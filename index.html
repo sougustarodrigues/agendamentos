@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-tema="verde">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b8a63">
+<title>Agendamentos – Certificado Digital</title>
+<script>(function(){var t;try{t=localStorage.getItem("agend_tema")}catch(e){}document.documentElement.dataset.tema=t==="azul"?"azul":"verde"})()</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#f6f8fa;--sf:#fff;--tx:#0f172a;--mu:#64748b;--ln:#e5eaf0;--sh:0 1px 2px rgba(15,23,42,.04),0 12px 32px rgba(15,23,42,.06);
+--pr:#0b8a63;--onpr:#fff;--g1:#0b8a63;--g2:#17c08f;
+--soft:color-mix(in srgb,var(--pr) 10%,var(--sf));--softer:color-mix(in srgb,var(--pr) 5%,var(--sf));
+--s-ag:#3b82f6;--s-co:#f59e0b;--s-va:#16a34a;--s-fa:#ef4444;--s-ca:#94a3b8}
+html[data-tema="azul"]{--pr:#2563eb;--g1:#1d4ed8;--g2:#4f9bff}
+@media (prefers-color-scheme:dark){
+:root{--bg:#0b1220;--sf:#111a2b;--tx:#e8eef9;--mu:#94a3b8;--ln:#1f2b40;--sh:none;--pr:#34d399;--onpr:#04261b;--g1:#0b6b50;--g2:#12a37a}
+html[data-tema="azul"]{--pr:#7aa7ff;--onpr:#071331;--g1:#1e40af;--g2:#3b82f6}}
+*{box-sizing:border-box}
+html{scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3,p{margin:0}
+.ic{width:18px;height:18px;flex:none}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--sf) 90%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(12px);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--ln);padding-top:env(safe-area-inset-top,0px)}
+.bar{max-width:1160px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx)}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;display:grid;place-items:center}
+.logo .ic{width:20px;height:20px}
+.bn{font-weight:800;font-size:16px;line-height:1.15}
+.bn small{display:block;font-weight:500;font-size:11px;color:var(--mu)}
+.menu{display:flex;gap:2px;margin-left:8px;flex:1}
+.menu a{padding:8px 14px;border-radius:99px;color:var(--mu);font-weight:600;font-size:14px;text-decoration:none}
+.menu a:hover{color:var(--tx);background:var(--soft)}
+.menu a.on{color:var(--pr);background:var(--soft)}
+.tools{display:flex;align-items:center;gap:14px;margin-left:auto}
+.themes{display:flex;gap:8px}
+.dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--sf);box-shadow:0 0 0 1px var(--ln);cursor:pointer;padding:0}
+.dv{background:#0b8a63}.da{background:#2563eb}
+html[data-tema="verde"] .dv,html[data-tema="azul"] .da{box-shadow:0 0 0 2px var(--tx)}
+a:focus-visible,button:focus-visible,.drop:focus-within{outline:2px solid var(--pr);outline-offset:2px}
+.site{max-width:1160px;margin:0 auto;padding:24px 20px 8px}
+.pg{display:none}.pg.on{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.ph h1{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sub{color:var(--mu);font-size:14px;margin-top:2px}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:32px;color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2));box-shadow:var(--sh);margin-bottom:16px}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero::before{width:280px;height:280px;right:-70px;top:-100px}
+.hero::after{width:170px;height:170px;right:150px;bottom:-90px}
+.hr{position:relative}
+.hero h1{font-size:38px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.hs{opacity:.85;margin-top:4px}
+#dataHoje::first-letter{text-transform:uppercase}
+.hs2{margin:10px 0 20px;font-weight:600;max-width:520px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:16px;display:flex;gap:12px;align-items:center;box-shadow:var(--sh)}
+.ki{width:42px;height:42px;border-radius:12px;background:var(--soft);color:var(--pr);display:grid;place-items:center;flex:none}
+.kpi b{display:block;font-size:24px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.kpi small{color:var(--mu);font-size:12px;font-weight:600}
+.cols{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:start}
+.sheet{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:22px;box-shadow:var(--sh)}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+h2{font-size:15px;font-weight:700;margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+h2::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--pr)}
+h2:first-child,.sh h2{margin-top:0}
+.nv{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.prev{position:sticky;top:84px}
+.lbl{font-size:12px;font-weight:700;color:var(--mu);margin:14px 0 6px}
+.box{background:var(--softer);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;font:13px/1.6 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:0;min-height:44px}
+label{display:grid;gap:5px;font-size:12px;color:var(--mu);font-weight:600}
+input,select,textarea{width:100%;min-height:42px;padding:10px 12px;border:1px solid var(--ln);border-radius:12px;background:var(--sf);color:var(--tx);font:inherit;font-size:14px;outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--pr);box-shadow:0 0 0 4px color-mix(in srgb,var(--pr) 16%,transparent)}
+.paste{min-height:90px;resize:vertical;border:1.5px dashed color-mix(in srgb,var(--pr) 40%,var(--ln));background:var(--softer)}
+.drop{display:grid;justify-items:center;gap:2px;text-align:center;margin-top:12px;padding:20px 14px;border:1.5px dashed color-mix(in srgb,var(--pr) 40%,var(--ln));border-radius:16px;background:var(--softer);cursor:pointer;color:var(--tx);font-size:14px;transition:background .15s,border-color .15s;position:relative}
+.drop:hover,.drop.ov{background:var(--soft);border-color:var(--pr)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop .ic{width:26px;height:26px;color:var(--pr);margin-bottom:4px}
+.drop span{color:var(--mu);font-size:13px}
+.drop em{font-style:normal;color:var(--pr);font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .15s,transform .1s}
+.btn:hover{background:var(--soft)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.p{background:var(--pr);border-color:var(--pr);color:var(--onpr)}
+.btn.p:hover{filter:brightness(1.08);background:var(--pr)}
+.hb{background:#fff;color:#0f172a;border-color:#fff}
+.hb:hover{background:#f1f5f9}
+.hg{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.28)}
+.hg:hover{background:rgba(255,255,255,.26)}
+.hint{font-size:12px;color:var(--mu)}
+.hint a,.lk{color:var(--pr);font-weight:600;text-decoration:none;font-size:13px}
+.seg{display:inline-flex;background:var(--soft);border-radius:12px;padding:4px;gap:2px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:9px;font:inherit;font-size:13px;font-weight:600;color:var(--mu);cursor:pointer}
+.seg .on{background:var(--sf);color:var(--pr);box-shadow:0 1px 3px rgba(15,23,42,.12)}
+.tb{margin-bottom:6px}
+.dia{font-size:13px;font-weight:700;margin:22px 0 4px;color:var(--mu)}
+.dia::first-letter{text-transform:uppercase}
+.dia span{font-weight:500;margin-left:6px;font-size:12px}
+.it,.wk{--c:var(--s-ag)}
+.st-co{--c:var(--s-co)}.st-va{--c:var(--s-va)}.st-fa{--c:var(--s-fa)}.st-ca{--c:var(--s-ca)}
+.it{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--ln);content-visibility:auto;contain-intrinsic-size:auto 120px}
+.tm{font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;color:var(--c);line-height:1.5}
+.bd{min-width:0;border-left:3px solid var(--c);padding-left:14px}
+.hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.av{width:36px;height:36px;border-radius:50%;background:var(--soft);color:var(--pr);display:grid;place-items:center;font-size:13px;font-weight:800;flex:none}
+.nm{min-width:140px;flex:1}
+.nm strong{display:block;font-size:15px;overflow-wrap:anywhere;line-height:1.3}
+.nm small{color:var(--mu);font-size:12px}
+.pill{width:auto;padding:4px 10px;border:1px solid transparent;border-radius:99px;font-size:12px;font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);cursor:pointer}
+.pill:focus{box-shadow:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{background:var(--softer);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:3px 9px;font:inherit;font-size:12.5px;cursor:pointer}
+.chip i{font-style:normal;color:var(--mu);margin-right:5px}
+.chip:hover{border-color:var(--pr)}
+.acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.ib{width:34px;height:34px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--mu);display:grid;place-items:center;cursor:pointer;padding:0}
+.ib:hover{color:var(--pr);border-color:var(--pr);background:var(--soft)}
+.ib.del:hover{color:var(--s-fa);border-color:var(--s-fa);background:color-mix(in srgb,var(--s-fa) 8%,var(--sf))}
+.qa{padding:7px 12px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.qa:hover{background:var(--soft)}
+.qa.p{background:var(--pr);border-color:var(--pr);color:var(--onpr)}
+.rn{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--ln);flex-wrap:wrap}
+.rn:first-child{border-top:0}
+.rn .acts{margin:0}
+.bdg{font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);white-space:nowrap}
+.empty{color:var(--mu);padding:26px 8px;font-size:14px;text-align:center}
+.weekbar{display:flex;align-items:center;gap:8px;margin:14px 0}
+.weekbar b{flex:1;text-align:center;font-size:14px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(130px,1fr));gap:8px;overflow-x:auto;padding-bottom:6px}
+.wc{background:var(--softer);border:1px solid var(--ln);border-radius:14px;padding:8px;min-height:150px}
+.wc.hoje{border-color:var(--pr);background:var(--soft)}
+.wh{display:flex;justify-content:space-between;align-items:baseline;padding:2px 4px 8px;font-size:12px;color:var(--mu);font-weight:700;text-transform:uppercase}
+.wh span{font-size:18px;color:var(--tx)}
+.wk{display:block;width:100%;text-align:left;border:0;border-left:3px solid var(--c);background:var(--sf);border-radius:8px;padding:6px 8px;margin-bottom:6px;font:inherit;font-size:12.5px;cursor:pointer;box-shadow:0 1px 2px rgba(15,23,42,.06);color:var(--tx)}
+.wk b{display:block;color:var(--c);font-size:12px}
+.wk span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+dialog{border:0;border-radius:20px;padding:0;background:var(--sf);color:var(--tx);box-shadow:0 20px 60px rgba(15,23,42,.3);width:min(400px,92vw)}
+dialog::backdrop{background:rgba(15,23,42,.45)}
+.dl{padding:22px;display:grid;gap:12px}
+.dl h3{font-size:18px;font-weight:800}
+.foot{max-width:1160px;margin:20px auto 0;padding:18px 20px 28px;color:var(--mu);font-size:12px;border-top:1px solid var(--ln)}
+.tabbar{display:none}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){
+.menu,.cta{display:none}
+.bar{padding:10px 14px}
+.themes{margin-left:auto}
+.site{padding:16px 14px 8px}
+.hero{padding:24px 20px;border-radius:20px}.hero h1{font-size:30px}
+.kpis{grid-template-columns:1fr 1fr}
+.cols,.nv{grid-template-columns:1fr}
+.prev{position:static}
+.sheet{padding:16px;border-radius:18px}
+.ph h1{font-size:24px}
+.foot{margin-bottom:80px;padding:14px}
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--sf) 94%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--ln);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabbar a{display:grid;justify-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--mu);text-decoration:none;padding:4px 0}
+.tabbar a.on{color:var(--pr)}
+.tabbar .fab .ic{width:44px;height:44px;padding:11px;border-radius:50%;background:var(--pr);color:var(--onpr);margin-top:-22px;box-shadow:0 6px 16px rgba(15,23,42,.25)}
+#toast{bottom:calc(86px + env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14 4M20 20v-4h-4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
+<symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></symbol>
+</defs></svg>
+
+<header class="top"><div class="bar">
+<a class="brand" href="#inicio"><span class="logo"><svg class="ic"><use href="#i-cal"/></svg></span><span class="bn">Agendamentos<small>Certificado digital</small></span></a>
+<nav class="menu"><a href="#inicio" data-p="inicio">Início</a><a href="#agenda" data-p="agenda">Agenda</a><a href="#renovacoes" data-p="renovacoes">Renovações</a><a href="#backup" data-p="backup">Backup</a></nav>
+<div class="tools">
+<div class="themes" role="group" aria-label="Cor do tema"><button class="dot dv" data-act="tema" data-t="verde" aria-label="Tema verde"></button><button class="dot da" data-act="tema" data-t="azul" aria-label="Tema azul"></button></div>
+<a class="btn p cta" href="#novo" data-p="novo"><svg class="ic"><use href="#i-plus"/></svg>Novo atendimento</a>
+</div>
+</div></header>
+
+<main class="site">
+
+<section class="pg on" id="v-inicio">
+<div class="hero"><div class="hr">
+<h1 id="saud">Olá!</h1><p class="hs" id="dataHoje"></p><p class="hs2" id="resumo"></p>
+<div class="row" style="margin:0"><a class="btn hb" href="#novo"><svg class="ic"><use href="#i-plus"/></svg>Novo atendimento</a><a class="btn hg" href="#agenda">Ver agenda</a></div>
+</div></div>
+<div class="kpis" id="stats"></div>
+<div class="cols">
+<div class="sheet"><div class="sh"><h2>Hoje na agenda</h2></div><div id="hoje"></div></div>
+<div class="sheet"><div class="sh"><h2>Renovações próximas</h2><a class="lk" href="#renovacoes">Ver todas</a></div><div id="renMini"></div></div>
+</div>
+</section>
+
+<section class="pg" id="v-agenda">
+<div class="ph"><div><h1>Agenda</h1><p class="sub">Todos os atendimentos, por dia ou por semana.</p></div>
+<div class="seg" id="segVis"><button data-act="vis" data-v="lista" class="on">Lista</button><button data-act="vis" data-v="semana">Semana</button></div></div>
+<div class="sheet">
+<div class="grid tb">
+<label>Buscar<input id="busca" placeholder="Nome, CPF, CNPJ, contabilidade" oninput="agendarRender()"></label>
+<label>Status<select id="fstatus" onchange="render()"><option value="">Todos</option><option>Agendado</option><option>Confirmado</option><option>Validado</option><option>Faltou</option><option>Cancelado</option></select></label>
+</div>
+<div id="lista"></div>
+<div id="semana" hidden></div>
+</div>
+</section>
+
+<section class="pg" id="v-renovacoes">
+<div class="ph"><div><h1>Renovações</h1><p class="sub">Certificados validados que estão perto de vencer. Avise o cliente a tempo.</p></div>
+<div class="seg" id="segRen"><button data-act="rjan" data-v="60" class="on">60 dias</button><button data-act="rjan" data-v="180">6 meses</button><button data-act="rjan" data-v="9999">Todos</button></div></div>
+<div class="sheet"><div id="renLista"></div></div>
+</section>
+
+<section class="pg" id="v-novo">
+<div class="ph"><div><h1 id="tNovo">Novo atendimento</h1><p class="sub">Cole a mensagem do cliente ou anexe os documentos. Confira e salve.</p></div></div>
+<div class="nv">
+<div class="sheet" id="form">
+<h2>Entrada rápida</h2>
+<textarea id="paste" class="paste" placeholder="Cole aqui a mensagem do cliente. Os campos são preenchidos automaticamente."></textarea>
+<div class="row" style="margin-top:10px"><button class="btn" onclick="preencher()">Preencher campos</button></div>
+<label class="drop" id="drop"><input id="arqs" type="file" accept="image/*,application/pdf" multiple onchange="listaArq()"><svg class="ic"><use href="#i-upload"/></svg><b>Arraste RG, CNH ou cartão CNPJ aqui</b><span>ou toque para escolher fotos e PDFs</span><em id="arqNomes"></em></label>
+<div class="row" style="margin-top:10px"><button class="btn p" id="btnLer" onclick="lerDocs()">Ler documentos</button><span class="hint" id="st">Confira os dados lidos antes de salvar.</span></div>
+
+<h2>Cliente</h2>
+<div class="grid">
+<label>Nome ou razão social<input id="nome"></label>
+<label>CPF<input id="cpf" inputmode="numeric" placeholder="000.000.000-00" onchange="buscarCliente()"></label>
+<label>CNPJ<input id="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" onchange="buscarCliente()"></label>
+<label>Data de nascimento<input id="nasc" placeholder="dd/mm/aaaa"></label>
+<label>Nº do RG<input id="rg"></label>
+<label>Nº de registro da CNH<input id="cnh" inputmode="numeric"></label>
+<label>Responsável<input id="resp"></label>
+</div>
+
+<h2>Contato</h2>
+<div class="grid">
+<label>E-mail<input id="email" type="email"></label>
+<label>Telefone<input id="tel" inputmode="tel" placeholder="(00) 00000-0000"></label>
+<label>Contabilidade<input id="contab"></label>
+</div>
+
+<h2>Atendimento</h2>
+<div class="grid">
+<label>Data e hora<input id="agenda" type="datetime-local"></label>
+<label>Status<select id="status"><option>Agendado</option><option>Confirmado</option><option>Validado</option><option>Faltou</option><option>Cancelado</option></select></label>
+<label>Modelo<select id="modelo"><option value="">—</option><option>e-CPF A1</option><option>e-CPF A3</option><option>e-CNPJ A1</option><option>e-CNPJ A3</option><option>Outro</option></select></label>
+<label>Validade do certificado<select id="validade"><option value="">Não informada</option><option value="1">1 ano</option><option value="2">2 anos</option><option value="3">3 anos</option><option value="5">5 anos</option></select></label>
+<label>Valor (R$)<input id="valor" inputmode="decimal" placeholder="0,00"></label>
+<label>Pedido<input id="pedido"></label>
+<label>Histórico<input id="hist"></label>
+</div>
+<div class="row"><button class="btn p" id="btnSalvar" onclick="salvar()">Salvar atendimento</button><button class="btn" onclick="limpar()">Limpar</button><span class="hint">Ctrl + Enter também salva.</span></div>
+</div>
+
+<aside class="sheet prev">
+<h2>Prévia para o Trello</h2>
+<p class="lbl" style="margin-top:0">Título do cartão</p><div class="box" id="pvT"></div>
+<p class="lbl">Descrição</p><pre class="box" id="pvD"></pre>
+<div class="row"><button class="btn p" onclick="copiarTitulo()"><svg class="ic"><use href="#i-copy"/></svg>Copiar título</button><button class="btn" onclick="copiarForm()"><svg class="ic"><use href="#i-copy"/></svg>Copiar descrição</button></div>
+</aside>
+</div>
+</section>
+
+<section class="pg" id="v-backup">
+<div class="ph"><div><h1>Backup</h1><p class="sub">Seus dados ficam salvos só neste navegador. Guarde uma cópia para não perdê-los.</p></div></div>
+<div class="sheet">
+<h2>Salvar cópia</h2>
+<div class="row" style="margin-top:0"><button class="btn p" onclick="backupJson()">Salvar backup completo</button><button class="btn" onclick="exportar()">Exportar planilha (CSV)</button></div>
+<p class="hint" style="margin-top:8px">O backup completo serve para restaurar depois. A planilha abre no Excel ou no Google Planilhas.</p>
+<h2>Restaurar backup</h2>
+<div class="row" style="margin-top:0"><input id="imp" type="file" accept=".json,application/json" style="max-width:340px"><button class="btn" onclick="importar()">Restaurar</button></div>
+<p class="hint" style="margin-top:8px">Os registros do arquivo são somados aos que já existem.</p>
+<h2>Leitura de documentos</h2>
+<div class="row" style="margin-top:0"><input id="chave" type="password" placeholder="Cole aqui a chave da API da Anthropic" autocomplete="off" style="max-width:420px"><button class="btn" onclick="salvarChave()">Salvar chave</button></div>
+<p class="hint" style="margin-top:8px">Necessária só para ler fotos e PDFs. É uma chave de API própria (console.anthropic.com), cobrada por uso, e fica guardada apenas neste navegador. Use só em computador seu. Para remover, salve o campo vazio.</p>
+<h2>Apagar dados</h2>
+<div class="row" style="margin-top:0"><button class="btn" onclick="apagarTudo()">Apagar todos os registros</button></div>
+</div>
+</section>
+
+</main>
+<footer class="foot">Agendamentos de validação de certificado digital · uso interno</footer>
+
+<nav class="tabbar">
+<a href="#inicio" data-p="inicio"><svg class="ic"><use href="#i-home"/></svg><span>Início</span></a>
+<a href="#agenda" data-p="agenda"><svg class="ic"><use href="#i-cal"/></svg><span>Agenda</span></a>
+<a href="#novo" data-p="novo" class="fab"><svg class="ic"><use href="#i-plus"/></svg><span>Novo</span></a>
+<a href="#renovacoes" data-p="renovacoes"><svg class="ic"><use href="#i-refresh"/></svg><span>Renovar</span></a>
+<a href="#backup" data-p="backup"><svg class="ic"><use href="#i-shield"/></svg><span>Backup</span></a>
+</nav>
+
+<dialog id="dlg"><form method="dialog" class="dl">
+<h3>Validar atendimento</h3><p class="sub" id="dlgNome"></p>
+<label>Validade do certificado<select id="dvAnos"><option value="">Não informar</option><option value="1">1 ano</option><option value="2">2 anos</option><option value="3">3 anos</option><option value="5">5 anos</option></select></label>
+<p class="hint">Com a validade, o sistema avisa na página Renovações quando o certificado estiver perto de vencer.</p>
+<div class="row" style="margin:0"><button class="btn" value="cancel">Cancelar</button><button class="btn p" value="ok">Confirmar validação</button></div>
+</form></dialog>
+
+<div id="toast" role="status"></div>
+
+<script>
+var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis="lista",renJan=60,dlgId=null;
+var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","status","pedido","resp","hist","cnh","rg","validade"];
+var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
+var PAGS=["inicio","agenda","renovacoes","novo","backup"];
+function $(i){return document.getElementById(i)}
+function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
+function dig(s){return (s||"").replace(/\D/g,"")}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function p2(n){return String(n).padStart(2,"0")}
+function iso(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function carregar(){try{dados=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){dados=[]}}
+function gravar(){try{localStorage.setItem(KEY,JSON.stringify(dados))}catch(e){toast("Não foi possível salvar neste navegador.")}}
+
+/* ---------- formatação e leitura de texto ---------- */
+function fmtCPF(s){s=dig(s);return s.length===11?s.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,"$1.$2.$3-$4"):s}
+function fmtCNPJ(s){s=dig(s);return s.length===14?s.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,"$1.$2.$3/$4-$5"):s}
+function fmtTel(s){s=dig(s);if(s.length===11)return s.replace(/(\d{2})(\d{5})(\d{4})/,"($1) $2-$3");if(s.length===10)return s.replace(/(\d{2})(\d{4})(\d{4})/,"($1) $2-$3");if(s.length===9)return s.replace(/(\d{5})(\d{4})/,"$1-$2");if(s.length===8)return s.replace(/(\d{4})(\d{4})/,"$1-$2");return s}
+function nove(s){var d=dig(s);if(d.length===10&&/[6-9]/.test(d[2]))d=d.slice(0,2)+"9"+d.slice(2);else if(d.length===8&&/[6-9]/.test(d[0]))d="9"+d;return d}
+function achaTel(t){var m=t.match(/(?:\+?55[\s.-]?)?\(?\b(\d{2})\)?[\s.-]?(9?\d{4})[\s.-]?(\d{4})\b/);if(m)return{raw:m[0],v:fmtTel(nove(m[1]+m[2]+m[3]))};m=t.match(/\b(9?\d{4})[\s.-]?(\d{4})\b/);if(m)return{raw:m[0],v:fmtTel(nove(m[1]+m[2]))};return null}
+function cpfOk(d){if(d.length!==11||/^(\d)\1+$/.test(d))return false;for(var n=9;n<11;n++){var x=0;for(var i=0;i<n;i++)x+=d[i]*(n+1-i);if((x*10%11)%10!=d[n])return false}return true}
+function achaCpf(t){var re=/\d{3}\.?\d{3}\.?\d{3}-?\d{2}/g,m;while(m=re.exec(t)){var d=dig(m[0]);if(/[.-]/.test(m[0])||cpfOk(d)||d[2]!=="9")return m[0]}return null}
+function dataHora(t){
+  var m,d,mo,y,h,mi,raw,hoje=new Date(),ano=hoje.getFullYear();
+  if(m=t.match(/(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\D{0,15}?(\d{1,2})\s?(?:h|:)\s?(\d{2})?/i)){d=+m[1];mo=+m[2];y=m[3]?+m[3]:0;h=+m[4];mi=+(m[5]||0);raw=m[0]}
+  else if(m=t.match(/(\d{1,2})\s?(?:h|:)\s?(\d{2})?\D{0,15}?(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/i)){h=+m[1];mi=+(m[2]||0);d=+m[3];mo=+m[4];y=m[5]?+m[5]:0;raw=m[0]}
+  else if(m=t.match(/(hoje|amanh[ãa])\D{0,10}?(\d{1,2})\s?(?:h|:)\s?(\d{2})?/i)){var x=new Date();if(/amanh/i.test(m[1]))x.setDate(x.getDate()+1);d=x.getDate();mo=x.getMonth()+1;y=x.getFullYear();h=+m[2];mi=+(m[3]||0);raw=m[0]}
+  else return null;
+  if(y&&y<100)y+=2000;
+  if(y&&y<ano)return null;
+  if(!y){y=ano;if(new Date(y,mo-1,d,23,59)<hoje)y++}
+  if(mo<1||mo>12||d<1||d>31||h>23||mi>59)return null;
+  return {raw:raw,v:y+"-"+p2(mo)+"-"+p2(d)+"T"+p2(h)+":"+p2(mi)}}
+function preencher(){
+  var t=$("paste").value,m;
+  if(m=t.match(/\d{2}\.?\d{3}\.?\d{3}\/?\d{4}-?\d{2}/)){$("cnpj").value=fmtCNPJ(m[0]);t=t.replace(m[0]," ")}
+  var cp=achaCpf(t);if(cp){$("cpf").value=fmtCPF(cp);t=t.replace(cp," ")}
+  if(m=t.match(/[\w.+-]+@[\w-]+\.[\w.-]+/)){$("email").value=m[0];t=t.replace(m[0]," ")}
+  var ag=dataHora(t);if(ag){$("agenda").value=ag.v;t=t.replace(ag.raw," ")}
+  if(m=t.match(/\d{2}\/\d{2}\/\d{4}/)){$("nasc").value=m[0];t=t.replace(m[0]," ")}
+  if(m=t.match(/R\$\s*([\d.]+,\d{2}|\d+)/i)){$("valor").value=m[1];t=t.replace(m[0]," ")}
+  var tl=achaTel(t);if(tl){$("tel").value=tl.v;t=t.replace(tl.raw," ")}
+  var mod=t.match(/e-?(cpf|cnpj)\s*(a1|a3)/i);
+  if(mod){$("modelo").value="e-"+mod[1].toUpperCase()+" "+mod[2].toUpperCase()}
+  if(!$("nome").value){
+    var nm=t.split(/[\n,;]/).map(function(x){return x.replace(/^(nome|cliente)\s*:?\s*/i,"").trim()}).filter(function(x){return /^[A-Za-zÀ-ÿ' ]{5,}$/.test(x)&&x.indexOf(" ")>0&&!/e-?c(pf|npj)/i.test(x)});
+    if(nm.length)$("nome").value=nm[0];
+  }
+  buscarCliente();previa();
+}
+
+/* ---------- utilidades de dados ---------- */
+function bonito(n){return String(n||"").toLowerCase().replace(/(^|\s)(\S)/g,function(m,a,b){return a+b.toUpperCase()}).replace(/ (Da|De|Do|Das|Dos|E) /g,function(x){return x.toLowerCase()})}
+function ini(n){var p=String(n||"?").trim().split(/\s+/);return ((p[0]||"?")[0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
+function num(v){var s=String(v||"").replace(/[^\d,.-]/g,"");if(s.indexOf(",")>-1)s=s.replace(/\./g,"").replace(",",".");var n=parseFloat(s);return isNaN(n)?0:n}
+function brl(n){return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function fmtAgenda(v){if(!v)return"";var p=v.split("T"),d=p[0].split("-");return d[2]+"/"+d[1]+"/"+d[0]+(p[1]?" "+p[1]:"")}
+function fmtData(d){return p2(d.getDate())+"/"+p2(d.getMonth()+1)+"/"+d.getFullYear()}
+function parseISO(s){return s?new Date(s.slice(0,10)+"T12:00"):null}
+function diasAte(d){var h=new Date();h.setHours(12,0,0,0);return Math.round((d-h)/86400000)}
+function vence(d){if(!d.validade||!d.validadoEm)return null;var x=parseISO(d.validadoEm);x.setFullYear(x.getFullYear()+(+d.validade));return x}
+function dataVal(d){return d.validadoEm||(d.agenda||"").slice(0,10)}
+function diaLabel(v){if(!v)return"Sem data";var h=new Date(),a=new Date(h);a.setDate(a.getDate()+1);if(v===iso(h))return"Hoje";if(v===iso(a))return"Amanhã";return new Date(v+"T12:00").toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"2-digit"})}
+
+/* ---------- texto para o Trello ---------- */
+function textoReg(d){var L=[["PEDIDO",d.pedido],["NOME",d.nome],["CNPJ",d.cnpj],["DATA DE NASCIMENTO",d.nasc],["CPF",d.cpf]].concat(d.rg?[["RG",d.rg]]:[],d.cnh?[["CNH",d.cnh]]:[],[["RESPONSÁVEL",d.resp],["E-MAIL",d.email],["TELEFONE",d.tel],["MODELO",d.modelo],["CONTABILIDADE",d.contab],["AGENDADO",fmtAgenda(d.agenda)],["HISTÓRICO",d.hist],["VALOR","R$"+(d.valor?" "+d.valor:"")]]);return L.map(function(x){return x[0]+":"+(x[1]?" "+x[1]:"")}).join("\n")}
+function tituloReg(d){var m=(d.agenda||"").match(/T(\d\d):(\d\d)/);var h=m?m[1]+"h"+(m[2]!=="00"?m[2]:""):"00h";return h+" - "+(d.nome||"")}
+function previa(){var o=ler();$("pvT").textContent=tituloReg(o);$("pvD").textContent=textoReg(o)}
+function copiarTitulo(){copiar(tituloReg(ler()))}
+function copiarForm(){copiar(textoReg(ler()))}
+
+/* ---------- toast e cópia ---------- */
+var toastT;function toast(m){var t=$("toast");t.textContent=m;t.className="show";clearTimeout(toastT);toastT=setTimeout(function(){t.className=""},1600)}
+function fb(txt){var t=document.createElement("textarea");t.value=txt;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();try{document.execCommand("copy")}catch(e){}t.remove()}
+function copiar(txt){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).catch(function(){fb(txt)})}else fb(txt);toast("Copiado ✓")}
+
+/* ---------- formulário ---------- */
+function ler(){var o={};CAMPOS.forEach(function(c){o[c]=$(c).value.trim()});o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);return o}
+function salvar(){
+  var o=ler();
+  if(!o.nome){toast("Informe o nome.");$("nome").focus();return}
+  var i=editId?dados.findIndex(function(d){return d.id===editId}):-1;
+  if(i>-1){o.id=editId;o.criado=dados[i].criado;o.validadoEm=dados[i].validadoEm;dados[i]=o}
+  else{o.id=String(Date.now());o.criado=new Date().toISOString();dados.unshift(o)}
+  if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());
+  gravar();limpar();render();toast("Salvo ✓");aba("agenda");
+}
+function limpar(){CAMPOS.forEach(function(c){$(c).value=c==="status"?"Agendado":""});$("paste").value="";$("arqs").value="";listaArq();editId=null;$("btnSalvar").textContent="Salvar atendimento";$("tNovo").textContent="Novo atendimento";previa()}
+function preencherForm(d){CAMPOS.forEach(function(c){$(c).value=d[c]||""})}
+function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;preencherForm(d);editId=id;$("btnSalvar").textContent="Atualizar atendimento";$("tNovo").textContent="Editar atendimento";previa();aba("novo")}
+function renovar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;limpar();preencherForm(d);$("agenda").value="";$("status").value="Agendado";$("hist").value="Renovação de certificado";$("pedido").value="";$("validade").value="";editId=null;previa();aba("novo");toast("Dados copiados para a renovação")}
+function excluir(id){if(confirm("Excluir este registro?")){dados=dados.filter(function(d){return d.id!==id});gravar();render()}}
+function mudarStatus(id,s){var d=dados.find(function(x){return x.id===id});if(!d)return;if(s==="Validado"&&!d.validadoEm){abrirValidar(id);render();return}d.status=s;gravar();render()}
+function buscarCliente(){
+  var c=dig($("cpf").value),j=dig($("cnpj").value);if(!c&&!j)return;
+  var d=dados.find(function(x){return x.id!==editId&&((c&&dig(x.cpf)===c)||(j&&dig(x.cnpj)===j))});
+  if(!d)return;var n=0;
+  ["nome","cpf","cnpj","nasc","email","tel","contab","resp","rg","cnh","modelo"].forEach(function(k){if(!$(k).value&&d[k]){$(k).value=d[k];n++}});
+  if(n){toast("Cliente já cadastrado: dados preenchidos");previa()}
+}
+
+/* ---------- validar ---------- */
+function abrirValidar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;dlgId=id;$("dlgNome").textContent=bonito(d.nome);$("dvAnos").value=d.validade||(/A1/i.test(d.modelo||"")?"1":"");$("dlg").returnValue="";$("dlg").showModal()}
+$("dlg").addEventListener("close",function(){if($("dlg").returnValue!=="ok"||!dlgId)return;var d=dados.find(function(x){return x.id===dlgId});if(!d)return;d.status="Validado";d.validadoEm=iso(new Date());d.validade=$("dvAnos").value;gravar();render();toast("Atendimento validado ✓")});
+
+/* ---------- WhatsApp ---------- */
+function waLink(d,msg){var t=dig(d.tel);if(t.length<10){toast("Cadastre o telefone do cliente.");return}if(t.length<=11)t="55"+t;window.open("https://wa.me/"+t+"?text="+encodeURIComponent(msg),"_blank","noopener")}
+function primeiro(d){return bonito((d.nome||"").split(" ")[0])}
+function msgAg(d){var p=(d.agenda||"").split("T"),dd=p[0]?p[0].split("-").reverse().slice(0,2).join("/"):"",hh=p[1]?p[1].slice(0,5):"";
+  return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento para validação do certificado digital"+(d.modelo?" ("+d.modelo+")":"")+(dd?" no dia "+dd:"")+(hh?" às "+hh:"")+". Por favor, leve um documento oficial com foto (original). Qualquer dúvida, é só chamar."}
+function msgRen(d){var v=vence(d);return "Olá, "+primeiro(d)+"! Tudo bem? Seu certificado digital"+(d.modelo?" ("+d.modelo+")":"")+" vence em "+fmtData(v)+". Podemos agendar a renovação?"}
+
+/* ---------- cartões ---------- */
+function ib(a,i,t,id,x){return '<button class="ib'+(x||"")+'" data-act="'+a+'" data-id="'+id+'" title="'+t+'" aria-label="'+t+'">'+ic(i)+'</button>'}
+function qa(a,t,id,x){return '<button class="qa'+(x||"")+'" data-act="'+a+'" data-id="'+id+'">'+t+'</button>'}
+function card(d){
+  var hora=(d.agenda||"").slice(11,16);
+  var ch=[["CPF",d.cpf],["CNPJ",d.cnpj],["Nasc.",d.nasc],["RG",d.rg],["CNH",d.cnh],["E-mail",d.email],["Tel.",d.tel],["Contab.",d.contab],["Pedido",d.pedido],["Resp.",d.resp]].filter(function(c){return c[1]}).map(function(c){return '<button class="chip" data-act="copy" data-v="'+esc(c[1])+'"><i>'+c[0]+'</i>'+esc(c[1])+'</button>'}).join("");
+  var sub=[d.modelo,d.valor?"R$ "+d.valor:""].filter(Boolean).join(" · ");
+  var opts=ORD.map(function(s){return '<option'+(s===d.status?' selected':'')+'>'+s+'</option>'}).join("");
+  var q="";if(d.status==="Agendado")q+=qa("conf","Confirmar",d.id);if(d.status==="Agendado"||d.status==="Confirmado")q+=qa("val","Validar",d.id," p");
+  return '<article class="it '+(ST[d.status]||"")+'"><div class="tm">'+(hora||"—")+'</div><div class="bd"><div class="hd"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome)||"Sem nome")+'</strong>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</div><select class="pill" data-id="'+d.id+'" aria-label="Status">'+opts+'</select></div>'+(ch?'<div class="chips">'+ch+'</div>':'')+'<div class="acts">'+q+ib("wa","chat","Mensagem no WhatsApp",d.id)+ib("tit","copy","Copiar título",d.id)+ib("desc","copy","Copiar descrição",d.id)+ib("edit","edit","Editar",d.id)+ib("del","trash","Excluir",d.id," del")+'</div></div></article>'}
+function renItem(d){var v=vence(d),dias=diasAte(v),cor=dias<=30?"var(--s-fa)":dias<=60?"var(--s-co)":"var(--mu)";
+  var txt=dias<0?"vencido há "+(-dias)+(dias===-1?" dia":" dias"):dias===0?"vence hoje":"vence em "+dias+(dias===1?" dia":" dias");
+  return '<article class="rn"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong><small>'+esc([d.modelo,fmtData(v)].filter(Boolean).join(" · "))+'</small></div><span class="bdg" style="--c:'+cor+'">'+txt+'</span><div class="acts">'+ib("war","chat","Avisar no WhatsApp",d.id)+ib("ren","refresh","Renovar",d.id)+'</div></article>'}
+
+/* ---------- renderização ---------- */
+var tmr=0;function agendarRender(){clearTimeout(tmr);tmr=setTimeout(render,120)}
+function filtrar(){var q=$("busca").value.toLowerCase(),fs=$("fstatus").value;
+  return dados.filter(function(d){if(fs&&d.status!==fs)return false;return !q||CAMPOS.some(function(c){return String(d[c]||"").toLowerCase().indexOf(q)>-1})}).sort(function(a,b){return (a.agenda||"9").localeCompare(b.agenda||"9")})}
+function kpi(i,n,l){return '<div class="kpi"><span class="ki">'+ic(i)+'</span><div><b>'+n+'</b><small>'+l+'</small></div></div>'}
+function renRows(lim){return dados.filter(function(d){var v=vence(d);return d.status==="Validado"&&v&&diasAte(v)<=lim}).sort(function(a,b){return vence(a)-vence(b)})}
+function render(){
+  var hojeI=iso(new Date()),mes=hojeI.slice(0,7);
+  var hojeL=dados.filter(function(d){return (d.agenda||"").slice(0,10)===hojeI&&d.status!=="Cancelado"}).sort(function(a,b){return a.agenda.localeCompare(b.agenda)});
+  var pend=dados.filter(function(d){return d.status==="Agendado"||d.status==="Confirmado"}).length;
+  var vm=dados.filter(function(d){return d.status==="Validado"&&dataVal(d).slice(0,7)===mes});
+  var fat=vm.reduce(function(s,d){return s+num(d.valor)},0);
+  var hr=new Date().getHours(),g=hr<5?"Boa madrugada":hr<12?"Bom dia":hr<18?"Boa tarde":"Boa noite";
+  $("saud").textContent=g+"!";$("dataHoje").textContent=new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+  var nh=hojeL.length,np=hojeL.filter(function(d){return d.status==="Agendado"}).length;
+  $("resumo").textContent=nh?("Você tem "+nh+(nh===1?" atendimento":" atendimentos")+" hoje"+(np?", "+np+" ainda sem confirmação.":".")):"Nenhum atendimento marcado para hoje.";
+  $("stats").innerHTML=kpi("clock",nh,"hoje")+kpi("cal",pend,"pendentes")+kpi("check",vm.length,"validados no mês")+kpi("money",brl(fat),"faturado no mês");
+  $("hoje").innerHTML=nh?hojeL.map(card).join(""):'<p class="empty">Nenhum atendimento para hoje.</p>';
+  var rm=renRows(60).slice(0,5);
+  $("renMini").innerHTML=rm.length?rm.map(renItem).join(""):'<p class="empty">Nenhum certificado vencendo nos próximos 60 dias.</p>';
+  var rl=renRows(renJan);
+  $("renLista").innerHTML=rl.length?rl.map(renItem).join(""):'<p class="empty">Nada para renovar neste período. Ao validar um atendimento, informe a validade do certificado para ele aparecer aqui.</p>';
+  var lista=filtrar();
+  if(vis==="lista"){
+    if(!lista.length){$("lista").innerHTML='<p class="empty">Nenhum atendimento por aqui. Cole os dados de um cliente para começar.</p>'}
+    else{var html=[],ult=null,cont={};
+      lista.forEach(function(d){var k=(d.agenda||"").slice(0,10);cont[k]=(cont[k]||0)+1});
+      lista.forEach(function(d){var k=(d.agenda||"").slice(0,10);if(k!==ult){ult=k;html.push('<h3 class="dia">'+esc(diaLabel(k))+'<span>'+cont[k]+(cont[k]===1?' atendimento':' atendimentos')+'</span></h3>')}html.push(card(d))});
+      $("lista").innerHTML=html.join("")}
+  }else renderSemana(lista);
+}
+function inicioSemana(off){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+off*7);return d}
+function renderSemana(lista){
+  var ini0=inicioSemana(semOff),fim=new Date(ini0);fim.setDate(ini0.getDate()+6);
+  var hojeI=iso(new Date()),nomes=["seg","ter","qua","qui","sex","sáb","dom"],cols="";
+  for(var k=0;k<7;k++){var dd=new Date(ini0);dd.setDate(ini0.getDate()+k);var key=iso(dd);
+    var its=lista.filter(function(d){return (d.agenda||"").slice(0,10)===key}).map(function(d){return '<button class="wk '+(ST[d.status]||"")+'" data-act="edit" data-id="'+d.id+'"><b>'+((d.agenda||"").slice(11,16)||"—")+'</b><span>'+esc(bonito(d.nome))+'</span></button>'}).join("");
+    cols+='<div class="wc'+(key===hojeI?" hoje":"")+'"><div class="wh">'+nomes[k]+'<span>'+dd.getDate()+'</span></div>'+its+'</div>'}
+  $("semana").innerHTML='<div class="weekbar"><button class="qa" data-act="sem" data-d="-1">‹ Anterior</button><b>'+p2(ini0.getDate())+'/'+p2(ini0.getMonth()+1)+' a '+p2(fim.getDate())+'/'+p2(fim.getMonth()+1)+'</b><button class="qa" data-act="sem" data-d="0">Hoje</button><button class="qa" data-act="sem" data-d="1">Próxima ›</button></div><div class="week">'+cols+'</div>'}
+function setVis(v){vis=v;$("lista").hidden=v!=="lista";$("semana").hidden=v!=="semana";[].forEach.call($("segVis").children,function(b){b.classList.toggle("on",b.dataset.v===v)});render()}
+
+/* ---------- navegação ---------- */
+function rota(){var h=(location.hash||"").slice(1);if(PAGS.indexOf(h)<0)h="inicio";PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h)});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===h)});window.scrollTo(0,0)}
+function aba(v){if(location.hash==="#"+v)rota();else location.hash=v}
+window.addEventListener("hashchange",rota);
+function tema(t){document.documentElement.dataset.tema=t;try{localStorage.setItem(TKEY,t)}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="azul"?"#2563eb":"#0b8a63"}
+
+/* ---------- ações (um único ouvinte) ---------- */
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button[data-act]");if(!b)return;
+  var a=b.dataset.act,id=b.dataset.id,d=id?dados.find(function(x){return x.id===id}):null;
+  if(a==="copy")copiar(b.dataset.v);
+  else if(a==="desc"&&d)copiar(textoReg(d));
+  else if(a==="tit"&&d)copiar(tituloReg(d));
+  else if(a==="edit")editar(id);
+  else if(a==="del")excluir(id);
+  else if(a==="wa"&&d)waLink(d,msgAg(d));
+  else if(a==="war"&&d)waLink(d,msgRen(d));
+  else if(a==="ren")renovar(id);
+  else if(a==="conf"&&d){d.status="Confirmado";gravar();render();toast("Confirmado ✓")}
+  else if(a==="val")abrirValidar(id);
+  else if(a==="sem"){var v=+b.dataset.d;semOff=v===0?0:semOff+v;render()}
+  else if(a==="vis")setVis(b.dataset.v);
+  else if(a==="rjan"){renJan=+b.dataset.v;[].forEach.call($("segRen").children,function(x){x.classList.toggle("on",x===b)});render()}
+  else if(a==="tema")tema(b.dataset.t)});
+document.addEventListener("change",function(e){var s=e.target.closest("select[data-id]");if(s)mudarStatus(s.dataset.id,s.value)});
+$("form").addEventListener("input",previa);
+$("paste").addEventListener("paste",function(){setTimeout(preencher,0)});
+document.addEventListener("keydown",function(e){if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&$("v-novo").classList.contains("on")){e.preventDefault();salvar()}});
+
+/* ---------- arquivos, backup e planilha ---------- */
+function salvarArq(nome,txt){var b=new Blob([txt],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},3000);toast("Arquivo salvo ✓")}
+function exportar(){
+  var cols=[["Nome","nome"],["CPF","cpf"],["CNPJ","cnpj"],["Nascimento","nasc"],["Valor","valor"],["E-mail","email"],["Telefone","tel"],["Modelo","modelo"],["Contabilidade","contab"],["Agendamento","agenda"],["Status","status"],["Pedido","pedido"],["Responsável","resp"],["Histórico","hist"],["Registro CNH","cnh"],["RG","rg"],["Validade (anos)","validade"],["Validado em","validadoEm"]];
+  if(!dados.length){toast("Nada para exportar ainda.");return}
+  var linhas=[cols.map(function(c){return c[0]})].concat(dados.map(function(d){return cols.map(function(c){return d[c[1]]||""})}));
+  salvarArq("agendamentos.csv","﻿"+linhas.map(function(l){return l.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(";")}).join("\n"))}
+function backupJson(){if(!dados.length){toast("Nada para salvar ainda.");return}salvarArq("backup-agendamentos.json",JSON.stringify(dados))}
+function importar(){var f=$("imp").files[0];if(!f){toast("Escolha o arquivo de backup.");return}
+  var r=new FileReader();r.onload=function(){try{var a=JSON.parse(r.result);if(!Array.isArray(a))throw 0;var ids={};dados.forEach(function(d){ids[d.id]=1});var n=0;a.forEach(function(d){if(d&&d.id&&!ids[d.id]){dados.push(d);n++}});gravar();render();toast(n+" registro(s) restaurado(s)")}catch(e){toast("Arquivo de backup inválido.")}};r.readAsText(f)}
+function apagarTudo(){if(confirm("Apagar todos os registros deste navegador? Isso não pode ser desfeito.")){dados=[];gravar();render();toast("Registros apagados")}}
+function salvarChave(){var v=$("chave").value.trim();try{if(!v){localStorage.removeItem("agend_api_key");toast("Chave removida");return}localStorage.setItem("agend_api_key",v);$("chave").value="";toast("Chave salva ✓")}catch(e){toast("Não foi possível salvar a chave.")}}
+
+/* ---------- leitura de documentos ---------- */
+var dz=$("drop");
+["dragenter","dragover"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.add("ov")})});
+["dragleave","drop"].forEach(function(ev){dz.addEventListener(ev,function(e){e.preventDefault();dz.classList.remove("ov")})});
+dz.addEventListener("drop",function(e){if(e.dataTransfer&&e.dataTransfer.files.length){try{$("arqs").files=e.dataTransfer.files}catch(x){}listaArq()}});
+function listaArq(){var f=$("arqs").files;$("arqNomes").textContent=f.length?[].map.call(f,function(x){return x.name}).join(", "):""}
+function carregarPdf(){return window.pdfjsLib?Promise.resolve():new Promise(function(ok,err){var s=document.createElement("script");s.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";s.onload=ok;s.onerror=err;document.head.appendChild(s)})}
+async function pdfParaImagens(f){
+  await carregarPdf();
+  pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  var pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise,out=[],n=Math.min(pdf.numPages,3);
+  for(var i=1;i<=n;i++){var pg=await pdf.getPage(i),vp=pg.getViewport({scale:1.6}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;await pg.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;out.push(await new Promise(function(r){c.toBlob(r,"image/jpeg",0.85)}))}
+  return out}
+async function reduzir(f){try{var bm=await createImageBitmap(f),s=Math.min(1,1800/Math.max(bm.width,bm.height)),c=document.createElement("canvas");c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);c.getContext("2d").drawImage(bm,0,0,c.width,c.height);return await new Promise(function(r){c.toBlob(r,"image/jpeg",0.88)})}catch(e){return f}}
+function b64(b){return new Promise(function(ok){var r=new FileReader();r.onload=function(){ok(r.result.split(",")[1])};r.readAsDataURL(b)})}
+async function lerApi(p,imgs,chave){
+  var c=[];for(var i=0;i<imgs.length;i++){c.push({type:"image",source:{type:"base64",media_type:imgs[i].type||"image/jpeg",data:await b64(imgs[i])}})}
+  c.push({type:"text",text:p});
+  var r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":chave,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-5-5",max_tokens:1000,messages:[{role:"user",content:c}]})});
+  var j=await r.json();if(!r.ok){if(r.status===401)throw new Error("chave inválida");throw new Error((j.error&&j.error.message)||"erro na API")}
+  return j.content.map(function(x){return x.text||""}).join("")}
+async function lerDocs(){
+  var fs=$("arqs").files,st=$("st"),btn=$("btnLer");
+  if(!fs.length){st.textContent="Escolha ao menos um arquivo.";return}
+  var chave="";try{chave=localStorage.getItem("agend_api_key")||""}catch(e){}
+  if(!chave){st.innerHTML='Para ler documentos, cadastre a chave em <a href="#backup">Backup</a>.';return}
+  btn.disabled=true;st.textContent="Lendo…";
+  try{
+    var imgs=[];
+    for(var i=0;i<fs.length;i++){var f=fs[i];
+      if(f.type==="application/pdf"||/\.pdf$/i.test(f.name))imgs=imgs.concat(await pdfParaImagens(f));else imgs.push(await reduzir(f))}
+    imgs=imgs.slice(0,6);
+    var p="Extraia os dados cadastrais destes documentos (RG, CNH, CPF, cartão CNPJ, contrato social, comprovantes etc.). Responda SOMENTE com um JSON: {\"nome\":\"se houver cartão CNPJ, a razão social da empresa; caso contrário, o nome completo da pessoa\",\"resp\":\"nome completo da pessoa que consta no RG ou na CNH anexado (preencha sempre que houver RG ou CNH); sem esses documentos, o sócio ou representante, se constar\",\"cpf\":\"\",\"cnpj\":\"\",\"nasc\":\"dd/mm/aaaa\",\"email\":\"\",\"tel\":\"\",\"contab\":\"\",\"rg\":\"número do RG, SOMENTE se o documento for uma carteira de identidade (RG); se for CNH, deixe vazio\",\"cnh\":\"número de registro da CNH, SOMENTE se o documento for uma CNH\"}. Use \"\" para o que não aparecer. Não invente nada.";
+    var txt=await lerApi(p,imgs,chave);
+    var m=txt.match(/\{[\s\S]*\}/),j=JSON.parse(m[0]);
+    if(j.nome)$("nome").value=j.nome;
+    if(j.cpf)$("cpf").value=fmtCPF(j.cpf);
+    if(j.cnpj)$("cnpj").value=fmtCNPJ(j.cnpj);
+    if(j.nasc)$("nasc").value=j.nasc;
+    if(j.email)$("email").value=j.email;
+    if(j.tel)$("tel").value=fmtTel(j.tel);
+    if(j.contab)$("contab").value=j.contab;
+    if(j.resp)$("resp").value=j.resp;
+    if(j.rg)$("rg").value=j.rg;
+    if(j.cnh)$("cnh").value=j.cnh;
+    buscarCliente();previa();
+    st.textContent="Pronto. Confira os campos antes de salvar."
+  }catch(e){st.textContent="Não consegui ler ("+((e&&e.message)||"erro")+"). Tente uma foto mais nítida."}
+  btn.disabled=false}
+
+rota();carregar();render();previa();
+</script>
+</body>
+</html>
