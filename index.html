@@ -300,6 +300,7 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <label>Data e hora<input id="agenda" type="datetime-local"></label>
 <label>Status<select id="status"><option>Agendado</option><option>Confirmado</option><option>Validado</option><option>Faltou</option><option>Cancelado</option></select></label>
 <label>Tipo de atendimento<select id="tipo"><option value="">—</option><option>Videoconferência</option><option>Presencial</option></select></label>
+<label>Link da videoconferência (opcional)<input id="link" type="url" inputmode="url" placeholder="https://…"></label>
 <label>Modelo<select id="modelo"><option value="">—</option><option>e-CPF A1</option><option>e-CPF A3</option><option>e-CNPJ A1</option><option>e-CNPJ A3</option><option>Outro</option></select></label>
 <label>Validade do certificado<select id="validade"><option value="">Não informada</option><option value="1">1 ano</option><option value="2">2 anos</option><option value="3">3 anos</option><option value="5">5 anos</option></select></label>
 <label>Valor (R$)<input id="valor" inputmode="decimal" placeholder="0,00"></label>
@@ -328,9 +329,8 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <div class="row" style="margin-top:0"><input id="imp" type="file" accept=".json,application/json" style="max-width:340px"><button class="btn" onclick="importar()">Restaurar</button></div>
 <p class="hint" style="margin-top:8px">Os registros do arquivo são somados aos que já existem.</p>
 <h2>Mensagens do WhatsApp</h2>
-<div class="row" style="margin-top:0"><input id="cfgEnd" placeholder="Endereço do escritório (para atendimentos presenciais)" style="max-width:520px"></div>
-<div class="row"><input id="cfgLink" placeholder="Link padrão da videoconferência (https://…)" style="max-width:520px"><button class="btn" type="button" onclick="salvarCfg()">Salvar</button></div>
-<p class="hint" style="margin-top:8px">O endereço entra na mensagem dos atendimentos presenciais, e o link entra na dos atendimentos por videoconferência. Vale para todos os usuários.</p>
+<div class="row" style="margin-top:0"><input id="cfgEnd" placeholder="Endereço do escritório (para atendimentos presenciais)" style="max-width:520px"><button class="btn" type="button" onclick="salvarCfg()">Salvar</button></div>
+<p class="hint" style="margin-top:8px">O endereço entra na mensagem dos atendimentos presenciais e vale para todos os usuários. O link da videoconferência é preenchido em cada atendimento.</p>
 <h2>Avisos de 10 minutos</h2>
 <div class="row" style="margin-top:0"><button class="btn" data-act="notif" type="button">Ativar notificações</button><span class="hint" id="notifTxt"></span></div>
 <p class="hint" style="margin-top:8px">Com o site aberto, ele avisa quando faltarem 10 minutos para um atendimento e mostra o botão para enviar o lembrete no WhatsApp. O envio é seu: o WhatsApp abre com a mensagem pronta e você toca em enviar.</p>
@@ -382,7 +382,7 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 
 <script>
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis="lista",renJan=60,dlgId=null;
-var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","status","pedido","resp","hist","cnh","rg","validade"];
+var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
 var PAGS=["inicio","agenda","renovacoes","novo","backup","usuarios"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
@@ -508,7 +508,7 @@ function salvar(){
 function limpar(){CAMPOS.forEach(function(c){$(c).value=c==="status"?"Agendado":""});$("paste").value="";$("arqs").value="";listaArq();editId=null;$("btnSalvar").textContent="Salvar atendimento";$("tNovo").textContent="Novo atendimento";previa()}
 function preencherForm(d){CAMPOS.forEach(function(c){$(c).value=d[c]||""})}
 function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;preencherForm(d);editId=id;$("btnSalvar").textContent="Atualizar atendimento";$("tNovo").textContent="Editar atendimento";previa();aba("novo")}
-function renovar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;limpar();preencherForm(d);$("agenda").value="";$("status").value="Agendado";$("hist").value="Renovação de certificado";$("pedido").value="";$("validade").value="";editId=null;previa();aba("novo");toast("Dados copiados para a renovação")}
+function renovar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;limpar();preencherForm(d);$("agenda").value="";$("status").value="Agendado";$("hist").value="Renovação de certificado";$("pedido").value="";$("validade").value="";$("link").value="";editId=null;previa();aba("novo");toast("Dados copiados para a renovação")}
 function excluir(id){if(confirm("Excluir este registro?")){dados=dados.filter(function(d){return d.id!==id});gravar();render()}}
 function mudarStatus(id,s){var d=dados.find(function(x){return x.id===id});if(!d)return;if(s==="Validado"&&!d.validadoEm){abrirValidar(id);render();return}d.status=s;gravar();render()}
 function buscarCliente(){
@@ -526,15 +526,15 @@ $("dlg").addEventListener("close",function(){if($("dlg").returnValue!=="ok"||!dl
 /* ---------- WhatsApp ---------- */
 function waLink(d,msg){var t=dig(d.tel);if(t.length<10){toast("Cadastre o telefone do cliente.");return}if(t.length<=11)t="55"+t;window.open("https://wa.me/"+t+"?text="+encodeURIComponent(msg),"_blank","noopener")}
 function primeiro(d){return bonito((d.nome||"").split(" ")[0])}
-var cfg={endereco:"",link:""};
+var cfg={endereco:""};
 function dh(d){var p=(d.agenda||"").split("T");return{dd:p[0]?p[0].split("-").reverse().slice(0,2).join("/"):"",hh:p[1]?p[1].slice(0,5):""}}
 function msgAg(d){var x=dh(d),q=dd_hh(x),mod=d.modelo?" ("+d.modelo+")":"",fim=" Qualquer dúvida, é só chamar.";
-  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento por *videoconferência* para validação do certificado digital"+mod+q+". "+(cfg.link?"\nLink de acesso: "+cfg.link+"\n":"Enviarei o link de acesso antes do horário. ")+"Tenha em mãos o documento oficial com foto (original) e uma boa conexão de internet."+fim;
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento por *videoconferência* para validação do certificado digital"+mod+q+". "+(d.link?"\nLink de acesso: "+d.link+"\n":"Enviarei o link de acesso antes do horário. ")+"Tenha em mãos o documento oficial com foto (original) e uma boa conexão de internet."+fim;
   if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento *presencial* para validação do certificado digital"+mod+q+". "+(cfg.endereco?"Endereço: "+cfg.endereco+". ":"")+"Leve o documento oficial com foto (original)."+fim;
   return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento para validação do certificado digital"+mod+q+". Por favor, leve um documento oficial com foto (original)."+fim}
 function dd_hh(x){return (x.dd?" no dia "+x.dd:"")+(x.hh?" às "+x.hh:"")}
 function msgLembrete(d){var x=dh(d),h=x.hh?" às "+x.hh:"";
-  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Falta pouco: sua validação por *videoconferência* começa"+h+" (em 10 minutos). "+(cfg.link?"\nEntre por aqui: "+cfg.link+"\n":"Já estou enviando o link de acesso. ")+"Deixe o documento oficial com foto (original) em mãos."
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Falta pouco: sua validação por *videoconferência* começa"+h+" (em 10 minutos). "+(d.link?"\nEntre por aqui: "+d.link+"\n":"Já estou enviando o link de acesso. ")+"Deixe o documento oficial com foto (original) em mãos."
   if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Sua validação *presencial* é"+h+" (daqui a 10 minutos). Estamos te aguardando"+(cfg.endereco?" em "+cfg.endereco:"")+". Não esqueça o documento oficial com foto (original)."
   return "Olá, "+primeiro(d)+"! Lembrando que sua validação do certificado digital começa"+h+" (em 10 minutos). Estamos te aguardando."}
 function msgRen(d){var v=vence(d);return "Olá, "+primeiro(d)+"! Tudo bem? Seu certificado digital"+(d.modelo?" ("+d.modelo+")":"")+" vence em "+fmtData(v)+". Podemos agendar a renovação?"}
@@ -659,14 +659,13 @@ setInterval(checarLembretes,20000);
 /* ---------- configurações das mensagens ---------- */
 async function carregarCfg(){
   try{var r=await sb.from("configuracoes").select("chave,valor");
-    (r.data||[]).forEach(function(x){if(x.chave==="endereco"||x.chave==="link")cfg[x.chave]=x.valor||""})}catch(e){}
-  $("cfgEnd").value=cfg.endereco;$("cfgLink").value=cfg.link}
+    (r.data||[]).forEach(function(x){if(x.chave==="endereco")cfg.endereco=x.valor||""})}catch(e){}
+  $("cfgEnd").value=cfg.endereco}
 async function salvarCfg(){
-  var e=$("cfgEnd").value.trim(),l=$("cfgLink").value.trim();
-  if(l&&!/^https?:\/\//i.test(l)){toast("O link precisa começar com https://");return}
-  var r=await sb.from("configuracoes").upsert([{chave:"endereco",valor:e,atualizado:new Date().toISOString()},{chave:"link",valor:l,atualizado:new Date().toISOString()}]);
+  var e=$("cfgEnd").value.trim();
+  var r=await sb.from("configuracoes").upsert([{chave:"endereco",valor:e,atualizado:new Date().toISOString()}]);
   if(r.error){toast("Não foi possível salvar.");return}
-  cfg.endereco=e;cfg.link=l;toast("Mensagens atualizadas ✓")}
+  cfg.endereco=e;toast("Endereço salvo ✓")}
 
 /* ---------- administrador: usuários ---------- */
 async function checarAdmin(){
