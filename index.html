@@ -26,6 +26,11 @@ html[data-modo="escuro"] .im-lua{display:none}html:not([data-modo="escuro"]) .im
 .urow .us{color:var(--mu);font-size:12px;font-weight:500;display:block}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--pr);margin-left:6px}
 #uOk{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--soft);font-size:14px;white-space:pre-line}
+#lemb{max-width:1160px;margin:0 auto;padding:0 20px}
+#lemb:empty{display:none}
+.lm{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px;padding:10px 14px;border-radius:14px;background:var(--soft);border:1px solid color-mix(in srgb,var(--pr) 35%,var(--ln));font-size:14px}
+.lm b{font-weight:800}.lm .tx{flex:1;min-width:180px}
+@media(max-width:900px){#lemb{padding:0 14px}}
 #uMsg{min-height:20px;margin-top:10px;font-size:13px;color:#b42318}
 *{box-sizing:border-box}
 html{scroll-padding-top:90px}
@@ -226,7 +231,8 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <button class="btn sair" data-act="sair" type="button">Sair</button>
 <a class="btn p cta" href="#novo" data-p="novo"><svg class="ic"><use href="#i-plus"/></svg>Novo atendimento</a>
 </div>
-</div></header>
+</div>
+<div id="lemb" aria-live="polite"></div></header>
 
 <main class="site">
 
@@ -293,6 +299,7 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <div class="grid">
 <label>Data e hora<input id="agenda" type="datetime-local"></label>
 <label>Status<select id="status"><option>Agendado</option><option>Confirmado</option><option>Validado</option><option>Faltou</option><option>Cancelado</option></select></label>
+<label>Tipo de atendimento<select id="tipo"><option value="">—</option><option>Videoconferência</option><option>Presencial</option></select></label>
 <label>Modelo<select id="modelo"><option value="">—</option><option>e-CPF A1</option><option>e-CPF A3</option><option>e-CNPJ A1</option><option>e-CNPJ A3</option><option>Outro</option></select></label>
 <label>Validade do certificado<select id="validade"><option value="">Não informada</option><option value="1">1 ano</option><option value="2">2 anos</option><option value="3">3 anos</option><option value="5">5 anos</option></select></label>
 <label>Valor (R$)<input id="valor" inputmode="decimal" placeholder="0,00"></label>
@@ -320,6 +327,13 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <h2>Restaurar backup</h2>
 <div class="row" style="margin-top:0"><input id="imp" type="file" accept=".json,application/json" style="max-width:340px"><button class="btn" onclick="importar()">Restaurar</button></div>
 <p class="hint" style="margin-top:8px">Os registros do arquivo são somados aos que já existem.</p>
+<h2>Mensagens do WhatsApp</h2>
+<div class="row" style="margin-top:0"><input id="cfgEnd" placeholder="Endereço do escritório (para atendimentos presenciais)" style="max-width:520px"></div>
+<div class="row"><input id="cfgLink" placeholder="Link padrão da videoconferência (https://…)" style="max-width:520px"><button class="btn" type="button" onclick="salvarCfg()">Salvar</button></div>
+<p class="hint" style="margin-top:8px">O endereço entra na mensagem dos atendimentos presenciais, e o link entra na dos atendimentos por videoconferência. Vale para todos os usuários.</p>
+<h2>Avisos de 10 minutos</h2>
+<div class="row" style="margin-top:0"><button class="btn" data-act="notif" type="button">Ativar notificações</button><span class="hint" id="notifTxt"></span></div>
+<p class="hint" style="margin-top:8px">Com o site aberto, ele avisa quando faltarem 10 minutos para um atendimento e mostra o botão para enviar o lembrete no WhatsApp. O envio é seu: o WhatsApp abre com a mensagem pronta e você toca em enviar.</p>
 <h2>Leitura de documentos</h2>
 <p class="hint" style="margin-top:0">A leitura de fotos e PDFs usa o Gemini, configurado com segurança no servidor. Não é preciso cadastrar nenhuma chave aqui.</p>
 <h2>Conta</h2>
@@ -368,7 +382,7 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 
 <script>
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis="lista",renJan=60,dlgId=null;
-var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","status","pedido","resp","hist","cnh","rg","validade"];
+var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","status","pedido","resp","hist","cnh","rg","validade"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
 var PAGS=["inicio","agenda","renovacoes","novo","backup","usuarios"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
@@ -402,7 +416,7 @@ function mostrarLogin(){document.body.classList.add("nauth");nuvemOk=false;dados
 async function entrar(){
   try{await carregar()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível carregar seus dados. Verifique a internet e tente de novo.";return false}
   document.body.classList.remove("nauth");
-  await checarAdmin();rota();
+  await checarAdmin();await carregarCfg();rota();atualizaNotifTxt();
   var loc=lerCache();
   if(!dados.length&&loc.length&&confirm("Encontrei "+loc.length+" registro(s) salvos neste navegador. Enviar para a nuvem agora?")){dados=loc;gravar()}
   render();previa();return true}
@@ -486,7 +500,7 @@ function salvar(){
   var o=ler();
   if(!o.nome){toast("Informe o nome.");$("nome").focus();return}
   var i=editId?dados.findIndex(function(d){return d.id===editId}):-1;
-  if(i>-1){o.id=editId;o.criado=dados[i].criado;o.validadoEm=dados[i].validadoEm;dados[i]=o}
+  if(i>-1){o.id=editId;o.criado=dados[i].criado;o.validadoEm=dados[i].validadoEm;o.lembrete=dados[i].agenda===o.agenda?dados[i].lembrete:"";dados[i]=o}
   else{o.id=String(Date.now());o.criado=new Date().toISOString();dados.unshift(o)}
   if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());
   gravar();limpar();render();toast("Salvo ✓");aba("agenda");
@@ -512,8 +526,17 @@ $("dlg").addEventListener("close",function(){if($("dlg").returnValue!=="ok"||!dl
 /* ---------- WhatsApp ---------- */
 function waLink(d,msg){var t=dig(d.tel);if(t.length<10){toast("Cadastre o telefone do cliente.");return}if(t.length<=11)t="55"+t;window.open("https://wa.me/"+t+"?text="+encodeURIComponent(msg),"_blank","noopener")}
 function primeiro(d){return bonito((d.nome||"").split(" ")[0])}
-function msgAg(d){var p=(d.agenda||"").split("T"),dd=p[0]?p[0].split("-").reverse().slice(0,2).join("/"):"",hh=p[1]?p[1].slice(0,5):"";
-  return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento para validação do certificado digital"+(d.modelo?" ("+d.modelo+")":"")+(dd?" no dia "+dd:"")+(hh?" às "+hh:"")+". Por favor, leve um documento oficial com foto (original). Qualquer dúvida, é só chamar."}
+var cfg={endereco:"",link:""};
+function dh(d){var p=(d.agenda||"").split("T");return{dd:p[0]?p[0].split("-").reverse().slice(0,2).join("/"):"",hh:p[1]?p[1].slice(0,5):""}}
+function msgAg(d){var x=dh(d),q=dd_hh(x),mod=d.modelo?" ("+d.modelo+")":"",fim=" Qualquer dúvida, é só chamar.";
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento por *videoconferência* para validação do certificado digital"+mod+q+". "+(cfg.link?"\nLink de acesso: "+cfg.link+"\n":"Enviarei o link de acesso antes do horário. ")+"Tenha em mãos o documento oficial com foto (original) e uma boa conexão de internet."+fim;
+  if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento *presencial* para validação do certificado digital"+mod+q+". "+(cfg.endereco?"Endereço: "+cfg.endereco+". ":"")+"Leve o documento oficial com foto (original)."+fim;
+  return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento para validação do certificado digital"+mod+q+". Por favor, leve um documento oficial com foto (original)."+fim}
+function dd_hh(x){return (x.dd?" no dia "+x.dd:"")+(x.hh?" às "+x.hh:"")}
+function msgLembrete(d){var x=dh(d),h=x.hh?" às "+x.hh:"";
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Falta pouco: sua validação por *videoconferência* começa"+h+" (em 10 minutos). "+(cfg.link?"\nEntre por aqui: "+cfg.link+"\n":"Já estou enviando o link de acesso. ")+"Deixe o documento oficial com foto (original) em mãos."
+  if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Sua validação *presencial* é"+h+" (daqui a 10 minutos). Estamos te aguardando"+(cfg.endereco?" em "+cfg.endereco:"")+". Não esqueça o documento oficial com foto (original)."
+  return "Olá, "+primeiro(d)+"! Lembrando que sua validação do certificado digital começa"+h+" (em 10 minutos). Estamos te aguardando."}
 function msgRen(d){var v=vence(d);return "Olá, "+primeiro(d)+"! Tudo bem? Seu certificado digital"+(d.modelo?" ("+d.modelo+")":"")+" vence em "+fmtData(v)+". Podemos agendar a renovação?"}
 
 /* ---------- cartões ---------- */
@@ -522,10 +545,10 @@ function qa(a,t,id,x){return '<button class="qa'+(x||"")+'" data-act="'+a+'" dat
 function card(d){
   var hora=(d.agenda||"").slice(11,16);
   var ch=[["CPF",d.cpf],["CNPJ",d.cnpj],["Nasc.",d.nasc],["RG",d.rg],["CNH",d.cnh],["E-mail",d.email],["Tel.",d.tel],["Contab.",d.contab],["Pedido",d.pedido],["Resp.",d.resp]].filter(function(c){return c[1]}).map(function(c){return '<button class="chip" data-act="copy" data-v="'+esc(c[1])+'"><i>'+c[0]+'</i>'+esc(c[1])+'</button>'}).join("");
-  var sub=[d.modelo,d.valor?"R$ "+d.valor:""].filter(Boolean).join(" · ");
+  var sub=[d.tipo,d.modelo,d.valor?"R$ "+d.valor:""].filter(Boolean).join(" · ");
   var opts=ORD.map(function(s){return '<option'+(s===d.status?' selected':'')+'>'+s+'</option>'}).join("");
   var q="";if(d.status==="Agendado")q+=qa("conf","Confirmar",d.id);if(d.status==="Agendado"||d.status==="Confirmado")q+=qa("val","Validar",d.id," p");
-  return '<article class="it '+(ST[d.status]||"")+'"><div class="tm">'+(hora||"—")+'</div><div class="bd"><div class="hd"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome)||"Sem nome")+'</strong>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</div><select class="pill" data-id="'+d.id+'" aria-label="Status">'+opts+'</select></div>'+(ch?'<div class="chips">'+ch+'</div>':'')+'<div class="acts">'+q+ib("wa","chat","Mensagem no WhatsApp",d.id)+ib("tit","copy","Copiar título",d.id)+ib("desc","copy","Copiar descrição",d.id)+ib("edit","edit","Editar",d.id)+ib("del","trash","Excluir",d.id," del")+'</div></div></article>'}
+  return '<article class="it '+(ST[d.status]||"")+'"><div class="tm">'+(hora||"—")+'</div><div class="bd"><div class="hd"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome)||"Sem nome")+'</strong>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</div><select class="pill" data-id="'+d.id+'" aria-label="Status">'+opts+'</select></div>'+(ch?'<div class="chips">'+ch+'</div>':'')+'<div class="acts">'+q+ib("wa","chat","Confirmação no WhatsApp",d.id)+ib("wal","clock","Lembrete de 10 minutos no WhatsApp",d.id)+ib("tit","copy","Copiar título",d.id)+ib("desc","copy","Copiar descrição",d.id)+ib("edit","edit","Editar",d.id)+ib("del","trash","Excluir",d.id," del")+'</div></div></article>'}
 function renItem(d){var v=vence(d),dias=diasAte(v),cor=dias<=30?"var(--s-fa)":dias<=60?"var(--s-co)":"var(--mu)";
   var txt=dias<0?"vencido há "+(-dias)+(dias===-1?" dia":" dias"):dias===0?"vence hoje":"vence em "+dias+(dias===1?" dia":" dias");
   return '<article class="rn"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong><small>'+esc([d.modelo,fmtData(v)].filter(Boolean).join(" · "))+'</small></div><span class="bdg" style="--c:'+cor+'">'+txt+'</span><div class="acts">'+ib("war","chat","Avisar no WhatsApp",d.id)+ib("ren","refresh","Renovar",d.id)+'</div></article>'}
@@ -560,6 +583,7 @@ function render(){
       lista.forEach(function(d){var k=(d.agenda||"").slice(0,10);if(k!==ult){ult=k;html.push('<h3 class="dia">'+esc(diaLabel(k))+'<span>'+cont[k]+(cont[k]===1?' atendimento':' atendimentos')+'</span></h3>')}html.push(card(d))});
       $("lista").innerHTML=html.join("")}
   }else renderSemana(lista);
+  checarLembretes();
 }
 function inicioSemana(off){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+off*7);return d}
 function renderSemana(lista){
@@ -597,6 +621,10 @@ document.addEventListener("click",function(e){
   else if(a==="vis")setVis(b.dataset.v);
   else if(a==="rjan"){renJan=+b.dataset.v;[].forEach.call($("segRen").children,function(x){x.classList.toggle("on",x===b)});render()}
   else if(a==="sair")sair();
+  else if(a==="wal"&&d){waLink(d,msgLembrete(d))}
+  else if(a==="lem"&&d){waLink(d,msgLembrete(d));d.lembrete="1";gravar();checarLembretes()}
+  else if(a==="lemx"){dispensados[id]=1;checarLembretes()}
+  else if(a==="notif")ativarNotif();
   else if(a==="modo")modo();
   else if(a==="uSenha")trocarSenhaUsuario(id);
   else if(a==="uDel")removerUsuario(id,b.dataset.e);
@@ -608,6 +636,37 @@ $("form").addEventListener("input",previa);
 $("paste").addEventListener("paste",function(){setTimeout(preencher,0)});
 document.addEventListener("keydown",function(e){if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&$("v-novo").classList.contains("on")){e.preventDefault();salvar()}});
 
+
+
+/* ---------- lembrete de 10 minutos ---------- */
+var dispensados={},avisados={};
+function minutosAte(d){if(!d.agenda||d.agenda.length<16)return null;var t=new Date(d.agenda);if(isNaN(t))return null;return (t-new Date())/60000}
+function checarLembretes(){
+  var el=$("lemb");if(!el)return;
+  if(document.body.classList.contains("nauth")){el.innerHTML="";return}
+  var it=dados.filter(function(d){if(d.lembrete==="1"||dispensados[d.id])return false;if(d.status!=="Agendado"&&d.status!=="Confirmado")return false;var m=minutosAte(d);return m!==null&&m>-5&&m<=10}).sort(function(a,b){return a.agenda.localeCompare(b.agenda)});
+  el.innerHTML=it.map(function(d){var m=Math.max(0,Math.ceil(minutosAte(d)));
+    return '<div class="lm"><span class="tx">⏰ <b>'+(m>0?"Faltam "+m+" min":"Está na hora")+'</b> · '+esc((d.agenda||"").slice(11,16))+' · '+esc(bonito(d.nome))+(d.tipo?' · '+esc(d.tipo):'')+'</span><button class="btn p" data-act="lem" data-id="'+esc(d.id)+'" type="button">Enviar lembrete</button><button class="btn" data-act="lemx" data-id="'+esc(d.id)+'" type="button">Dispensar</button></div>'}).join("");
+  document.title=(it.length?"⏰ ("+it.length+") ":"")+"Agendamentos – Certificado Digital";
+  it.forEach(function(d){if(avisados[d.id])return;avisados[d.id]=1;
+    try{if("Notification" in window&&Notification.permission==="granted")new Notification("Lembrete de atendimento",{body:(d.agenda||"").slice(11,16)+" · "+bonito(d.nome)+(d.tipo?" · "+d.tipo:"")})}catch(e){}})}
+function ativarNotif(){
+  if(!("Notification" in window)){toast("Este navegador não suporta notificações.");return}
+  Notification.requestPermission().then(function(r){atualizaNotifTxt();toast(r==="granted"?"Notificações ativadas ✓":"Notificações não liberadas.")})}
+function atualizaNotifTxt(){var e=$("notifTxt");if(!e)return;e.textContent=!("Notification" in window)?"Seu navegador não suporta notificações.":Notification.permission==="granted"?"Notificações ativadas neste aparelho.":Notification.permission==="denied"?"Bloqueadas no navegador. Libere nas configurações do site.":"Ainda não ativadas neste aparelho."}
+setInterval(checarLembretes,20000);
+
+/* ---------- configurações das mensagens ---------- */
+async function carregarCfg(){
+  try{var r=await sb.from("configuracoes").select("chave,valor");
+    (r.data||[]).forEach(function(x){if(x.chave==="endereco"||x.chave==="link")cfg[x.chave]=x.valor||""})}catch(e){}
+  $("cfgEnd").value=cfg.endereco;$("cfgLink").value=cfg.link}
+async function salvarCfg(){
+  var e=$("cfgEnd").value.trim(),l=$("cfgLink").value.trim();
+  if(l&&!/^https?:\/\//i.test(l)){toast("O link precisa começar com https://");return}
+  var r=await sb.from("configuracoes").upsert([{chave:"endereco",valor:e,atualizado:new Date().toISOString()},{chave:"link",valor:l,atualizado:new Date().toISOString()}]);
+  if(r.error){toast("Não foi possível salvar.");return}
+  cfg.endereco=e;cfg.link=l;toast("Mensagens atualizadas ✓")}
 
 /* ---------- administrador: usuários ---------- */
 async function checarAdmin(){
@@ -647,7 +706,7 @@ async function removerUsuario(id,email){
 /* ---------- arquivos, backup e planilha ---------- */
 function salvarArq(nome,txt){var b=new Blob([txt],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},3000);toast("Arquivo salvo ✓")}
 function exportar(){
-  var cols=[["Nome","nome"],["CPF","cpf"],["CNPJ","cnpj"],["Nascimento","nasc"],["Valor","valor"],["E-mail","email"],["Telefone","tel"],["Modelo","modelo"],["Contabilidade","contab"],["Agendamento","agenda"],["Status","status"],["Pedido","pedido"],["Responsável","resp"],["Histórico","hist"],["Registro CNH","cnh"],["RG","rg"],["Validade (anos)","validade"],["Validado em","validadoEm"]];
+  var cols=[["Nome","nome"],["CPF","cpf"],["CNPJ","cnpj"],["Nascimento","nasc"],["Valor","valor"],["E-mail","email"],["Telefone","tel"],["Modelo","modelo"],["Contabilidade","contab"],["Agendamento","agenda"],["Tipo","tipo"],["Status","status"],["Pedido","pedido"],["Responsável","resp"],["Histórico","hist"],["Registro CNH","cnh"],["RG","rg"],["Validade (anos)","validade"],["Validado em","validadoEm"]];
   if(!dados.length){toast("Nada para exportar ainda.");return}
   var linhas=[cols.map(function(c){return c[0]})].concat(dados.map(function(d){return cols.map(function(c){return d[c[1]]||""})}));
   salvarArq("agendamentos.csv","﻿"+linhas.map(function(l){return l.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(";")}).join("\n"))}
