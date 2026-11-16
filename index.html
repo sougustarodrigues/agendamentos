@@ -321,8 +321,7 @@ body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none
 <div class="row" style="margin-top:0"><input id="imp" type="file" accept=".json,application/json" style="max-width:340px"><button class="btn" onclick="importar()">Restaurar</button></div>
 <p class="hint" style="margin-top:8px">Os registros do arquivo são somados aos que já existem.</p>
 <h2>Leitura de documentos</h2>
-<div class="row" style="margin-top:0"><input id="chave" type="password" placeholder="Cole aqui a chave da API da Anthropic" autocomplete="off" style="max-width:420px"><button class="btn" onclick="salvarChave()">Salvar chave</button></div>
-<p class="hint" style="margin-top:8px">Necessária só para ler fotos e PDFs. É uma chave de API própria (console.anthropic.com), cobrada por uso, e fica guardada apenas neste navegador. Use só em computador seu. Para remover, salve o campo vazio.</p>
+<p class="hint" style="margin-top:0">A leitura de fotos e PDFs usa o Gemini, configurado com segurança no servidor. Não é preciso cadastrar nenhuma chave aqui.</p>
 <h2>Conta</h2>
 <div class="row" style="margin-top:0"><button class="btn" data-act="sair" type="button">Sair da conta</button><a class="btn" id="bUsu" href="#usuarios" hidden>Gerenciar usuários</a></div>
 <h2>Apagar dados</h2>
@@ -656,7 +655,6 @@ function backupJson(){if(!dados.length){toast("Nada para salvar ainda.");return}
 function importar(){var f=$("imp").files[0];if(!f){toast("Escolha o arquivo de backup.");return}
   var r=new FileReader();r.onload=function(){try{var a=JSON.parse(r.result);if(!Array.isArray(a))throw 0;var ids={};dados.forEach(function(d){ids[d.id]=1});var n=0;a.forEach(function(d){if(d&&d.id&&!ids[d.id]){dados.push(d);n++}});gravar();render();toast(n+" registro(s) restaurado(s)")}catch(e){toast("Arquivo de backup inválido.")}};r.readAsText(f)}
 function apagarTudo(){if(confirm("Apagar TODOS os registros da nuvem? Isso não pode ser desfeito.")){dados=[];gravar();render();toast("Registros apagados")}}
-function salvarChave(){var v=$("chave").value.trim();try{if(!v){localStorage.removeItem("agend_api_key");toast("Chave removida");return}localStorage.setItem("agend_api_key",v);$("chave").value="";toast("Chave salva ✓")}catch(e){toast("Não foi possível salvar a chave.")}}
 
 /* ---------- leitura de documentos ---------- */
 var dz=$("drop");
@@ -673,17 +671,15 @@ async function pdfParaImagens(f){
   return out}
 async function reduzir(f){try{var bm=await createImageBitmap(f),s=Math.min(1,1800/Math.max(bm.width,bm.height)),c=document.createElement("canvas");c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);c.getContext("2d").drawImage(bm,0,0,c.width,c.height);return await new Promise(function(r){c.toBlob(r,"image/jpeg",0.88)})}catch(e){return f}}
 function b64(b){return new Promise(function(ok){var r=new FileReader();r.onload=function(){ok(r.result.split(",")[1])};r.readAsDataURL(b)})}
-async function lerApi(p,imgs,chave){
-  var c=[];for(var i=0;i<imgs.length;i++){c.push({type:"image",source:{type:"base64",media_type:imgs[i].type||"image/jpeg",data:await b64(imgs[i])}})}
-  c.push({type:"text",text:p});
-  var r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":chave,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-5-5",max_tokens:1000,messages:[{role:"user",content:c}]})});
-  var j=await r.json();if(!r.ok){if(r.status===401)throw new Error("chave inválida");throw new Error((j.error&&j.error.message)||"erro na API")}
-  return j.content.map(function(x){return x.text||""}).join("")}
+async function lerApi(p,imgs){
+  var im=[];for(var i=0;i<imgs.length;i++){im.push({mime:imgs[i].type||"image/jpeg",data:await b64(imgs[i])})}
+  var r=await sb.functions.invoke("ler-documentos",{body:{imagens:im,prompt:p}}),msg="erro na leitura";
+  if(r.error){try{var j=await r.error.context.json();if(j&&j.erro)msg=j.erro}catch(e){}throw new Error(msg)}
+  if(r.data&&r.data.erro)throw new Error(r.data.erro);
+  return (r.data&&r.data.texto)||""}
 async function lerDocs(){
   var fs=$("arqs").files,st=$("st"),btn=$("btnLer");
   if(!fs.length){st.textContent="Escolha ao menos um arquivo.";return}
-  var chave="";try{chave=localStorage.getItem("agend_api_key")||""}catch(e){}
-  if(!chave){st.innerHTML='Para ler documentos, cadastre a chave em <a href="#backup">Backup</a>.';return}
   btn.disabled=true;st.textContent="Lendo…";
   try{
     var imgs=[];
@@ -691,7 +687,7 @@ async function lerDocs(){
       if(f.type==="application/pdf"||/\.pdf$/i.test(f.name))imgs=imgs.concat(await pdfParaImagens(f));else imgs.push(await reduzir(f))}
     imgs=imgs.slice(0,6);
     var p="Extraia os dados cadastrais destes documentos (RG, CNH, CPF, cartão CNPJ, contrato social, comprovantes etc.). Responda SOMENTE com um JSON: {\"nome\":\"se houver cartão CNPJ, a razão social da empresa; caso contrário, o nome completo da pessoa\",\"resp\":\"nome completo da pessoa que consta no RG ou na CNH anexado (preencha sempre que houver RG ou CNH); sem esses documentos, o sócio ou representante, se constar\",\"cpf\":\"\",\"cnpj\":\"\",\"nasc\":\"dd/mm/aaaa\",\"email\":\"\",\"tel\":\"\",\"contab\":\"\",\"rg\":\"número do RG, SOMENTE se o documento for uma carteira de identidade (RG); se for CNH, deixe vazio\",\"cnh\":\"número de registro da CNH, SOMENTE se o documento for uma CNH\"}. Use \"\" para o que não aparecer. Não invente nada.";
-    var txt=await lerApi(p,imgs,chave);
+    var txt=await lerApi(p,imgs);
     var m=txt.match(/\{[\s\S]*\}/),j=JSON.parse(m[0]);
     if(j.nome)$("nome").value=j.nome;
     if(j.cpf)$("cpf").value=fmtCPF(j.cpf);
