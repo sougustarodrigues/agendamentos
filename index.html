@@ -164,10 +164,24 @@ dialog::backdrop{background:rgba(15,23,42,.45)}
 .tabbar a.on{color:var(--pr)}
 .tabbar .fab .ic{width:44px;height:44px;padding:11px;border-radius:50%;background:var(--pr);color:var(--onpr);margin-top:-22px;box-shadow:0 6px 16px rgba(15,23,42,.25)}
 #toast{bottom:calc(86px + env(safe-area-inset-bottom,0px))}}
+
+#login{position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:20px;background:linear-gradient(135deg,var(--g1),var(--g2))}
+body.nauth #login{display:grid}
+body.nauth .top,body.nauth main,body.nauth .foot,body.nauth .tabbar{display:none!important}
+.lg{width:100%;max-width:400px;background:var(--sf);color:var(--tx);border-radius:24px;padding:32px 28px;box-shadow:0 24px 60px rgba(15,23,42,.3)}
+.lgi{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 14px;border-radius:16px;background:var(--pr);color:var(--onpr)}
+.lg h1{font-size:24px;font-weight:800;letter-spacing:-.02em;text-align:center}
+.lg .sub{text-align:center;margin:4px 0 18px;color:var(--mu);font-size:14px}
+.lg label{display:block;margin-top:12px;font-weight:600;font-size:13px}
+.lg input{width:100%;margin-top:6px}
+.lg .btn{width:100%;margin-top:18px;justify-content:center}
+#lgMsg{min-height:20px;margin-top:12px;font-size:13px;color:#b42318;text-align:center}
+.sair{font-size:13px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
-<body>
+<body class="nauth">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
 <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
@@ -184,11 +198,20 @@ dialog::backdrop{background:rgba(15,23,42,.45)}
 <symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></symbol>
 </defs></svg>
 
+<div id="login"><form class="lg" id="lgForm" autocomplete="on">
+<span class="lgi"><svg class="ic" style="width:30px;height:30px"><use href="#i-cal"/></svg></span>
+<h1>Agendamentos</h1><p class="sub">Entre para acessar seus atendimentos</p>
+<label>E-mail<input id="lgEmail" type="email" autocomplete="username" required></label>
+<label>Senha<input id="lgSenha" type="password" autocomplete="current-password" required></label>
+<button class="btn p" id="lgBtn" type="submit">Entrar</button>
+<p id="lgMsg" role="alert"></p>
+</form></div>
 <header class="top"><div class="bar">
 <a class="brand" href="#inicio"><span class="logo"><svg class="ic"><use href="#i-cal"/></svg></span><span class="bn">Agendamentos<small>Certificado digital</small></span></a>
 <nav class="menu"><a href="#inicio" data-p="inicio">Início</a><a href="#agenda" data-p="agenda">Agenda</a><a href="#renovacoes" data-p="renovacoes">Renovações</a><a href="#backup" data-p="backup">Backup</a></nav>
 <div class="tools">
 <div class="themes" role="group" aria-label="Cor do tema"><button class="dot dv" data-act="tema" data-t="verde" aria-label="Tema verde"></button><button class="dot da" data-act="tema" data-t="azul" aria-label="Tema azul"></button></div>
+<button class="btn sair" data-act="sair" type="button">Sair</button>
 <a class="btn p cta" href="#novo" data-p="novo"><svg class="ic"><use href="#i-plus"/></svg>Novo atendimento</a>
 </div>
 </div></header>
@@ -277,7 +300,7 @@ dialog::backdrop{background:rgba(15,23,42,.45)}
 </section>
 
 <section class="pg" id="v-backup">
-<div class="ph"><div><h1>Backup</h1><p class="sub">Seus dados ficam salvos só neste navegador. Guarde uma cópia para não perdê-los.</p></div></div>
+<div class="ph"><div><h1>Backup</h1><p class="sub">Seus dados ficam salvos na nuvem, protegidos pelo seu login. Ainda assim, guarde uma cópia de vez em quando.</p></div></div>
 <div class="sheet">
 <h2>Salvar cópia</h2>
 <div class="row" style="margin-top:0"><button class="btn p" onclick="backupJson()">Salvar backup completo</button><button class="btn" onclick="exportar()">Exportar planilha (CSV)</button></div>
@@ -288,6 +311,8 @@ dialog::backdrop{background:rgba(15,23,42,.45)}
 <h2>Leitura de documentos</h2>
 <div class="row" style="margin-top:0"><input id="chave" type="password" placeholder="Cole aqui a chave da API da Anthropic" autocomplete="off" style="max-width:420px"><button class="btn" onclick="salvarChave()">Salvar chave</button></div>
 <p class="hint" style="margin-top:8px">Necessária só para ler fotos e PDFs. É uma chave de API própria (console.anthropic.com), cobrada por uso, e fica guardada apenas neste navegador. Use só em computador seu. Para remover, salve o campo vazio.</p>
+<h2>Conta</h2>
+<div class="row" style="margin-top:0"><button class="btn" data-act="sair" type="button">Sair da conta</button></div>
 <h2>Apagar dados</h2>
 <div class="row" style="margin-top:0"><button class="btn" onclick="apagarTudo()">Apagar todos os registros</button></div>
 </div>
@@ -324,8 +349,45 @@ function dig(s){return (s||"").replace(/\D/g,"")}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function p2(n){return String(n).padStart(2,"0")}
 function iso(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
-function carregar(){try{dados=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){dados=[]}}
-function gravar(){try{localStorage.setItem(KEY,JSON.stringify(dados))}catch(e){toast("Não foi possível salvar neste navegador.")}}
+var SB_URL="https://fspzjedkntmrxmhwhhvh.supabase.co",SB_KEY="sb_publishable_M26mT9ipT6wUhX6rJOEeDg_EIa0gf9K";
+var sb=window.supabase?window.supabase.createClient(SB_URL,SB_KEY):null;
+var snap={},nuvemOk=false,sincFila=Promise.resolve();
+function lerCache(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return[]}}
+async function carregar(){
+  var r=await sb.from("registros").select("id,dados").order("atualizado",{ascending:true}).limit(5000);
+  if(r.error)throw r.error;
+  dados=r.data.map(function(x){return x.dados});snap={};
+  dados.forEach(function(d){snap[d.id]=JSON.stringify(d)});nuvemOk=true}
+function gravar(){
+  if(!nuvemOk){toast("Sem conexão com a nuvem. Recarregue a página.");return}
+  sincFila=sincFila.then(sincronizar).catch(function(){})}
+async function sincronizar(){
+  var ate=await sb.auth.getUser();if(!ate.data||!ate.data.user){toast("Sessão expirada. Entre de novo.");mostrarLogin();return}
+  var mudou=[],ids={};
+  dados.forEach(function(d){ids[d.id]=1;var j=JSON.stringify(d);if(snap[d.id]!==j)mudou.push({id:d.id,dados:d,atualizado:new Date().toISOString()})});
+  var sumiu=Object.keys(snap).filter(function(i){return !ids[i]});
+  if(mudou.length){var u=await sb.from("registros").upsert(mudou);if(u.error){toast("Não foi possível salvar na nuvem. Verifique a internet.");return}
+    mudou.forEach(function(m){snap[m.id]=JSON.stringify(m.dados)})}
+  if(sumiu.length){var x=await sb.from("registros").delete().in("id",sumiu);if(x.error){toast("Não foi possível apagar na nuvem.");return}
+    sumiu.forEach(function(i){delete snap[i]})}}
+function mostrarLogin(){document.body.classList.add("nauth");nuvemOk=false;dados=[]}
+async function entrar(){
+  try{await carregar()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível carregar seus dados. Verifique a internet e tente de novo.";return false}
+  document.body.classList.remove("nauth");
+  var loc=lerCache();
+  if(!dados.length&&loc.length&&confirm("Encontrei "+loc.length+" registro(s) salvos neste navegador. Enviar para a nuvem agora?")){dados=loc;gravar()}
+  render();previa();return true}
+async function iniciar(){
+  if(!sb){$("lgMsg").textContent="Não foi possível carregar o sistema de login. Recarregue a página.";return}
+  var s=await sb.auth.getSession();
+  if(s.data&&s.data.session)await entrar()}
+$("lgForm").addEventListener("submit",async function(e){
+  e.preventDefault();var b=$("lgBtn");b.disabled=true;$("lgMsg").textContent="";
+  var r=await sb.auth.signInWithPassword({email:$("lgEmail").value.trim(),password:$("lgSenha").value});
+  b.disabled=false;
+  if(r.error){$("lgMsg").textContent="E-mail ou senha incorretos.";return}
+  $("lgSenha").value="";await entrar()});
+async function sair(){await sb.auth.signOut();mostrarLogin();render()}
 
 /* ---------- formatação e leitura de texto ---------- */
 function fmtCPF(s){s=dig(s);return s.length===11?s.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,"$1.$2.$3-$4"):s}
@@ -503,6 +565,7 @@ document.addEventListener("click",function(e){
   else if(a==="sem"){var v=+b.dataset.d;semOff=v===0?0:semOff+v;render()}
   else if(a==="vis")setVis(b.dataset.v);
   else if(a==="rjan"){renJan=+b.dataset.v;[].forEach.call($("segRen").children,function(x){x.classList.toggle("on",x===b)});render()}
+  else if(a==="sair")sair();
   else if(a==="tema")tema(b.dataset.t)});
 document.addEventListener("change",function(e){var s=e.target.closest("select[data-id]");if(s)mudarStatus(s.dataset.id,s.value)});
 $("form").addEventListener("input",previa);
@@ -519,7 +582,7 @@ function exportar(){
 function backupJson(){if(!dados.length){toast("Nada para salvar ainda.");return}salvarArq("backup-agendamentos.json",JSON.stringify(dados))}
 function importar(){var f=$("imp").files[0];if(!f){toast("Escolha o arquivo de backup.");return}
   var r=new FileReader();r.onload=function(){try{var a=JSON.parse(r.result);if(!Array.isArray(a))throw 0;var ids={};dados.forEach(function(d){ids[d.id]=1});var n=0;a.forEach(function(d){if(d&&d.id&&!ids[d.id]){dados.push(d);n++}});gravar();render();toast(n+" registro(s) restaurado(s)")}catch(e){toast("Arquivo de backup inválido.")}};r.readAsText(f)}
-function apagarTudo(){if(confirm("Apagar todos os registros deste navegador? Isso não pode ser desfeito.")){dados=[];gravar();render();toast("Registros apagados")}}
+function apagarTudo(){if(confirm("Apagar TODOS os registros da nuvem? Isso não pode ser desfeito.")){dados=[];gravar();render();toast("Registros apagados")}}
 function salvarChave(){var v=$("chave").value.trim();try{if(!v){localStorage.removeItem("agend_api_key");toast("Chave removida");return}localStorage.setItem("agend_api_key",v);$("chave").value="";toast("Chave salva ✓")}catch(e){toast("Não foi possível salvar a chave.")}}
 
 /* ---------- leitura de documentos ---------- */
@@ -572,7 +635,7 @@ async function lerDocs(){
   }catch(e){st.textContent="Não consegui ler ("+((e&&e.message)||"erro")+"). Tente uma foto mais nítida."}
   btn.disabled=false}
 
-rota();carregar();render();previa();
+rota();previa();iniciar();
 </script>
 </body>
 </html>
