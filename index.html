@@ -529,12 +529,12 @@ function primeiro(d){return bonito((d.nome||"").split(" ")[0])}
 var cfg={endereco:""};
 function dh(d){var p=(d.agenda||"").split("T");return{dd:p[0]?p[0].split("-").reverse().slice(0,2).join("/"):"",hh:p[1]?p[1].slice(0,5):""}}
 function msgAg(d){var x=dh(d),q=dd_hh(x),mod=d.modelo?" ("+d.modelo+")":"",fim=" Qualquer dúvida, é só chamar.";
-  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento por *videoconferência* para validação do certificado digital"+mod+q+". "+(d.link?"\nLink de acesso: "+d.link+"\n":"Enviarei o link de acesso antes do horário. ")+"Tenha em mãos o documento oficial com foto (original) e uma boa conexão de internet."+fim;
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento por *videoconferência* para validação do certificado digital"+mod+q+". "+(d.link?"\nLink de acesso: "+d.link+"\n":"Enviarei o link de acesso antes do horário. ")+"Tenha uma boa conexão de internet."+fim;
   if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento *presencial* para validação do certificado digital"+mod+q+". "+(cfg.endereco?"Endereço: "+cfg.endereco+". ":"")+"Leve o documento oficial com foto (original)."+fim;
   return "Olá, "+primeiro(d)+"! Tudo bem? Confirmando seu atendimento para validação do certificado digital"+mod+q+". Por favor, leve um documento oficial com foto (original)."+fim}
 function dd_hh(x){return (x.dd?" no dia "+x.dd:"")+(x.hh?" às "+x.hh:"")}
 function msgLembrete(d){var x=dh(d),h=x.hh?" às "+x.hh:"";
-  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Falta pouco: sua validação por *videoconferência* começa"+h+" (em 10 minutos). "+(d.link?"\nEntre por aqui: "+d.link+"\n":"Já estou enviando o link de acesso. ")+"Deixe o documento oficial com foto (original) em mãos."
+  if(d.tipo==="Videoconferência")return "Olá, "+primeiro(d)+"! Falta pouco: sua validação por *videoconferência* começa"+h+" (em 10 minutos). "+(d.link?"\nEntre por aqui: "+d.link+"\n":"Já estou enviando o link de acesso.")
   if(d.tipo==="Presencial")return "Olá, "+primeiro(d)+"! Sua validação *presencial* é"+h+" (daqui a 10 minutos). Estamos te aguardando"+(cfg.endereco?" em "+cfg.endereco:"")+". Não esqueça o documento oficial com foto (original)."
   return "Olá, "+primeiro(d)+"! Lembrando que sua validação do certificado digital começa"+h+" (em 10 minutos). Estamos te aguardando."}
 function msgRen(d){var v=vence(d);return "Olá, "+primeiro(d)+"! Tudo bem? Seu certificado digital"+(d.modelo?" ("+d.modelo+")":"")+" vence em "+fmtData(v)+". Podemos agendar a renovação?"}
