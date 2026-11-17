@@ -238,6 +238,34 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 .chk{display:flex!important;align-items:center;gap:8px;font-size:13px;color:var(--tx)!important;font-weight:500!important}
 .chk input{width:auto;min-height:0}
 .ib.cnt{position:relative}
+.tb2{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px}
+.tb2 th{text-align:left;font-size:12px;color:var(--mu);font-weight:700;padding:8px 10px;border-bottom:1px solid var(--ln)}
+.tb2 td{padding:9px 10px;border-bottom:1px solid var(--ln);vertical-align:middle}
+.tb2 .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tb2 tfoot td{font-weight:800;border-bottom:0}
+.tbw{overflow-x:auto}
+.ctr{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--ln);flex-wrap:wrap}
+.ctr:first-of-type{border-top:0}
+.ctr .nm{min-width:200px}
+.ctr .acts{margin:0}
+#relPrint{display:none}
+@media print{
+  @page{margin:16mm}
+  html,body{background:#fff!important}
+  body>*:not(#relPrint){display:none!important}
+  #relPrint{display:block!important;color:#000;font-family:"Plus Jakarta Sans",Arial,sans-serif}
+  .rel .rh{display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:2px solid #c83000;margin-bottom:16px}
+  .rel img{height:52px;width:auto}
+  .rel h1{font-size:20px;margin:0 0 2px}
+  .rel p{margin:0;font-size:12.5px;color:#333}
+  .rel table{width:100%;border-collapse:collapse}
+  .rel th{font-size:11px;text-align:left;border-bottom:1.5px solid #000;padding:6px 6px;color:#000}
+  .rel td{font-size:12px;border-bottom:1px solid #ccc;padding:6px;color:#000}
+  .rel .v{text-align:right;white-space:nowrap}
+  .rel tr{break-inside:avoid}
+  .rel .rt{margin-top:14px;display:flex;justify-content:space-between;font-size:14px;font-weight:800;border-top:2px solid #000;padding-top:8px}
+  .rel .rf{margin-top:18px;font-size:11px;color:#555}
+}
 @media(max-width:900px){.dg{grid-template-columns:1fr}.kpis.k8{grid-template-columns:1fr 1fr}.hbr{grid-template-columns:minmax(80px,38%) 1fr auto}}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -304,8 +332,8 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 </section>
 
 <section class="pg" id="v-financeiro">
-<div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p></div>
-<div class="seg" id="segFin"><button data-act="finf" data-v="todos" class="on">Todos</button><button data-act="finf" data-v="receber">A receber</button><button data-act="finf" data-v="parcial">Parciais</button><button data-act="finf" data-v="atraso">Em atraso</button><button data-act="finf" data-v="pago">Pagos</button></div></div>
+<div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e fechamento mensal →</a></div>
+<div class="seg" id="segFin"><button data-act="finf" data-v="todos" class="on">Todos</button><button data-act="finf" data-v="contab">Contabilidades</button><button data-act="finf" data-v="receber">A receber</button><button data-act="finf" data-v="parcial">Parciais</button><button data-act="finf" data-v="atraso">Em atraso</button><button data-act="finf" data-v="pago">Pagos</button></div></div>
 <div class="kpis" id="finKpis"></div>
 <div class="sheet"><div id="finLista"></div></div>
 </section>
@@ -355,7 +383,9 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 <div class="grid">
 <label>E-mail<input id="email" type="email"></label>
 <label>Telefone<input id="tel" inputmode="tel" placeholder="(00) 00000-0000"></label>
-<label>Contabilidade<input id="contab"></label>
+<label>Contabilidade<input id="contab" list="dlContab" autocomplete="off"></label>
+<label>Quem paga<select id="pagador"><option value="">Cliente</option><option value="contabilidade">Contabilidade</option></select></label>
+<datalist id="dlContab"></datalist>
 </div>
 
 <h2>Atendimento</h2>
@@ -424,6 +454,19 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 </div>
 </section>
 
+<section class="pg" id="v-contabs">
+<div class="ph"><div><h1>Contabilidades</h1><p class="sub">Cadastre as contabilidades parceiras, feche o mês e envie a relação dos certificados em PDF.</p></div></div>
+<div class="sheet"><h2 id="ctTit">Nova contabilidade</h2>
+<div class="grid"><label>Nome<input id="ctNome" maxlength="160"></label><label>CNPJ<input id="ctCnpj" inputmode="numeric" placeholder="00.000.000/0000-00"></label><label>E-mail<input id="ctEmail" type="email"></label><label>Telefone<input id="ctTel" inputmode="tel" placeholder="(00) 00000-0000"></label></div>
+<label class="chk" style="margin-top:12px"><input type="checkbox" id="ctPadrao" checked>Normalmente a contabilidade paga os certificados dos clientes dela</label>
+<div class="row"><button class="btn p" data-act="ctSalvar" type="button">Salvar contabilidade</button><button class="btn" data-act="ctCancel" type="button">Limpar</button></div>
+<h2>Contabilidades parceiras</h2><div id="ctLista"></div></div>
+<div class="sheet" style="margin-top:16px" id="fechamento"><h2>Fechamento mensal</h2>
+<div class="grid"><label>Contabilidade<select id="fechCt"></select></label><label>Mês<input id="fechMes" type="month"></label></div>
+<div class="row"><button class="btn p" data-act="fechGerar" type="button">Gerar fechamento</button></div>
+<div id="fechRes"></div></div>
+</section>
+
 </main>
 <footer class="foot">Agendamentos de validação de certificado digital · uso interno</footer>
 
@@ -437,6 +480,7 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 </form></dialog>
 
 <dialog id="dlgP"><div class="dl"><h3>Registrar pagamento</h3><p class="sub" id="pgNome"></p>
+<p class="hint" id="pgNota" hidden></p>
 <label>Situação<select id="pgStatus" onchange="pgCampos()"><option value="pago">Pago</option><option value="parcial">Parcial</option><option value="receber">A receber</option></select></label>
 <label id="pgValorL">Valor recebido (R$)<input id="pgValor" inputmode="decimal" placeholder="0,00"></label>
 <label id="pgFormaL">Forma de pagamento<select id="pgForma"><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option><option>Transferência</option></select></label>
@@ -458,13 +502,23 @@ dialog.wide{width:min(640px,94vw);max-height:90vh;overflow:auto}
 <p class="hint" id="dMsg" role="status"></p>
 </div></dialog>
 
+<dialog id="dlgF"><div class="dl"><h3>Pagamento do fechamento</h3><p class="sub" id="fpInfo"></p>
+<label>Forma de pagamento<select id="fpForma"><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option><option>Transferência</option></select></label>
+<label>Data do pagamento<input id="fpData" type="date"></label>
+<label>Observação (opcional)<input id="fpObs" maxlength="200"></label>
+<p class="hint">Todos os certificados ainda não pagos deste fechamento serão marcados como pagos.</p>
+<div class="row" style="margin:0"><button class="btn" type="button" data-act="fpFechar">Cancelar</button><button class="btn p" type="button" data-act="fpSalvar">Registrar pagamento</button></div>
+</div></dialog>
+
+<div id="relPrint" aria-hidden="true"></div>
+
 <div id="toast" role="status"></div>
 
 <script>
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis="lista",renJan=60,dlgId=null;
-var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade"];
+var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade","pagador"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
-var PAGS=["inicio","agenda","renovacoes","financeiro","novo","backup","usuarios"],ehAdmin=false;
+var PAGS=["inicio","agenda","renovacoes","financeiro","contabs","novo","backup","usuarios"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
 function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
 function dig(s){return (s||"").replace(/\D/g,"")}
@@ -498,7 +552,7 @@ async function entrar(){
   if(!papel){await sb.auth.signOut();document.body.classList.add("nauth");$("lgMsg").textContent="Seu usuário ainda não tem nível de acesso. Fale com o administrador.";return false}
   try{await carregar();await carregarPgtos()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível carregar seus dados. Verifique a internet e tente de novo.";return false}
   document.body.classList.remove("nauth");
-  montarMenu();await carregarCfg();rota();atualizaNotifTxt();
+  montarMenu();await carregarCfg();await carregarContabs();rota();atualizaNotifTxt();
   var loc=lerCache();
   if(pode("editar")&&!dados.length&&loc.length&&confirm("Encontrei "+loc.length+" registro(s) salvos neste navegador. Enviar para a nuvem agora?")){dados=loc;gravar()}
   render();previa();return true}
@@ -600,7 +654,7 @@ function buscarCliente(){
   var c=dig($("cpf").value),j=dig($("cnpj").value);if(!c&&!j)return;
   var d=dados.find(function(x){return x.id!==editId&&((c&&dig(x.cpf)===c)||(j&&dig(x.cnpj)===j))});
   if(!d)return;var n=0;
-  ["nome","cpf","cnpj","nasc","email","tel","contab","resp","rg","cnh","modelo"].forEach(function(k){if(!$(k).value&&d[k]){$(k).value=d[k];n++}});
+  ["nome","cpf","cnpj","nasc","email","tel","contab","pagador","resp","rg","cnh","modelo"].forEach(function(k){if(!$(k).value&&d[k]){$(k).value=d[k];n++}});
   if(n){toast("Cliente já cadastrado: dados preenchidos");previa()}
 }
 
@@ -630,7 +684,7 @@ function qa(a,t,id,x){return '<button class="qa'+(x||"")+'" data-act="'+a+'" dat
 function card(d){
   var hora=(d.agenda||"").slice(11,16),ed=pode("editar");
   var ch=[["CPF",d.cpf],["CNPJ",d.cnpj],["Nasc.",d.nasc],["RG",d.rg],["CNH",d.cnh],["E-mail",d.email],["Tel.",d.tel],["Contab.",d.contab],["Pedido",d.pedido],["Resp.",d.resp]].filter(function(c){return c[1]}).map(function(c){return '<button class="chip" data-act="copy" data-v="'+esc(c[1])+'"><i>'+c[0]+'</i>'+esc(c[1])+'</button>'}).join("");
-  var sub=[d.tipo,d.modelo,d.valor?"R$ "+d.valor:""].filter(Boolean).join(" · ");
+  var sub=[d.tipo,d.modelo,d.valor?"R$ "+d.valor:"",d.pagador==="contabilidade"?"paga pela contabilidade":""].filter(Boolean).join(" · ");
   var opts=ORD.map(function(s){return '<option'+(s===d.status?' selected':'')+'>'+s+'</option>'}).join("");
   var q="";if(ed){if(d.status==="Agendado")q+=qa("conf","Confirmar",d.id);if(d.status==="Agendado"||d.status==="Confirmado")q+=qa("val","Validar",d.id," p")}
   var pill=ed?'<select class="pill" data-id="'+d.id+'" aria-label="Status">'+opts+'</select>':'<span class="pill" style="cursor:default">'+esc(d.status)+'</span>';
@@ -670,7 +724,7 @@ function render(){
       lista.forEach(function(d){var k=(d.agenda||"").slice(0,10);if(k!==ult){ult=k;html.push('<h3 class="dia">'+esc(diaLabel(k))+'<span>'+cont[k]+(cont[k]===1?' atendimento':' atendimentos')+'</span></h3>')}html.push(card(d))});
       $("lista").innerHTML=html.join("")}
   }else renderSemana(lista);
-  if(papel){renderDash();renderFin()}
+  if(papel){renderDash();renderFin();renderContabs()}
   checarLembretes();
 }
 function inicioSemana(off){var d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+off*7);return d}
@@ -730,7 +784,18 @@ document.addEventListener("click",function(e){
   else if(a==="axEnviar")enviarAnx();
   else if(a==="axBaixar")baixarAnx(id);
   else if(a==="axDel")apagarAnx(id);
-  else if(a==="zip")baixarPacote()});
+  else if(a==="zip")baixarPacote()
+  else if(a==="ctSalvar")ctSalvar();
+  else if(a==="ctCancel")ctLimpar();
+  else if(a==="ctEdit")ctEditar(id);
+  else if(a==="ctDel")ctExcluir(id);
+  else if(a==="ctFech"){$("fechCt").value=id;$("fechMes").value=iso(new Date()).slice(0,7);renderFech();$("fechamento").scrollIntoView({behavior:"smooth"})}
+  else if(a==="fechGerar")renderFech();
+  else if(a==="fechPdf")fechPdf();
+  else if(a==="fechCopiar"){var f0=fechLista();if(f0.ct&&f0.L.length)copiar(fechTexto())}
+  else if(a==="fechPagar")abrirFechPagto();
+  else if(a==="fpFechar")$("dlgF").close();
+  else if(a==="fpSalvar")salvarFechPagto()});
 document.addEventListener("change",async function(e){var s=e.target.closest("select[data-uid]");if(!s)return;
   try{await admFn({acao:"papel",id:s.dataset.uid,papel:s.value});toast("Nível de acesso alterado ✓")}catch(x){toast(x.message)}listarUsuarios()});
 $("dlgD").addEventListener("click",function(e){if(e.target===$("dlgD"))$("dlgD").close()});
@@ -808,7 +873,7 @@ async function removerUsuario(id,email){
 /* ---------- arquivos, backup e planilha ---------- */
 function salvarArq(nome,txt){var b=new Blob([txt],{type:"text/plain;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},3000);toast("Arquivo salvo ✓")}
 function exportar(){
-  var cols=[["Nome","nome"],["CPF","cpf"],["CNPJ","cnpj"],["Nascimento","nasc"],["Valor","valor"],["E-mail","email"],["Telefone","tel"],["Modelo","modelo"],["Contabilidade","contab"],["Agendamento","agenda"],["Tipo","tipo"],["Status","status"],["Pedido","pedido"],["Responsável","resp"],["Histórico","hist"],["Registro CNH","cnh"],["RG","rg"],["Validade (anos)","validade"],["Validado em","validadoEm"]];
+  var cols=[["Nome","nome"],["CPF","cpf"],["CNPJ","cnpj"],["Nascimento","nasc"],["Valor","valor"],["E-mail","email"],["Telefone","tel"],["Modelo","modelo"],["Contabilidade","contab"],["Quem paga","pagador"],["Agendamento","agenda"],["Tipo","tipo"],["Status","status"],["Pedido","pedido"],["Responsável","resp"],["Histórico","hist"],["Registro CNH","cnh"],["RG","rg"],["Validade (anos)","validade"],["Validado em","validadoEm"]];
   if(!dados.length){toast("Nada para exportar ainda.");return}
   var linhas=[cols.map(function(c){return c[0]})].concat(dados.map(function(d){return cols.map(function(c){return d[c[1]]||""})}));
   salvarArq("agendamentos.csv","﻿"+linhas.map(function(l){return l.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(";")}).join("\n"))}
@@ -868,11 +933,11 @@ async function lerDocs(){
 /* ---------- níveis de acesso ---------- */
 var papel=null,pgtos={},meuEmail="",perI="mes",finF="todos",detId=null,pgId=null;
 var PAPEL_NOME={admin:"Administrador",financeiro:"Financeiro",comercial:"Comercial"};
-var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],renovacoes:["Renovações","refresh"],financeiro:["Financeiro","money"],novo:["Novo","plus"],backup:["Backup","shield"],usuarios:["Usuários","user"]};
+var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],renovacoes:["Renovações","refresh"],financeiro:["Financeiro","money"],novo:["Novo","plus"],backup:["Backup","shield"],usuarios:["Usuários","user"],contabs:["Contabilidades","user"]};
 var ACESSO={
-  admin:{pags:["inicio","agenda","renovacoes","financeiro","novo","backup","usuarios"],menu:["inicio","agenda","renovacoes","financeiro","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
+  admin:{pags:["inicio","agenda","renovacoes","financeiro","contabs","novo","backup","usuarios"],menu:["inicio","agenda","renovacoes","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
   comercial:{pags:["inicio","agenda","renovacoes","novo"],menu:["inicio","agenda","renovacoes"],tab:["inicio","agenda","novo","renovacoes"]},
-  financeiro:{pags:["inicio","agenda","financeiro"],menu:["inicio","agenda","financeiro"],tab:["inicio","agenda","financeiro"]}};
+  financeiro:{pags:["inicio","agenda","financeiro","contabs"],menu:["inicio","agenda","financeiro","contabs"],tab:["inicio","agenda","financeiro","contabs"]}};
 function pode(a){var p=papel;
   if(a==="editar"||a==="anexos")return p==="admin"||p==="comercial";
   if(a==="fin")return p==="admin"||p==="financeiro";
@@ -911,10 +976,10 @@ function renderFin(){
   L.forEach(function(d){var s=pgSt(d),sd=saldo(d);if(s!=="pago")tot+=sd;if(s==="atraso")atr+=sd;if(s==="parcial")par++});
   Object.keys(pgtos).forEach(function(k){var p=pgtos[k];if(p.data_pgto&&p.data_pgto.slice(0,7)===mes)rec+=+p.valor_pago});
   $("finKpis").innerHTML=kpi("money",brl(tot),"a receber")+kpi("clock",brl(atr),"em atraso")+kpi("check",brl(rec),"recebido no mês")+kpi("refresh",par,"pagamentos parciais");
-  var f=L.filter(function(d){var s=pgSt(d);return finF==="todos"||(finF==="atraso"?s==="atraso":finF==="receber"?(s==="receber"||s==="atraso"):s===finF)}).sort(function(a,b){return dataVal(b).localeCompare(dataVal(a))});
+  var f=L.filter(function(d){var s=pgSt(d);return finF==="todos"||(finF==="contab"?d.pagador==="contabilidade":finF==="atraso"?s==="atraso":finF==="receber"?(s==="receber"||s==="atraso"):s===finF)}).sort(function(a,b){return dataVal(b).localeCompare(dataVal(a))});
   $("finLista").innerHTML=f.length?f.map(function(d){var p=pgtos[d.id],s=pgSt(d);
     var inf=[p&&p.forma,p&&p.data_pgto?"em "+fmtData(parseISO(p.data_pgto)):"",p&&p.status==="parcial"?"recebido "+brl(+p.valor_pago):""].filter(Boolean).join(" · ");
-    return '<article class="fr"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong><small>'+esc([d.modelo,fmtAgenda(dataVal(d))].filter(Boolean).join(" · ")+(inf?" · "+inf:""))+'</small></div><span class="vl">'+(d.valor?"R$ "+esc(d.valor):"—")+'</span>'+pgBadge(d)+'<div class="acts" style="margin:0">'+(s!=="pago"?qa("quitar","Marcar como pago",d.id," p"):"")+qa("pagar","Registrar",d.id)+'</div></article>'}).join(""):'<p class="empty">Nada por aqui. Atendimentos validados aparecem nesta lista para você controlar o pagamento.</p>'}
+    return '<article class="fr"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong>'+(d.pagador==="contabilidade"?'<span class="tag" style="margin:0 0 0 0">Contabilidade'+(d.contab?": "+esc(bonito(d.contab)):"")+'</span>':"")+'<small>'+esc([d.modelo,fmtAgenda(dataVal(d))].filter(Boolean).join(" · ")+(inf?" · "+inf:""))+'</small></div><span class="vl">'+(d.valor?"R$ "+esc(d.valor):"—")+'</span>'+pgBadge(d)+'<div class="acts" style="margin:0">'+(s!=="pago"?qa("quitar","Marcar como pago",d.id," p"):"")+qa("pagar","Registrar",d.id)+'</div></article>'}).join(""):'<p class="empty">Nada por aqui. Atendimentos validados aparecem nesta lista para você controlar o pagamento.</p>'}
 async function gravarPgto(id,o){
   await sincFila;
   var r=await sb.from("pagamentos").upsert([Object.assign({registro_id:id,atualizado:new Date().toISOString()},o)]).select().single();
@@ -924,6 +989,8 @@ function abrirPgto(id){var d=dados.find(function(x){return x.id===id});if(!d)ret
   $("pgNome").textContent=bonito(d.nome)+(d.valor?" · R$ "+d.valor:"");
   $("pgStatus").value=p.status||"pago";$("pgValor").value=p.status==="parcial"?String(p.valor_pago).replace(".",","):(p.status==="pago"||!p.status?(d.valor||""):"");
   $("pgForma").value=p.forma||"Pix";$("pgData").value=p.data_pgto||iso(new Date());$("pgObs").value=p.obs||"";
+  var ctn=d.pagador==="contabilidade";$("pgNota").hidden=!ctn;
+  if(ctn){$("pgNota").textContent="Este atendimento é pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")+". O mais prático é registrar o pagamento de todos de uma vez, no fechamento mensal (menu Contabilidades).";if(!p.obs)$("pgObs").value="Pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")}
   pgCampos();$("dlgP").showModal()}
 function pgCampos(){var s=$("pgStatus").value;$("pgValorL").hidden=s==="receber";$("pgFormaL").hidden=s==="receber";$("pgDataL").hidden=s==="receber"}
 async function salvarPgto(){
@@ -1084,6 +1151,89 @@ async function baixarPacote(){
   }catch(e){$("dMsg").textContent="Não foi possível montar o pacote. Tente de novo."}
   btn.disabled=false;listarAnx()}
 
+/* ---------- contabilidades parceiras ---------- */
+var contabs=[],ctEdit=null;
+function semAcento(s){return String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g," ").trim()}
+function achaContab(nome){var n=semAcento(nome);if(!n)return null;return contabs.find(function(c){return semAcento(c.nome)===n})||null}
+async function carregarContabs(){
+  var r=await sb.from("contabilidades").select("*").order("nome",{ascending:true});contabs=r.data||[];
+  $("dlContab").innerHTML=contabs.map(function(c){return '<option value="'+esc(c.nome)+'">'}).join("")}
+function mesNome(ym){var p=ym.split("-");return new Date(+p[0],+p[1]-1,1).toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}
+function certsDe(ct,mes){return dados.filter(function(d){if(d.status!=="Validado"||d.pagador!=="contabilidade")return false;var c=achaContab(d.contab);return c&&c.id===ct.id&&dataVal(d).slice(0,7)===mes}).sort(function(a,b){return dataVal(a).localeCompare(dataVal(b))})}
+function renderContabs(){
+  if(!pode("fin"))return;
+  var mes=iso(new Date()).slice(0,7);
+  $("ctLista").innerHTML=contabs.length?contabs.map(function(c){var L=certsDe(c,mes),tot=L.reduce(function(s,d){return s+num(d.valor)},0);
+    var inf=[c.cnpj,c.email,c.telefone].filter(Boolean).join(" · ");
+    return '<div class="ctr"><span class="av">'+esc(ini(c.nome))+'</span><div class="nm"><strong>'+esc(c.nome)+'</strong><small>'+esc(inf||"Sem dados de contato")+'</small></div><span class="hint">'+esc(mesNome(mes))+': '+L.length+(L.length===1?" certificado":" certificados")+' · '+brl(tot)+'</span><div class="acts">'+qa("ctFech","Fechamento",c.id," p")+qa("ctEdit","Editar",c.id)+qa("ctDel","Excluir",c.id)+'</div></div>'}).join(""):'<p class="empty">Nenhuma contabilidade cadastrada ainda.</p>';
+  var sel=$("fechCt"),v=sel.value;sel.innerHTML=contabs.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.nome)+'</option>'}).join("");if(v&&contabs.some(function(c){return c.id===v}))sel.value=v;
+  if(!$("fechMes").value)$("fechMes").value=mes;
+  if($("fechRes").dataset.on)renderFech()}
+function ctLimpar(){ctEdit=null;["ctNome","ctCnpj","ctEmail","ctTel"].forEach(function(i){$(i).value=""});$("ctPadrao").checked=true;$("ctTit").textContent="Nova contabilidade"}
+async function ctSalvar(){
+  var nome=$("ctNome").value.trim().replace(/\s+/g," ");if(nome.length<2){toast("Informe o nome da contabilidade.");$("ctNome").focus();return}
+  var o={nome:nome,cnpj:fmtCNPJ($("ctCnpj").value.trim()),email:$("ctEmail").value.trim(),telefone:fmtTel($("ctTel").value.trim()),paga_por_padrao:$("ctPadrao").checked},r;
+  if(ctEdit){var antigo=contabs.find(function(c){return c.id===ctEdit}),renomeou=antigo&&semAcento(antigo.nome)!==semAcento(nome);
+    if(renomeou&&!pode("editar")){toast("Só o administrador pode trocar o nome.");return}
+    r=await sb.from("contabilidades").update(o).eq("id",ctEdit);
+    if(!r.error&&renomeou){dados.forEach(function(d){if(semAcento(d.contab)===semAcento(antigo.nome))d.contab=nome});gravar()}}
+  else r=await sb.from("contabilidades").insert(o);
+  if(r.error){toast(/duplicate|unique|23505/i.test(r.error.message||r.error.code||"")?"Já existe uma contabilidade com esse nome.":"Não foi possível salvar.");return}
+  ctLimpar();await carregarContabs();renderContabs();toast("Contabilidade salva ✓")}
+function ctEditar(id){var c=contabs.find(function(x){return x.id===id});if(!c)return;ctEdit=id;
+  $("ctNome").value=c.nome;$("ctCnpj").value=c.cnpj;$("ctEmail").value=c.email;$("ctTel").value=c.telefone;$("ctPadrao").checked=c.paga_por_padrao;$("ctTit").textContent="Editar contabilidade";window.scrollTo(0,0);$("ctNome").focus()}
+async function ctExcluir(id){var c=contabs.find(function(x){return x.id===id});if(!c)return;
+  if(!confirm("Excluir "+c.nome+" da lista de parceiras?\nOs atendimentos continuam salvos, só o cadastro é apagado."))return;
+  var r=await sb.from("contabilidades").delete().eq("id",id);if(r.error){toast("Não foi possível excluir.");return}
+  await carregarContabs();renderContabs();toast("Contabilidade excluída")}
+/* ---------- fechamento mensal ---------- */
+function fechLista(){var ct=contabs.find(function(c){return c.id===$("fechCt").value}),mes=$("fechMes").value;return{ct:ct,mes:mes,L:ct&&mes?certsDe(ct,mes):[]}}
+function docDe(d){return d.cnpj||d.cpf||""}
+function renderFech(){
+  var f=fechLista(),el=$("fechRes");
+  if(!f.ct){el.innerHTML='<p class="empty">Cadastre uma contabilidade para gerar o fechamento.</p>';return}
+  if(!f.mes){el.innerHTML='<p class="empty">Escolha o mês.</p>';return}
+  el.dataset.on="1";
+  var tot=0,pago=0,sv=0;f.L.forEach(function(d){var v=num(d.valor);if(!v)sv++;tot+=v;if(pgSt(d)==="pago")pago+=v});
+  var linhas=f.L.map(function(d){return '<tr><td>'+esc(fmtData(parseISO(dataVal(d))))+'</td><td>'+esc(bonito(d.nome))+'</td><td>'+esc(docDe(d))+'</td><td>'+esc(d.modelo||"—")+'</td><td class="v">'+(d.valor?"R$ "+esc(d.valor):"—")+'</td><td>'+pgBadge(d)+'</td></tr>'}).join("");
+  el.innerHTML='<div class="kpis" style="margin-top:16px">'+kpi("check",f.L.length,"certificados em "+esc(mesNome(f.mes)))+kpi("money",brl(tot),"valor total")+kpi("check",brl(pago),"já recebido")+kpi("clock",brl(tot-pago),"a receber")+'</div>'
+   +(f.L.length?'<div class="tbw"><table class="tb2"><thead><tr><th>Validação</th><th>Cliente</th><th>CPF/CNPJ</th><th>Modelo</th><th class="v">Valor</th><th>Situação</th></tr></thead><tbody>'+linhas+'</tbody><tfoot><tr><td colspan="4">Total</td><td class="v">'+brl(tot)+'</td><td></td></tr></tfoot></table></div>'
+     +(sv?'<p class="hint" style="margin-top:8px">⚠ '+sv+(sv===1?" certificado está":" certificados estão")+' sem valor preenchido. Complete antes de enviar para a contabilidade.</p>':'')
+     +'<div class="row"><button class="btn p" data-act="fechPdf" type="button">Gerar PDF</button><button class="btn" data-act="fechCopiar" type="button">Copiar resumo</button><button class="btn" data-act="fechPagar" type="button"'+(f.L.every(function(d){return pgSt(d)==="pago"})?' disabled':'')+'>Registrar pagamento do fechamento</button></div>'
+    :'<p class="empty">Nenhum certificado validado em '+esc(mesNome(f.mes))+' marcado como pago por '+esc(f.ct.nome)+'. Para entrar aqui, o atendimento precisa estar Validado, com esta contabilidade e com "Quem paga" = Contabilidade.</p>')}
+function fechTexto(){var f=fechLista(),tot=0;
+  var l=f.L.map(function(d){tot+=num(d.valor);return fmtData(parseISO(dataVal(d)))+" - "+bonito(d.nome)+(docDe(d)?" ("+docDe(d)+")":"")+" - "+(d.modelo||"certificado")+" - "+(d.valor?"R$ "+d.valor:"sem valor")});
+  return "Certsiga Certificado Digital\nRelação de certificados - "+f.ct.nome+"\nCompetência: "+mesNome(f.mes)+"\n\n"+l.join("\n")+"\n\nTotal: "+f.L.length+" certificado(s) - "+brl(tot)}
+function fechPdf(){
+  var f=fechLista();if(!f.ct||!f.L.length)return;var tot=0;
+  var linhas=f.L.map(function(d){tot+=num(d.valor);return '<tr><td>'+esc(fmtData(parseISO(dataVal(d))))+'</td><td>'+esc(bonito(d.nome))+'</td><td>'+esc(docDe(d))+'</td><td>'+esc(d.modelo||"")+'</td><td class="v">'+(d.valor?"R$ "+esc(d.valor):"—")+'</td></tr>'}).join("");
+  var info=[f.ct.cnpj?"CNPJ "+f.ct.cnpj:"","Competência: "+mesNome(f.mes)].filter(Boolean).join(" · ");
+  $("relPrint").innerHTML='<div class="rel"><div class="rh"><img src="logo.png" alt="Certsiga"><div><h1>Relação de certificados</h1><p><b>'+esc(f.ct.nome)+'</b></p><p>'+esc(info)+'</p></div></div>'
+    +'<table><thead><tr><th>Validação</th><th>Cliente</th><th>CPF/CNPJ</th><th>Modelo</th><th class="v">Valor</th></tr></thead><tbody>'+linhas+'</tbody></table>'
+    +'<div class="rt"><span>'+f.L.length+(f.L.length===1?" certificado":" certificados")+'</span><span>Valor total: '+brl(tot)+'</span></div>'
+    +'<p class="rf">Emitido em '+fmtData(new Date())+' · Certsiga Certificado Digital</p></div>';
+  var t=document.title;document.title=limpaNome("Fechamento "+f.ct.nome+" "+f.mes);
+  var volta=function(){document.title=t;window.removeEventListener("afterprint",volta)};window.addEventListener("afterprint",volta);
+  setTimeout(function(){window.print()},60)}
+function abrirFechPagto(){
+  var f=fechLista(),pend=f.L.filter(function(d){return pgSt(d)!=="pago"});if(!pend.length)return;
+  var tot=pend.reduce(function(s,d){return s+num(d.valor)},0);
+  $("fpInfo").textContent=f.ct.nome+" · "+mesNome(f.mes)+" · "+pend.length+(pend.length===1?" certificado":" certificados")+" · "+brl(tot);
+  $("fpForma").value="Pix";$("fpData").value=iso(new Date());$("fpObs").value="";$("dlgF").showModal()}
+async function salvarFechPagto(){
+  var f=fechLista(),pend=f.L.filter(function(d){return pgSt(d)!=="pago"});if(!pend.length)return;
+  if(pend.some(function(d){return !num(d.valor)})){toast("Preencha o valor de todos os certificados antes de registrar o pagamento.");return}
+  if(!$("fpData").value){toast("Informe a data do pagamento.");return}
+  var ob=("Pago pela contabilidade "+f.ct.nome+" (fechamento "+f.mes+")"+($("fpObs").value.trim()?" - "+$("fpObs").value.trim():"")).slice(0,500);
+  await sincFila;
+  var rows=pend.map(function(d){return{registro_id:d.id,status:"pago",valor_pago:num(d.valor),forma:$("fpForma").value,data_pgto:$("fpData").value,obs:ob,atualizado:new Date().toISOString()}});
+  var r=await sb.from("pagamentos").upsert(rows).select();
+  if(r.error){toast("Não foi possível registrar o pagamento.");return}
+  r.data.forEach(function(x){pgtos[x.registro_id]=x});$("dlgF").close();render();toast("Pagamento do fechamento registrado ✓")}
+
+$("contab").addEventListener("change",function(){var c=achaContab($("contab").value);if(c){$("contab").value=c.nome;if(c.paga_por_padrao&&!$("pagador").value){$("pagador").value="contabilidade";previa()}}});
+$("fechCt").addEventListener("change",function(){if($("fechRes").dataset.on)renderFech()});
+$("fechMes").addEventListener("change",function(){if($("fechRes").dataset.on)renderFech()});
 rota();previa();iniciar();
 </script>
 </body>
