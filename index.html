@@ -2094,33 +2094,33 @@ function renderDash(){
 /* ---------- detalhes: comentários e anexos ---------- */
 var anx=[];
 var AMAP={dCmt:"aCmt",dAnx:"aAnx",dMsg:"aMsg",dTxt:"aTxt",dArq:"aArq",dTipo:"aTipo",btnZip:"aZip",btnEnv:"aEnv",zipApagar:"aZipApagar"};
-function W(n){return $(atId?AMAP[n]:n)}
+function WX(n){return $(atId?AMAP[n]:n)}
 function curto(e){return String(e||"").split("@")[0]}
 function tam(n){return n>=1048576?(n/1048576).toFixed(1).replace(".",",")+" MB":Math.max(1,Math.round(n/1024))+" KB"}
 function fmtDH(x){var d=new Date(x);return p2(d.getDate())+"/"+p2(d.getMonth()+1)+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
 async function abrirDet(id){
   var d=dados.find(function(x){return x.id===id});if(!d)return;detId=id;
   $("dNome").textContent=bonito(d.nome)||"Atendimento";$("dSub").textContent=[d.tipo,d.modelo,fmtAgenda(d.agenda)].filter(Boolean).join(" · ");
-  $("dAnxBox").hidden=!pode("anexos");W("dCmt").innerHTML='<p class="hint">Carregando…</p>';W("dAnx").innerHTML="";W("dMsg").textContent="";W("dTxt").value="";
+  $("dAnxBox").hidden=!pode("anexos");WX("dCmt").innerHTML='<p class="hint">Carregando…</p>';WX("dAnx").innerHTML="";WX("dMsg").textContent="";WX("dTxt").value="";
   $("dlgD").showModal();
   await sincFila;
   await Promise.all([listarCmt(),pode("anexos")?listarAnx():0])}
 async function listarCmt(){
   var r=await sb.from("comentarios").select("id,user_id,autor,texto,criado").eq("registro_id",detId).order("criado",{ascending:true});
-  if(r.error){W("dCmt").innerHTML='<p class="hint">Não foi possível carregar os comentários.</p>';return}
+  if(r.error){WX("dCmt").innerHTML='<p class="hint">Não foi possível carregar os comentários.</p>';return}
   var eu=(await sb.auth.getUser()).data.user,uid=eu&&eu.id;
-  W("dCmt").innerHTML=r.data.length?r.data.map(function(c){return '<div class="cm"><small><span>'+esc((perfisMap[c.user_id]&&perfisMap[c.user_id].nome)||curto(c.autor)||"usuário")+' · '+esc(fmtDH(c.criado))+'</span>'+((pode("excluir")||c.user_id===uid)?'<button type="button" data-act="cmtDel" data-id="'+esc(c.id)+'">apagar</button>':'')+'</small><p>'+esc(c.texto)+'</p></div>'}).join(""):'<p class="hint">Nenhum comentário ainda.</p>'}
+  WX("dCmt").innerHTML=r.data.length?r.data.map(function(c){return '<div class="cm"><small><span>'+esc((perfisMap[c.user_id]&&perfisMap[c.user_id].nome)||curto(c.autor)||"usuário")+' · '+esc(fmtDH(c.criado))+'</span>'+((pode("excluir")||c.user_id===uid)?'<button type="button" data-act="cmtDel" data-id="'+esc(c.id)+'">apagar</button>':'')+'</small><p>'+esc(c.texto)+'</p></div>'}).join(""):'<p class="hint">Nenhum comentário ainda.</p>'}
 async function enviarCmt(){
-  var t=W("dTxt").value.trim();if(!t||!detId)return;
+  var t=WX("dTxt").value.trim();if(!t||!detId)return;
   var r=await sb.from("comentarios").insert({registro_id:detId,autor:meuEmail,texto:t});
   if(r.error){toast("Não foi possível comentar.");return}
-  W("dTxt").value="";listarCmt()}
+  WX("dTxt").value="";listarCmt()}
 async function listarAnx(){
   var r=await sb.from("anexos").select("id,nome,caminho,tamanho,criado").eq("registro_id",detId).order("criado",{ascending:true});
-  if(r.error){anx=[];W("dAnx").innerHTML='<p class="hint">Não foi possível carregar os anexos.</p>';return}
+  if(r.error){anx=[];WX("dAnx").innerHTML='<p class="hint">Não foi possível carregar os anexos.</p>';return}
   anx=r.data;
-  W("dAnx").innerHTML=anx.length?anx.map(function(a){return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}).join(""):'<p class="hint">Nenhum documento anexado.</p>';
-  W("btnZip").disabled=!anx.length}
+  WX("dAnx").innerHTML=anx.length?anx.map(function(a){return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}).join(""):'<p class="hint">Nenhum documento anexado.</p>';
+  WX("btnZip").disabled=!anx.length}
 function uid(){return(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10)}
 function limpaNome(s){return String(s||"").replace(/[\\\/:*?"<>|\u0000-\u001f]/g," ").replace(/\s+/g," ").trim()}
 async function anexarArquivos(id,files,tipo){
@@ -2138,11 +2138,11 @@ async function anexarArquivos(id,files,tipo){
     ok++}
   return{ok:ok,rej:rej}}
 async function enviarAnx(){
-  var fs=[].slice.call(W("dArq").files);if(!fs.length){W("dMsg").textContent="Escolha ao menos um arquivo.";return}
-  W("btnEnv").disabled=true;W("dMsg").textContent="Enviando…";
-  var r=await anexarArquivos(detId,fs,W("dTipo").value);
-  W("dArq").value="";W("btnEnv").disabled=false;
-  W("dMsg").textContent=(r.ok?r.ok+" arquivo(s) anexado(s). ":"")+(r.rej.length?"Não enviados: "+r.rej.join(", ")+". Use JPG, PNG, WEBP ou PDF de até 5 MB.":"");
+  var fs=[].slice.call(WX("dArq").files);if(!fs.length){WX("dMsg").textContent="Escolha ao menos um arquivo.";return}
+  WX("btnEnv").disabled=true;WX("dMsg").textContent="Enviando…";
+  var r=await anexarArquivos(detId,fs,WX("dTipo").value);
+  WX("dArq").value="";WX("btnEnv").disabled=false;
+  WX("dMsg").textContent=(r.ok?r.ok+" arquivo(s) anexado(s). ":"")+(r.rej.length?"Não enviados: "+r.rej.join(", ")+". Use JPG, PNG, WEBP ou PDF de até 5 MB.":"");
   listarAnx()}
 function baixarBlob(nome,blob){var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},4000)}
 async function baixarAnx(id){var a=anx.find(function(x){return x.id===id});if(!a)return;
@@ -2168,18 +2168,18 @@ function montarZip(arq){
   return new Blob(partes.concat(central,[e.buffer]),{type:"application/zip"})}
 async function baixarPacote(){
   var d=dados.find(function(x){return x.id===detId});if(!d||!anx.length)return;
-  var btn=W("btnZip");btn.disabled=true;W("dMsg").textContent="Preparando o pacote…";
+  var btn=WX("btnZip");btn.disabled=true;WX("dMsg").textContent="Preparando o pacote…";
   try{var arq=[],usados={};
     for(var i=0;i<anx.length;i++){var a=anx[i],r=await sb.storage.from("anexos").download(a.caminho);if(r.error)throw 0;
       var nome=a.nome,k=0;while(usados[nome.toLowerCase()]){k++;nome=a.nome.replace(/(\.[^.]+)?$/,function(x){return " ("+(k+1)+")"+(x||"")})}
       usados[nome.toLowerCase()]=1;arq.push({nome:nome,dados:new Uint8Array(await r.data.arrayBuffer())})}
     var doc=d.cnpj||d.cpf||"",dt=d.agenda?d.agenda.slice(0,10).split("-").reverse().join("-"):fmtData(new Date()).replace(/\//g,"-");
     var zn=limpaNome([bonito(d.nome)||"Cliente",doc,dt].filter(Boolean).join(" - "))+".zip";
-    baixarBlob(zn,montarZip(arq));W("dMsg").textContent="Pacote baixado: "+zn;
-    if(W("zipApagar").checked&&confirm("Apagar os "+anx.length+" documento(s) do sistema agora? Confira se o ZIP abriu corretamente antes de confirmar.")){
+    baixarBlob(zn,montarZip(arq));WX("dMsg").textContent="Pacote baixado: "+zn;
+    if(WX("zipApagar").checked&&confirm("Apagar os "+anx.length+" documento(s) do sistema agora? Confira se o ZIP abriu corretamente antes de confirmar.")){
       var rm=await sb.storage.from("anexos").remove(anx.map(function(x){return x.caminho}));
-      if(!rm.error){await sb.from("anexos").delete().eq("registro_id",detId);W("dMsg").textContent="Pacote baixado e documentos apagados do sistema."}else W("dMsg").textContent="Pacote baixado, mas não foi possível apagar os documentos."}
-  }catch(e){W("dMsg").textContent="Não foi possível montar o pacote. Tente de novo."}
+      if(!rm.error){await sb.from("anexos").delete().eq("registro_id",detId);WX("dMsg").textContent="Pacote baixado e documentos apagados do sistema."}else WX("dMsg").textContent="Pacote baixado, mas não foi possível apagar os documentos."}
+  }catch(e){WX("dMsg").textContent="Não foi possível montar o pacote. Tente de novo."}
   btn.disabled=false;listarAnx()}
 
 /* ---------- página do atendimento (duplo clique) ---------- */
