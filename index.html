@@ -846,6 +846,13 @@ body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .rail{disp
 <p class="hint">N novo atendimento · / buscar · G e depois A, F, P ou C para ir à Agenda, Financeiro, Painel ou Clientes · ← → T D S na agenda · Ctrl+S salva na página do atendimento · ? mostra a lista.</p>
 <label class="chk" style="margin-top:10px"><input type="checkbox" id="atalhosOn" checked>Usar atalhos de teclado</label>
 <div class="row"><button class="btn" type="button" data-act="atalhosVer">Ver todos os atalhos</button></div></div>
+<div class="sheet" id="mfaBox"><h2>Verificação em duas etapas (2FA)</h2>
+<p class="hint">Além da senha, o sistema pede um código de 6 dígitos de um app autenticador (Google Authenticator, Microsoft Authenticator ou Authy). Recomendado principalmente para administradores.</p>
+<div class="row"><span class="ok2" id="mfaSt" style="--c:var(--mu)">Verificando…</span></div>
+<div id="mfaEnr" hidden><div class="row" style="align-items:flex-start;gap:18px"><img id="mfaQr" alt="QR Code do 2FA" style="width:160px;height:160px;border-radius:12px;border:1px solid var(--ln);background:#fff"><div style="flex:1;min-width:220px;line-height:1.6;font-size:14px">1. Abra o app autenticador e leia o QR Code.<br>2. Digite abaixo o código de 6 dígitos que aparecer.<div class="hint" style="margin-top:6px">Sem câmera? Digite esta chave no app: <b id="mfaSec" style="user-select:all"></b></div>
+<div class="row"><input id="mfaCod" inputmode="numeric" maxlength="6" placeholder="000000" style="width:140px;letter-spacing:.3em;text-align:center;font-weight:800"><button class="btn p" type="button" data-act="mfaOk">Ativar 2FA</button><button class="btn" type="button" data-act="mfaCancel">Cancelar</button></div></div></div></div>
+<div class="row" id="mfaBt"><button class="btn p" type="button" data-act="mfaIni" id="mfaIni" hidden>Ativar 2FA</button><button class="btn" type="button" data-act="mfaOff" id="mfaOff" hidden>Desativar 2FA</button></div>
+<p class="hint" style="margin-top:10px">Se perder o celular, o administrador remove o 2FA da sua conta no painel do Supabase (Authentication → Users). Por segurança, não existem códigos de recuperação neste sistema.</p></div>
 <div class="sheet"><h2>Avisos de 10 minutos</h2>
 <p class="hint">Com o site aberto, ele avisa quando faltarem 10 minutos para um atendimento e mostra o botão para enviar o lembrete no WhatsApp. O envio é seu: o WhatsApp abre com a mensagem pronta e você toca em enviar.</p>
 <div class="row"><button class="btn" data-act="notif" type="button">Ativar notificações</button><span class="hint" id="notifTxt"></span></div></div>
@@ -887,8 +894,6 @@ body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .rail{disp
 <div class="ctp"><div class="sheet" id="ctCab"></div>
 <div class="sheet"><div class="ctabs" id="ctTabs"></div><div id="ctCorpo"></div>
 <div id="fechamento" hidden><label hidden>Contabilidade<select id="fechCt"></select></label><input id="fechMes" type="month" hidden><div id="fechRes"></div></div></div></div></div>
-<dialog id="dlgAt"><div class="dl"><div class="mh"><div><h3>Atalhos de teclado</h3><p class="sub">Ficam desligados enquanto você digita em um campo.</p></div><button class="ib" type="button" data-act="atalhosFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
-<div class="mb" id="atalhosLista"></div><div class="mf"><button class="btn" type="button" data-act="atalhosFechar">Fechar</button></div></div></dialog>
 <dialog id="dlgCt"><div class="dl"><div class="mh"><div><h3 id="ctTit">Nova contabilidade</h3></div><button class="ib" type="button" data-act="ctCancel" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
 <div class="mb"><label>Nome<input id="ctNome" maxlength="160"></label><label>CNPJ<input id="ctCnpj" inputmode="numeric" placeholder="00.000.000/0000-00"></label><label>E-mail<input id="ctEmail" type="email"></label><label>Telefone<input id="ctTel" inputmode="tel" placeholder="(00) 00000-0000"></label>
 <label class="chk"><input type="checkbox" id="ctPadrao" checked>Normalmente a contabilidade paga os certificados dos clientes dela</label></div>
@@ -973,6 +978,11 @@ body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .rail{disp
 <label class="ck"><input id="c_wa" type="checkbox" checked> Avisar o cliente por WhatsApp com a lista do que falta</label>
 <p class="hint">O cartão continua na agenda com a etiqueta “Na central” e aparece na Central até você aprovar ou reagendar.</p></div>
 <div class="mf"><span class="fx"></span><button class="btn" data-act="cFechar" type="button">Cancelar</button><button class="btn p" data-act="cSalvar" type="button">Enviar para a central</button></div></div></dialog>
+<dialog id="dlgMfa"><div class="dl"><div class="mh"><div><h3>Verificação em duas etapas</h3><p class="sub">Digite o código de 6 dígitos do seu app autenticador.</p></div></div>
+<div class="mb"><label>Código<input id="mfaLg" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="000000" style="text-align:center;font-size:22px;font-weight:800;letter-spacing:.35em"></label><p class="hint" id="mfaMsg" role="status"></p></div>
+<div class="mf"><button class="btn" type="button" data-act="mfaSair">Cancelar</button><button class="btn p" type="button" data-act="mfaEnt">Entrar</button></div></div></dialog>
+<dialog id="dlgAt"><div class="dl"><div class="mh"><div><h3>Atalhos de teclado</h3><p class="sub">Ficam desligados enquanto você digita em um campo.</p></div><button class="ib" type="button" data-act="atalhosFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<div class="mb" id="atalhosLista"></div><div class="mf"><button class="btn" type="button" data-act="atalhosFechar">Fechar</button></div></div></dialog>
 <dialog id="dlgE" class="ed"><div class="dl"><div class="mh"><div><h3>Editar atendimento</h3><p class="sub" id="eSub"></p></div><button class="ib" type="button" data-act="eFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
 <div class="mb" id="eGrid"></div>
 <div class="mf"><button class="btn" id="eDel" data-act="eDel" type="button">Excluir</button><span class="fx"></span><button class="btn" data-act="eFechar" type="button">Cancelar</button><button class="btn p" data-act="eSalvar" type="button">Salvar alterações</button></div></div></dialog>
@@ -1343,6 +1353,7 @@ $("pfArq").addEventListener("change",function(){lerFoto(this.files[0],function(u
 $("obArq").addEventListener("change",function(){lerFoto(this.files[0],function(u){obFotoV=u;var b=$("obAv");b.className="avb has";b.innerHTML='<img src="'+esc(u)+'" alt="">'});this.value=""});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){menuUsr(false);if(tourL.length)fimTour()}});
 async function entrar(){
+  if(!(await mfaExigir())){await sb.auth.signOut();document.body.classList.add("nauth");$("lgMsg").textContent="Verificação em duas etapas não concluída.";return false}
   try{await carregarPapel()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível entrar. Verifique a internet e tente de novo.";return false}
   if(!papel){await sb.auth.signOut();document.body.classList.add("nauth");$("lgMsg").textContent="Seu usuário ainda não tem nível de acesso. Fale com o administrador.";return false}
   try{await carregar();await carregarPgtos()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível carregar seus dados. Verifique a internet e tente de novo.";return false}
@@ -1355,6 +1366,7 @@ async function iniciar(){
   if(!sb){$("lgMsg").textContent="Não foi possível carregar o sistema de login. Recarregue a página.";return}
   var s=await sb.auth.getSession();
   if(s.data&&s.data.session)await entrar()}
+$("dlgMfa").addEventListener("cancel",function(e){e.preventDefault();mfaDesistir()});
 $("lgForm").addEventListener("submit",async function(e){
   e.preventDefault();var b=$("lgBtn");b.disabled=true;$("lgMsg").textContent="";
   var r=await sb.auth.signInWithPassword({email:$("lgEmail").value.trim(),password:$("lgSenha").value});
@@ -1622,7 +1634,7 @@ function renderRail(){
   $("selMob").innerHTML=s1}
 
 /* ---------- navegação ---------- */
-function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"").slice(1).split("/"),h=hp[0],ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";atId=h==="atend"?(hp[1]||null):null;if(!atId&&h==="atend")h="agenda";if(h!=="atend")atMon=null;if(h==="contabs"&&hp[1]){ctSel=hp[1];ctTab="cli"}PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h)});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===(h==="atend"?"agenda":h))});if(h==="atend")atMontar();if(h==="contabs")renderContabs();if(h==="novo")rascBanner();if(h==="backup")tplMostrar();if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h;renderRail();window.scrollTo(0,0)}
+function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"").slice(1).split("/"),h=hp[0],ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";atId=h==="atend"?(hp[1]||null):null;if(!atId&&h==="atend")h="agenda";if(h!=="atend")atMon=null;if(h==="contabs"&&hp[1]){ctSel=hp[1];ctTab="cli"}PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h)});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===(h==="atend"?"agenda":h))});if(h==="atend")atMontar();if(h==="contabs")renderContabs();if(h==="novo")rascBanner();if(h==="backup"){tplMostrar();mfaStatus()}if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h;renderRail();window.scrollTo(0,0)}
 function aba(v){if(location.hash==="#"+v)rota();else location.hash=v}
 window.addEventListener("hashchange",rota);
 function modo(m){var h=document.documentElement,sv;m=m||(h.dataset.modo==="escuro"?"claro":"escuro");sv=m;if(m==="auto")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";h.dataset.modo=m;try{localStorage.setItem("agend_modo",sv)}catch(e){}corBarra()}
@@ -1694,6 +1706,12 @@ document.addEventListener("click",function(e){
   else if(a==="det")abrirDet(id);
   else if(a==="dFechar")$("dlgD").close();
   else if(a==="atVoltar")aba("agenda");
+  else if(a==="mfaIni")mfaIniciar();
+  else if(a==="mfaOk")mfaAtivar();
+  else if(a==="mfaCancel")mfaCancelar();
+  else if(a==="mfaOff")mfaDesativar();
+  else if(a==="mfaEnt")mfaConfirmar();
+  else if(a==="mfaSair")mfaDesistir();
   else if(a==="tplTab"){tplAtual=id;$("tplTxt").value=cfg.tpl[id]||TPL_PAD[id];tplMostrar()}
   else if(a==="tplVar"){var tx=$("tplTxt"),p0=tx.selectionStart||tx.value.length,p1=tx.selectionEnd||p0;tx.value=tx.value.slice(0,p0)+"{"+id+"}"+tx.value.slice(p1);tx.focus();tx.selectionStart=tx.selectionEnd=p0+id.length+2;tplPrev()}
   else if(a==="tplSalvar")tplSalvar(false);
@@ -2285,7 +2303,7 @@ document.addEventListener("change",function(e){if(e.target.closest&&e.target.clo
 var ATK=[["Em qualquer tela",[["N","Novo atendimento"],["/","Buscar cliente"],["G A","Ir para a Agenda"],["G F","Ir para o Financeiro"],["G P","Ir para o Painel"],["G C","Ir para Clientes"],["?","Mostrar esta ajuda"],["Esc","Fechar janela ou voltar"]]],["Na agenda",[["← →","Semana ou dia anterior / próximo"],["T","Voltar para hoje"],["D","Visão do dia"],["S","Visão da semana"]]],["Na página do atendimento",[["Ctrl S","Salvar agora"],["C","Copiar dados do atendimento"]]]],atkG=0;
 function atalhosOn(){try{return localStorage.getItem("agend_atalhos")!=="0"}catch(e){return true}}
 function atalhosVer(){$("atalhosLista").innerHTML=ATK.map(function(g){return '<div class="atk-h">'+g[0].toUpperCase()+'</div>'+g[1].map(function(a){return '<div class="atk"><span class="k">'+a[0].split(" ").map(function(k){return '<kbd>'+k+'</kbd>'}).join("")+'</span><span>'+a[1]+'</span></div>'}).join("")}).join("");if(!$("dlgAt").open)$("dlgAt").showModal()}
-document.addEventListener("keydown",function(e){
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="mfaLg"){e.preventDefault();mfaConfirmar();return}if(e.key==="Enter"&&e.target.id==="mfaCod"){e.preventDefault();mfaAtivar();return}
   if(!papel||document.body.classList.contains("nauth"))return;
   var t=e.target,tg=t&&t.tagName,dig_=tg==="INPUT"||tg==="TEXTAREA"||tg==="SELECT"||(t&&t.isContentEditable),h=(location.hash||"").slice(1).split("/")[0];
   if(e.key==="s"&&(e.ctrlKey||e.metaKey)&&h==="atend"&&atId){e.preventDefault();atSalvar();return}
@@ -2306,6 +2324,32 @@ document.addEventListener("keydown",function(e){
     if(kl==="d"||kl==="s"){var bv=document.querySelector('[data-act="vis"][data-v="'+(kl==="d"?"dia":"semana")+'"]');if(bv){e.preventDefault();bv.click()}return}}
   if(h==="atend"&&atId&&kl==="c"){var dd=atDados();if(dd){e.preventDefault();copiar(textoReg(dd))}}
 });
+/* ---------- verificação em duas etapas ---------- */
+var mfaRes=null,mfaPend=null;
+async function mfaExigir(){try{var a=await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+    if(a.data&&a.data.nextLevel==="aal2"&&a.data.currentLevel!=="aal2")return await new Promise(function(res){mfaRes=res;$("mfaLg").value="";$("mfaMsg").textContent="";$("dlgMfa").showModal();setTimeout(function(){$("mfaLg").focus()},50)})}catch(e){}
+  return true}
+async function mfaConfirmar(){var c=$("mfaLg").value.replace(/\D/g,"");if(c.length!==6){$("mfaMsg").textContent="Digite os 6 dígitos.";return}
+  $("mfaMsg").textContent="Conferindo…";
+  try{var f=await sb.auth.mfa.listFactors(),fa=(f.data.totp||[])[0];var ch=await sb.auth.mfa.challenge({factorId:fa.id});if(ch.error)throw ch.error;
+    var v=await sb.auth.mfa.verify({factorId:fa.id,challengeId:ch.data.id,code:c});if(v.error)throw v.error;
+    $("dlgMfa").close();var r=mfaRes;mfaRes=null;r&&r(true)}catch(e){$("mfaMsg").textContent="Código incorreto ou vencido. Tente de novo.";$("mfaLg").select()}}
+function mfaDesistir(){$("dlgMfa").close();var r=mfaRes;mfaRes=null;r&&r(false)}
+async function mfaStatus(){if(!$("mfaSt")||!sb||!sb.auth.mfa)return;
+  try{var f=await sb.auth.mfa.listFactors(),ok=(f.data.totp||[]).length>0;
+    $("mfaSt").textContent=ok?"✓ 2FA ativado nesta conta":"2FA desativado";$("mfaSt").style.setProperty("--c",ok?"var(--s-va)":"var(--mu)");$("mfaIni").hidden=ok||!$("mfaEnr").hidden;$("mfaOff").hidden=!ok}
+  catch(e){$("mfaSt").textContent="Não foi possível verificar o 2FA agora."}}
+async function mfaIniciar(){
+  try{var f=await sb.auth.mfa.listFactors();for(var i=0;i<(f.data.all||[]).length;i++){if(f.data.all[i].status==="unverified")await sb.auth.mfa.unenroll({factorId:f.data.all[i].id})}
+    var r=await sb.auth.mfa.enroll({factorType:"totp",friendlyName:"Certsiga "+Date.now()});if(r.error)throw r.error;
+    mfaPend=r.data.id;$("mfaQr").src=r.data.totp.qr_code;$("mfaSec").textContent=r.data.totp.secret;$("mfaCod").value="";$("mfaEnr").hidden=false;$("mfaIni").hidden=true;$("mfaCod").focus()}
+  catch(e){toast("Não foi possível iniciar o 2FA.")}}
+async function mfaAtivar(){var c=$("mfaCod").value.replace(/\D/g,"");if(c.length!==6){toast("Digite os 6 dígitos do app.");return}
+  try{var ch=await sb.auth.mfa.challenge({factorId:mfaPend});if(ch.error)throw ch.error;var v=await sb.auth.mfa.verify({factorId:mfaPend,challengeId:ch.data.id,code:c});if(v.error)throw v.error;
+    mfaPend=null;$("mfaEnr").hidden=true;toast("2FA ativado ✓");mfaStatus()}catch(e){toast("Código incorreto. Confira o app e tente de novo.")}}
+async function mfaCancelar(){try{if(mfaPend)await sb.auth.mfa.unenroll({factorId:mfaPend})}catch(e){}mfaPend=null;$("mfaEnr").hidden=true;mfaStatus()}
+async function mfaDesativar(){if(!confirm("Desativar a verificação em duas etapas desta conta?"))return;
+  try{var f=await sb.auth.mfa.listFactors(),fa=(f.data.totp||[])[0];var r=await sb.auth.mfa.unenroll({factorId:fa.id});if(r.error)throw r.error;toast("2FA desativado");mfaStatus()}catch(e){toast("Não foi possível desativar o 2FA.")}}
 /* ---------- contabilidades parceiras ---------- */
 var contabs=[],ctEdit=null;
 function semAcento(s){return String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g," ").trim()}
