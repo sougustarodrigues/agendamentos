@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#a8202a">
-<link rel="icon" type="image/png" href="logo-vinho.png">
+<link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="favicon.png">
 <title>Certsiga – Dashboard</title>
 <script>(function(){var m;try{m=localStorage.getItem("agend_modo")}catch(e){}if(m!=="claro"&&m!=="escuro")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";document.documentElement.dataset.modo=m})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -476,40 +476,64 @@ dialog.ed{width:min(720px,96vw)}
 .recb{flex:none;width:32px;height:32px;min-height:0}
 @media(min-width:901px){
 .app.rec{grid-template-columns:76px minmax(0,1fr) 344px}
-.app.rec .side{padding:20px 10px 16px;align-items:center;overflow:hidden}
-.app.rec .side>:not(.brr){display:none!important}
+.lg-s{display:none}
+.app.rec .side{padding:20px 10px 16px;align-items:center;overflow-x:hidden}
 .app.rec .recb{display:none}
 .app.rec .brr{justify-content:center}
-.app.rec .brand{padding:0;width:24px;height:40px;overflow:hidden;cursor:pointer}
-.app.rec .brand img{height:40px;width:auto;max-width:none;object-position:left}
+.app.rec .brand{padding:0;width:auto;height:auto;overflow:visible;cursor:pointer;display:block}
+.app.rec .brand .logoimg{display:none!important}
+.app.rec .brand .lg-s{display:block;height:40px;width:auto}
+.app.rec .menu{width:100%}
+.app.rec .menu a{justify-content:center;padding:11px 0;position:relative}
+.app.rec .menu a span,.app.rec .usr .un,.app.rec .usr .chev{display:none}
+.app.rec .mg{font-size:0;height:1px;padding:0;margin:8px 14px;background:var(--ln)}
+.app.rec .menu a .bgn:not([hidden]){display:block;position:absolute;top:6px;right:12px;min-width:0;width:9px;height:9px;padding:0;font-size:0;border:2px solid var(--sf);box-sizing:content-box}
+.app.rec .usr{width:auto;padding:6px;justify-content:center;background:none;border:0;margin-top:auto}
 @media(min-width:901px) and (max-width:1280px){.app.rec{grid-template-columns:76px minmax(0,1fr)}}
 @media print{#umenu,#tourTip,#tourBg,#tourBlk,.hvt{display:none!important}}
 @media(min-width:601px){.kpis.k8{grid-template-columns:repeat(auto-fit,minmax(214px,1fr))}}
 
-.dtb{white-space:nowrap;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;margin-top:6px;padding:10px 14px;border:1px solid var(--ln);border-radius:12px;background:var(--sf);color:var(--tx);font:inherit;font-weight:600;text-align:left;cursor:pointer}
-.dtb:hover,.dtb.on{border-color:var(--pr)}
-.dtb .ph0{color:var(--mu);font-weight:500}
-.dtb svg{width:18px;height:18px;color:var(--mu);flex:none}
-#dtp{position:fixed;z-index:200;display:none;width:min(372px,calc(100vw - 16px));background:var(--sf);border:1px solid var(--ln);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.28);padding:14px;color:var(--tx)}
+.dtb{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;margin-top:6px;padding:7px 14px 7px 8px;border:1.5px solid var(--ln);border-radius:16px;background:var(--sf);color:var(--tx);font:inherit;text-align:left;cursor:pointer;box-shadow:0 1px 2px rgba(38,38,38,.04);white-space:nowrap}
+.dtb:hover{border-color:color-mix(in srgb,var(--pr) 45%,var(--ln))}
+.dtb.on{border-color:var(--pr);box-shadow:0 0 0 4px color-mix(in srgb,var(--pr) 12%,transparent)}
+.dtb .di{width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--pr);display:grid;place-items:center;flex:none}
+.dtb .di svg{width:20px;height:20px}
+.dtb .dx{flex:1;min-width:0;line-height:1.2;display:flex;flex-direction:column}
+.dtb .dx b{font-weight:800;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+label:has(>.dtb){grid-column:1/-1}
+.dtb .dx small{font-size:12px;color:var(--mu);font-weight:600}
+.dtb .dh2{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;background:var(--soft);color:var(--pr);font-weight:800;font-size:14px}
+.dtb .dh2 svg{width:15px;height:15px}
+.dtb>svg{width:18px;height:18px;color:var(--mu);flex:none}
+.dtb .ph0{color:var(--mu);font-weight:600;font-size:14px;flex:1}
+#dtp{position:fixed;z-index:200;display:none;width:min(560px,calc(100vw - 16px));background:var(--sf);border:1px solid var(--ln);border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.22);padding:18px;color:var(--tx)}
 #dtp.on{display:block}
+#dtp .at{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+#dtp .at button{border:0;border-radius:99px;padding:6px 12px;background:var(--bg);color:var(--tx2);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+#dtp .at button:hover{background:var(--soft);color:var(--pr)}
 #dtp .dh{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px}
-#dtp .dh b{font-size:14px;font-weight:800}
-#dtp .dn{width:32px;height:32px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);cursor:pointer;font-size:16px;line-height:1}
+#dtp .dh b{font-size:15px;font-weight:800}
+#dtp .dn{width:34px;height:34px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);cursor:pointer;font-size:17px;line-height:1}
 #dtp .dn:hover{border-color:var(--pr);color:var(--pr)}
-#dtp .dbody{display:grid;grid-template-columns:1fr 92px;gap:12px}
+#dtp .dbody{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:20px}
 #dtp .dg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
-#dtp .dg i{font-style:normal;font-size:11px;font-weight:700;color:var(--mu);padding:4px 0}
-#dtp .dg button{height:34px;border:0;border-radius:10px;background:none;color:var(--tx);font:inherit;font-size:13px;font-weight:600;cursor:pointer;position:relative}
+#dtp .dg i{font-style:normal;font-size:11px;font-weight:800;color:var(--mu);padding:4px 0}
+#dtp .dg button{height:38px;border:0;border-radius:12px;background:none;color:var(--tx);font:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
 #dtp .dg button:hover{background:var(--soft)}
-#dtp .dg button.o{color:var(--mu);opacity:.55}
-#dtp .dg button.h{box-shadow:inset 0 0 0 1.5px var(--pr)}
-#dtp .dg button.s{background:var(--btn);color:var(--onpr);box-shadow:none}
-#dtp .dt{max-height:244px;overflow:auto;display:flex;flex-direction:column;gap:2px;padding-right:2px}
-#dtp .dt button{flex:none;height:32px;border:0;border-radius:10px;background:none;color:var(--tx);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
-#dtp .dt button:hover{background:var(--soft)}
-#dtp .dt button.s{background:var(--btn);color:var(--onpr)}
-#dtp .df{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--ln)}
-#dtp .df button{border:0;background:none;color:var(--pr);font:inherit;font-weight:700;font-size:13px;cursor:pointer;padding:4px 6px}
+#dtp .dg button.o{color:var(--mu);opacity:.45}
+#dtp .dg button.h{box-shadow:inset 0 0 0 1.5px var(--pr);color:var(--pr)}
+#dtp .dg button.s{background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;box-shadow:0 6px 14px color-mix(in srgb,var(--pr) 35%,transparent)}
+#dtp .dl{font-size:11px;font-weight:800;color:var(--mu);letter-spacing:.08em;margin-bottom:8px}
+#dtp .dt{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-content:start;max-height:250px;overflow:auto;padding-right:2px}
+#dtp .dt button{height:34px;border:1px solid var(--ln);border-radius:10px;background:var(--sf);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#dtp .dt button:hover{border-color:var(--pr);color:var(--pr)}
+#dtp .dt button.s{background:linear-gradient(135deg,var(--g1),var(--g2));border-color:transparent;color:#fff}
+#dtp .df{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--ln)}
+#dtp .df span{font-size:13px;color:var(--mu);font-weight:600}
+#dtp .df div{display:flex;gap:8px}
+#dtp .df button{height:36px;padding:0 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:800;font-size:13px;cursor:pointer}
+#dtp .df button.p{background:var(--btn);border-color:var(--btn);color:var(--onpr)}
+@media(max-width:600px){#dtp .dbody{grid-template-columns:1fr}#dtp .dt{max-height:140px;grid-template-columns:repeat(4,1fr)}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -535,6 +559,7 @@ dialog.ed{width:min(720px,96vw)}
 <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
 <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/></symbol>
 <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
 <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
 <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -555,7 +580,7 @@ dialog.ed{width:min(720px,96vw)}
 <p id="lgMsg" role="alert"></p>
 </form></div></div>
 <div class="app">
-<aside class="side"><div class="brr"><a class="brand" href="#inicio"><img class="logoimg lg-l" src="logo-vinho.png" alt="CertSiga Certificados Digitais"><img class="logoimg lg-d" src="logo-vinho-escura.png" alt="CertSiga Certificados Digitais"></a><button class="ib recb" data-act="rec" type="button" aria-label="Recolher menu" title="Recolher menu"><svg class="ic"><use href="#i-left"/></svg></button></div>
+<aside class="side"><div class="brr"><a class="brand" href="#inicio"><img class="logoimg lg-l" src="logo-vinho.png" alt="CertSiga Certificados Digitais"><img class="logoimg lg-d" src="logo-vinho-escura.png" alt="CertSiga Certificados Digitais"><img class="lg-s" src="simbolo.png" alt="CertSiga"></a><button class="ib recb" data-act="rec" type="button" aria-label="Recolher menu" title="Recolher menu"><svg class="ic"><use href="#i-left"/></svg></button></div>
 <nav class="menu" id="menu"></nav>
 <button class="usr" data-act="umenu" type="button" aria-haspopup="menu" aria-label="Menu do usuário"><span class="av" id="usrAv"></span><div class="un"><b id="usrNome"></b><small id="chipPapel"></small></div><svg class="ic chev"><use href="#i-up"/></svg></button></aside>
 <div class="mainc">
@@ -910,7 +935,9 @@ function initDtp(inp){
   var desc=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value");
   inp.type="hidden";
   var b=document.createElement("button");b.type="button";b.className="dtb";
-  var pintar=function(){var t=dtTxt(desc.get.call(inp));b.innerHTML=(t?'<span>'+esc(t)+'</span>':'<span class="ph0">Escolher data e hora</span>')+'<svg class="ic"><use href="#i-cal"/></svg>'};
+  var pintar=function(){var v=desc.get.call(inp),d=v?new Date(v):null;if(!d||isNaN(d)){b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="ph0">Escolher data e hora</span><svg class="ic"><use href="#i-down"/></svg>';return}
+    var dia=d.toLocaleDateString("pt-BR",{weekday:"short",day:"numeric",month:"long"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()});
+    b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="dx"><b>'+esc(dia.replace(" de "," de "))+'</b><small>'+d.getFullYear()+'</small></span><span class="dh2"><svg class="ic"><use href="#i-clock"/></svg>'+p2(d.getHours())+":"+p2(d.getMinutes())+'</span><svg class="ic"><use href="#i-down"/></svg>'};
   Object.defineProperty(inp,"value",{get:function(){return desc.get.call(inp)},set:function(v){desc.set.call(inp,v);pintar()},configurable:true});
   inp.parentNode.insertBefore(b,inp);pintar();
   b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();abrirDtp(inp,b)})}
@@ -922,7 +949,7 @@ function abrirDtp(inp,b){
   desenharDtp();dtpEl.classList.add("on");b.classList.add("on");
   var r=b.getBoundingClientRect(),w=dtpEl.offsetWidth,h=dtpEl.offsetHeight;
   dtpEl.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+"px";
-  dtpEl.style.top=(r.bottom+h+8>window.innerHeight&&r.top>h+8?r.top-h-6:r.bottom+6)+"px";
+  dtpEl.style.top=Math.max(8,Math.min(r.bottom+h+8>window.innerHeight&&r.top>h+8?r.top-h-6:r.bottom+6,window.innerHeight-h-8))+"px";
   var s=dtpEl.querySelector(".dt .s");if(s)dtpEl.querySelector(".dt").scrollTop=s.offsetTop-80}
 function fecharDtp(){if(dtpEl){dtpEl.classList.remove("on");if(dtpEl._b)dtpEl._b.classList.remove("on")}dtpIn=null}
 function desenharDtp(){
@@ -934,7 +961,8 @@ function desenharDtp(){
   var resto=(7-(ini0+dias)%7)%7;for(var j=1;j<=resto;j++){var d2=new Date(y,m+1,j);h+='<button type="button" class="o" data-d="'+iso(d2)+'">'+j+'</button>'}
   var hs='',cur=sel?p2(sel.getHours())+":"+p2(sel.getMinutes()):"";
   for(var t=6*60;t<=22*60;t+=30){var hh=p2(Math.floor(t/60))+":"+p2(t%60);hs+='<button type="button" data-t="'+hh+'" class="'+(hh===cur?"s":"")+'">'+hh+'</button>'}
-  dtpEl.innerHTML='<div class="dh"><button type="button" class="dn" data-n="-1" aria-label="Mês anterior">‹</button><b>'+esc(dtpMes.toLocaleDateString("pt-BR",{month:"long"}).replace(/^./,function(c){return c.toUpperCase()})+" de "+dtpMes.getFullYear())+'</b><button type="button" class="dn" data-n="1" aria-label="Próximo mês">›</button></div><div class="dbody"><div class="dg">'+h+'</div><div class="dt">'+hs+'</div></div><div class="df"><button type="button" data-x="limpar">Limpar</button><button type="button" data-x="hoje">Hoje</button><button type="button" data-x="ok">Pronto</button></div>'}
+  var res=sel?(function(){var w=sel.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()});return w+", "+p2(sel.getDate())+"/"+p2(sel.getMonth()+1)+"/"+sel.getFullYear()+" às "+p2(sel.getHours())+":"+p2(sel.getMinutes())})():"Nenhuma data escolhida";
+  dtpEl.innerHTML='<div class="at"><button type="button" data-a="0">Hoje</button><button type="button" data-a="1">Amanhã</button><button type="button" data-a="seg">Segunda</button><button type="button" data-a="7">Em 1 semana</button></div><div class="dbody"><div><div class="dh"><button type="button" class="dn" data-n="-1" aria-label="Mês anterior">‹</button><b>'+esc(dtpMes.toLocaleDateString("pt-BR",{month:"long"}).replace(/^./,function(c){return c.toUpperCase()})+" de "+dtpMes.getFullYear())+'</b><button type="button" class="dn" data-n="1" aria-label="Próximo mês">›</button></div><div class="dg">'+h+'</div></div><div><div class="dl">HORÁRIO</div><div class="dt">'+hs+'</div></div></div><div class="df"><span>'+esc(res)+'</span><div><button type="button" data-x="limpar">Limpar</button><button type="button" class="p" data-x="ok">Confirmar</button></div></div>'}
 function dtpGravar(dia,hora){
   var cur=dtpIn.value,base=cur?new Date(cur):null;
   var d=dia||(base?iso(base):iso(new Date())),t=hora||(base?p2(base.getHours())+":"+p2(base.getMinutes()):"09:00");
@@ -944,9 +972,9 @@ function dtpClick(e){
   if(t.dataset.n){dtpMes=new Date(dtpMes.getFullYear(),dtpMes.getMonth()+ +t.dataset.n,1);desenharDtp();return}
   if(t.dataset.d){dtpGravar(t.dataset.d,null);var o=new Date(t.dataset.d+"T12:00");dtpMes=new Date(o.getFullYear(),o.getMonth(),1);desenharDtp();return}
   if(t.dataset.t){dtpGravar(null,t.dataset.t);var sc=dtpEl.querySelector(".dt").scrollTop;desenharDtp();dtpEl.querySelector(".dt").scrollTop=sc;return}
+  if(t.dataset.a!==undefined){var n=new Date(),a0=t.dataset.a;if(a0==="seg"){var dd=(8-n.getDay())%7;n.setDate(n.getDate()+(dd||7))}else n.setDate(n.getDate()+ +a0);dtpGravar(iso(n),null);dtpMes=new Date(n.getFullYear(),n.getMonth(),1);desenharDtp();return}
   var x=t.dataset.x;
   if(x==="limpar"){dtpIn.value="";dtpIn.dispatchEvent(new Event("change",{bubbles:true}));fecharDtp()}
-  else if(x==="hoje"){var n=new Date(),mm=n.getMinutes()<30?"00":"30";dtpIn.value=iso(n)+"T"+p2(n.getHours())+":"+mm;dtpIn.dispatchEvent(new Event("change",{bubbles:true}));fecharDtp()}
   else if(x==="ok")fecharDtp()}
 document.addEventListener("click",function(e){if(dtpEl&&dtpEl.classList.contains("on")&&!e.target.closest("#dtp")&&!e.target.closest(".dtb"))fecharDtp()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&dtpEl&&dtpEl.classList.contains("on")){e.preventDefault();e.stopPropagation();fecharDtp()}},true);
