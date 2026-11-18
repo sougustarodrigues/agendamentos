@@ -541,6 +541,28 @@ label:has(>.dtb){grid-column:1/-1}
 #dtp .df button{height:36px;padding:0 14px;border-radius:12px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font:inherit;font-weight:800;font-size:13px;cursor:pointer}
 #dtp .df button.p{background:var(--btn);border-color:var(--btn);color:var(--onpr)}
 @media(max-width:600px){#dtp .dbody{grid-template-columns:1fr}#dtp .dt{max-height:140px;grid-template-columns:repeat(4,1fr)}}
+
+.ev.cen{--c:#7c3aed}
+.ev.cen::after{content:"Na central";position:absolute;right:5px;top:4px;font-size:9.5px;font-weight:800;color:#6d28d9;background:#ede9fe;border-radius:99px;padding:0 6px;line-height:15px}
+html[data-modo="escuro"] .ev.cen::after{background:#3b2a6b;color:#d8c8ff}
+.cenInfo{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-radius:16px;background:#f3eefe;border:1px solid #ddd0fa;color:#4c2a98;font-size:14px;margin-bottom:16px}
+.cenInfo b{display:block;font-weight:800}.cenInfo p{margin:2px 0 0}
+html[data-modo="escuro"] .cenInfo{background:#241b3d;border-color:#4a3a7a;color:#d8c8ff}
+.cenMt{display:inline-block;padding:6px 12px;border-radius:99px;background:#ede9fe;color:#5b21b6;font-weight:800;font-size:12.5px;white-space:nowrap}
+html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
+.cenFila{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;font-weight:800;font-size:12.5px;white-space:nowrap;background:#e3f4e3;color:#006300}
+.cenFila.am{background:#fff0c9;color:#8a5a00}.cenFila.vm{background:#fde2e2;color:#a01818}
+.cenCl{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--bg);border:1px solid var(--ln);margin-bottom:12px}
+.cenCl b{display:block;font-weight:800}.cenCl small{color:var(--mu)}
+.cenPr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--mu)}
+.cenAcs{display:flex;gap:6px;justify-content:flex-end;flex-wrap:nowrap}
+#dlgC .mb{display:flex;flex-direction:column;gap:12px}
+.cenAcs .qa{padding:6px 10px;font-size:12.5px;white-space:nowrap}
+#cenLista .tb2 td,#cenLista .tb2 th{padding-left:8px;padding-right:8px}
+#dlgC .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#dlgC label.ck{display:flex;align-items:center;gap:10px;font-weight:600}
+#dlgC label.ck input{width:18px;height:18px}
+@media(max-width:600px){#dlgC .g2{grid-template-columns:1fr}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -567,6 +589,8 @@ label:has(>.dtb){grid-column:1/-1}
 <symbol id="i-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/></symbol>
 <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></symbol>
 <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
 <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
 <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -633,6 +657,14 @@ label:has(>.dtb){grid-column:1/-1}
 <div id="semana"></div>
 <div id="lista" class="sheet" hidden></div>
 <div class="selmob" id="selMob"></div>
+</section>
+
+<section class="pg" id="v-central">
+<div class="ph"><div><h1>Central de verificação</h1><p class="sub">Certificados que não foram aprovados direto e estão em análise.</p></div></div>
+<div class="kpis" id="cenKpis"></div>
+<div class="cenInfo"><span class="ki"><svg class="ic"><use href="#i-eye"/></svg></span><div><b>Como funciona</b><p>Quando o certificado não é aprovado direto, use “Enviar para a central” no cartão. Ele continua na agenda com a etiqueta “Na central”, aparece aqui com o motivo e o protocolo, e volta como Validado ou Reagendado quando você resolver.</p></div></div>
+<div class="fl" id="cenFiltros"></div>
+<div class="sheet"><div class="tbw" id="cenLista"></div></div>
 </section>
 
 <section class="pg" id="v-renovacoes">
@@ -825,6 +857,16 @@ label:has(>.dtb){grid-column:1/-1}
 <dialog id="dlgOb" class="ob"><div class="dl"><div class="obh"><img src="logo-branca.png" alt="CertSiga"><h3>Bem-vindo à Certsiga!</h3><p>Vamos configurar o seu perfil. Leva menos de um minuto.</p></div>
 <div class="mb"><div class="obr"><button type="button" class="avb vz" id="obAv" data-act="obFoto" aria-label="Adicionar foto">Adicionar foto</button><div style="flex:1;min-width:0"><label>Como você quer ser chamado?<input id="obNome" maxlength="80" autocomplete="name"></label><p class="hint" style="margin-top:6px">Esse nome aparece na saudação e nos comentários.</p></div></div><p class="hint">A foto é opcional. Você muda tudo isso depois em Meu perfil.</p><input type="file" id="obArq" accept="image/*" hidden></div>
 <div class="mf"><button class="btn" data-act="obPular" type="button">Pular por enquanto</button><button class="btn p" data-act="obOk" type="button">Continuar para o tour</button></div></div></dialog>
+<dialog id="dlgC" class="ed"><div class="dl"><div class="mh"><div><h3>Enviar para a central de verificação</h3><p class="sub" id="cSub"></p></div><button class="ib" type="button" data-act="cFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<div class="mb"><div class="cenCl" id="cCl"></div>
+<div class="g2"><label>Motivo<select id="c_motivo"><option>Divergência de dados</option><option>Documento ilegível</option><option>Análise da AR</option><option>Aguardando cliente</option><option>Outros</option></select></label>
+<label>Protocolo da AR<input id="c_prot" placeholder="Ex.: PRT-884102" autocomplete="off"></label>
+<label>Prazo para retorno<input id="c_prazo" data-dia="1" type="text"></label>
+<label>Responsável pelo acompanhamento<input id="c_resp" autocomplete="off"></label></div>
+<label>O que falta resolver<textarea id="c_obs" rows="3" placeholder="Descreva o que precisa ser corrigido ou enviado"></textarea></label>
+<label class="ck"><input id="c_wa" type="checkbox" checked> Avisar o cliente por WhatsApp com a lista do que falta</label>
+<p class="hint">O cartão continua na agenda com a etiqueta “Na central” e aparece na Central até você aprovar ou reagendar.</p></div>
+<div class="mf"><span class="fx"></span><button class="btn" data-act="cFechar" type="button">Cancelar</button><button class="btn p" data-act="cSalvar" type="button">Enviar para a central</button></div></div></dialog>
 <dialog id="dlgE" class="ed"><div class="dl"><div class="mh"><div><h3>Editar atendimento</h3><p class="sub" id="eSub"></p></div><button class="ib" type="button" data-act="eFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
 <div class="mb" id="eGrid"></div>
 <div class="mf"><button class="btn" id="eDel" data-act="eDel" type="button">Excluir</button><span class="fx"></span><button class="btn" data-act="eFechar" type="button">Cancelar</button><button class="btn p" data-act="eSalvar" type="button">Salvar alterações</button></div></div></dialog>
@@ -842,7 +884,7 @@ label:has(>.dtb){grid-column:1/-1}
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis=(window.innerWidth<900?"dia":"semana"),renJan=60,dlgId=null,selId=null,diaSel=null,fSt="",fTp="",calM=new Date(),HH=96,DUR=30,arr=null,grab=0;
 var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade","pagador"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
-var PAGS=["inicio","agenda","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
+var PAGS=["inicio","agenda","central","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
 function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
 function dig(s){return (s||"").replace(/\D/g,"")}
@@ -937,14 +979,15 @@ window.addEventListener("hashchange",function(){navN++});
 /* ---------- seletor de data e hora ---------- */
 var dtpEl=null,dtpIn=null,dtpMes=null;
 function dtTxt(v){if(!v)return"";var d=new Date(v);if(isNaN(d))return"";return d.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()})+", "+p2(d.getDate())+"/"+p2(d.getMonth()+1)+"/"+d.getFullYear()+" · "+p2(d.getHours())+":"+p2(d.getMinutes())}
+function dtD(v){return new Date(String(v).length===10?v+"T12:00":v)}
 function initDtp(inp){
   if(!inp||inp.dataset.dtp)return;inp.dataset.dtp="1";
   var desc=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value");
   inp.type="hidden";
   var b=document.createElement("button");b.type="button";b.className="dtb";
-  var pintar=function(){var v=desc.get.call(inp),d=v?new Date(v):null;if(!d||isNaN(d)){b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="ph0">Escolher data e hora</span><svg class="ic"><use href="#i-down"/></svg>';return}
+  var pintar=function(){var v=desc.get.call(inp),d=v?dtD(v):null;if(!d||isNaN(d)){b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="ph0">Escolher data e hora</span><svg class="ic"><use href="#i-down"/></svg>';return}
     var dia=d.toLocaleDateString("pt-BR",{weekday:"short",day:"numeric",month:"long"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()});
-    b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="dx"><b>'+esc(dia.replace(" de "," de "))+'</b><small>'+d.getFullYear()+'</small></span><span class="dh2"><svg class="ic"><use href="#i-clock"/></svg>'+p2(d.getHours())+":"+p2(d.getMinutes())+'</span><svg class="ic"><use href="#i-down"/></svg>'};
+    b.innerHTML='<span class="di"><svg class="ic"><use href="#i-cal"/></svg></span><span class="dx"><b>'+esc(dia.replace(" de "," de "))+'</b><small>'+d.getFullYear()+'</small></span>'+(inp.dataset.dia?"":'<span class="dh2"><svg class="ic"><use href="#i-clock"/></svg>'+p2(d.getHours())+":"+p2(d.getMinutes())+'</span>')+'<svg class="ic"><use href="#i-down"/></svg>'};
   Object.defineProperty(inp,"value",{get:function(){return desc.get.call(inp)},set:function(v){desc.set.call(inp,v);pintar()},configurable:true});
   inp.parentNode.insertBefore(b,inp);pintar();
   b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();abrirDtp(inp,b)})}
@@ -952,7 +995,7 @@ function abrirDtp(inp,b){
   if(!dtpEl){dtpEl=document.createElement("div");dtpEl.id="dtp";dtpEl.addEventListener("click",dtpClick)}
   if(dtpEl.classList.contains("on")&&dtpIn===inp){fecharDtp();return}
   (b.closest("dialog")||document.body).appendChild(dtpEl);dtpIn=inp;dtpEl._b=b;
-  var v=inp.value,d=v?new Date(v):new Date();if(isNaN(d))d=new Date();dtpMes=new Date(d.getFullYear(),d.getMonth(),1);
+  var v=inp.value,d=v?dtD(v):new Date();if(isNaN(d))d=new Date();dtpMes=new Date(d.getFullYear(),d.getMonth(),1);
   desenharDtp();dtpEl.classList.add("on");b.classList.add("on");
   var r=b.getBoundingClientRect(),w=dtpEl.offsetWidth,h=dtpEl.offsetHeight;
   dtpEl.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+"px";
@@ -960,20 +1003,20 @@ function abrirDtp(inp,b){
   var s=dtpEl.querySelector(".dt .s");if(s)dtpEl.querySelector(".dt").scrollTop=s.offsetTop-80}
 function fecharDtp(){if(dtpEl){dtpEl.classList.remove("on");if(dtpEl._b)dtpEl._b.classList.remove("on")}dtpIn=null}
 function desenharDtp(){
-  var v=dtpIn.value,sel=v?new Date(v):null,hoje=new Date(),y=dtpMes.getFullYear(),m=dtpMes.getMonth();
+  var dia=!!dtpIn.dataset.dia,v=dtpIn.value,sel=v?dtD(v):null,hoje=new Date(),y=dtpMes.getFullYear(),m=dtpMes.getMonth();
   var ini0=new Date(y,m,1).getDay(),dias=new Date(y,m+1,0).getDate(),h='';
   ["D","S","T","Q","Q","S","S"].forEach(function(x){h+='<i>'+x+'</i>'});
   for(var i=0;i<ini0;i++){var dd=new Date(y,m,1-ini0+i);h+='<button type="button" class="o" data-d="'+iso(dd)+'">'+dd.getDate()+'</button>'}
   for(var k=1;k<=dias;k++){var dk=new Date(y,m,k),isoK=iso(dk);h+='<button type="button" data-d="'+isoK+'" class="'+(isoK===iso(hoje)?"h ":"")+(sel&&isoK===iso(sel)?"s":"")+'">'+k+'</button>'}
   var resto=(7-(ini0+dias)%7)%7;for(var j=1;j<=resto;j++){var d2=new Date(y,m+1,j);h+='<button type="button" class="o" data-d="'+iso(d2)+'">'+j+'</button>'}
   var hs='',cur=sel?p2(sel.getHours())+":"+p2(sel.getMinutes()):"";
-  for(var t=6*60;t<=22*60;t+=30){var hh=p2(Math.floor(t/60))+":"+p2(t%60);hs+='<button type="button" data-t="'+hh+'" class="'+(hh===cur?"s":"")+'">'+hh+'</button>'}
-  var res=sel?(function(){var w=sel.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()});return w+", "+p2(sel.getDate())+"/"+p2(sel.getMonth()+1)+"/"+sel.getFullYear()+" às "+p2(sel.getHours())+":"+p2(sel.getMinutes())})():"Nenhuma data escolhida";
-  dtpEl.innerHTML='<div class="at"><button type="button" data-a="0">Hoje</button><button type="button" data-a="1">Amanhã</button><button type="button" data-a="seg">Segunda</button><button type="button" data-a="7">Em 1 semana</button></div><div class="dbody"><div><div class="dh"><button type="button" class="dn" data-n="-1" aria-label="Mês anterior">‹</button><b>'+esc(dtpMes.toLocaleDateString("pt-BR",{month:"long"}).replace(/^./,function(c){return c.toUpperCase()})+" de "+dtpMes.getFullYear())+'</b><button type="button" class="dn" data-n="1" aria-label="Próximo mês">›</button></div><div class="dg">'+h+'</div></div><div><div class="dl">HORÁRIO</div><div class="dt">'+hs+'</div></div></div><div class="df"><span>'+esc(res)+'</span><div><button type="button" data-x="limpar">Limpar</button><button type="button" class="p" data-x="ok">Confirmar</button></div></div>'}
+  for(var t=6*60;!dia&&t<=22*60;t+=30){var hh=p2(Math.floor(t/60))+":"+p2(t%60);hs+='<button type="button" data-t="'+hh+'" class="'+(hh===cur?"s":"")+'">'+hh+'</button>'}
+  var res=sel?(function(){var w=sel.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()});return w+", "+p2(sel.getDate())+"/"+p2(sel.getMonth()+1)+"/"+sel.getFullYear()+(dia?"":" às "+p2(sel.getHours())+":"+p2(sel.getMinutes()))})():"Nenhuma data escolhida";
+  dtpEl.innerHTML='<div class="at"><button type="button" data-a="0">Hoje</button><button type="button" data-a="1">Amanhã</button><button type="button" data-a="seg">Segunda</button><button type="button" data-a="7">Em 1 semana</button></div><div class="dbody" style="'+(dia?"grid-template-columns:1fr":"")+'"><div><div class="dh"><button type="button" class="dn" data-n="-1" aria-label="Mês anterior">‹</button><b>'+esc(dtpMes.toLocaleDateString("pt-BR",{month:"long"}).replace(/^./,function(c){return c.toUpperCase()})+" de "+dtpMes.getFullYear())+'</b><button type="button" class="dn" data-n="1" aria-label="Próximo mês">›</button></div><div class="dg">'+h+'</div></div>'+(dia?'':'<div><div class="dl">HORÁRIO</div><div class="dt">'+hs+'</div></div>')+'</div><div class="df"><span>'+esc(res)+'</span><div><button type="button" data-x="limpar">Limpar</button><button type="button" class="p" data-x="ok">Confirmar</button></div></div>'}
 function dtpGravar(dia,hora){
-  var cur=dtpIn.value,base=cur?new Date(cur):null;
+  var cur=dtpIn.value,base=cur?dtD(cur):null;
   var d=dia||(base?iso(base):iso(new Date())),t=hora||(base?p2(base.getHours())+":"+p2(base.getMinutes()):"09:00");
-  dtpIn.value=d+"T"+t;dtpIn.dispatchEvent(new Event("input",{bubbles:true}));dtpIn.dispatchEvent(new Event("change",{bubbles:true}))}
+  dtpIn.value=dtpIn.dataset.dia?d:d+"T"+t;dtpIn.dispatchEvent(new Event("input",{bubbles:true}));dtpIn.dispatchEvent(new Event("change",{bubbles:true}))}
 function dtpClick(e){
   e.stopPropagation();var t=e.target.closest("button");if(!t)return;
   if(t.dataset.n){dtpMes=new Date(dtpMes.getFullYear(),dtpMes.getMonth()+ +t.dataset.n,1);desenharDtp();return}
@@ -987,12 +1030,47 @@ document.addEventListener("click",function(e){if(dtpEl&&dtpEl.classList.contains
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&dtpEl&&dtpEl.classList.contains("on")){e.preventDefault();e.stopPropagation();fecharDtp()}},true);
 initDtp($("agenda"));
 
+/* ---------- central de verificação ---------- */
+var CENT=["central","cMotivo","cProt","cPrazo","cResp","cObs","cDesde"],cenFil="";
+var CMOT=["Documento ilegível","Divergência de dados","Análise da AR","Aguardando cliente","Outros"];
+function naCentral(d){return d.central==="1"&&d.status!=="Cancelado"&&d.status!=="Validado"}
+function cenDias(d){var a=d.cDesde?new Date(d.cDesde+"T12:00"):null;if(!a)return 0;return Math.max(0,Math.round((new Date(iso(new Date())+"T12:00")-a)/864e5))}
+function cenPreservar(o,a){CENT.forEach(function(k){if(a[k]!==undefined)o[k]=a[k]});if(a.cAprov)o.cAprov=a.cAprov}
+function cenLimpar(d,aprov){CENT.forEach(function(k){delete d[k]});if(aprov)d.cAprov="1"}
+function renderCentral(){
+  if(!$("cenLista"))return;
+  var L=dados.filter(naCentral).sort(function(a,b){return (a.cDesde||"").localeCompare(b.cDesde||"")}),mes=iso(new Date()).slice(0,7);
+  badge("central",L.length);
+  var ag=L.filter(function(d){return d.cMotivo==="Aguardando cliente"}).length,at=L.filter(function(d){return cenDias(d)>3}).length;
+  var vm=dados.filter(function(d){return d.status==="Validado"&&dataVal(d).slice(0,7)===mes}),ap=vm.filter(function(d){return d.cAprov==="1"}).length,dir=vm.length?Math.round((vm.length-ap)/vm.length*100):0;
+  $("cenKpis").innerHTML=kpi("eye",L.length,"em verificação")+kpi("clock",ag,"aguardando o cliente")+kpi("alert",at,"há mais de 3 dias")+kpi("check",ap,"aprovados da central no mês"+(vm.length?" · "+dir+"% de aprovação direta":""));
+  var cont={};L.forEach(function(d){var m=CMOT.indexOf(d.cMotivo)>-1?d.cMotivo:"Outros";cont[m]=(cont[m]||0)+1});
+  $("cenFiltros").innerHTML='<button class="fc'+(cenFil?"":" on")+'" data-act="cenFil" data-id="">Todos <em>'+L.length+'</em></button>'+CMOT.filter(function(m){return cont[m]}).map(function(m){return '<button class="fc'+(cenFil===m?" on":"")+'" data-act="cenFil" data-id="'+esc(m)+'">'+esc(m)+' <em>'+cont[m]+'</em></button>'}).join("");
+  var V=cenFil?L.filter(function(d){return (CMOT.indexOf(d.cMotivo)>-1?d.cMotivo:"Outros")===cenFil}):L,ed=pode("editar");
+  $("cenLista").innerHTML=V.length?'<table class="tb2"><thead><tr><th>Cliente</th><th>Motivo</th><th>Enviado</th><th>Na fila</th><th>Protocolo</th><th></th></tr></thead><tbody>'+V.map(function(d){var n=cenDias(d),cl=n>=4?" vm":n>=2?" am":"";
+    return '<tr><td><b>'+esc(bonito(d.nome)||"Sem nome")+'</b><br><small style="color:var(--mu)">'+esc([d.modelo,d.contab||"Cliente"].filter(Boolean).join(" · "))+'</small></td><td><span class="cenMt">'+esc(d.cMotivo||"Outros")+'</span></td><td>'+esc(d.cDesde?fmtData(parseISO(d.cDesde)).slice(0,5):"—")+'</td><td><span class="cenFila'+cl+'">'+(n===0?"Hoje":n+(n===1?" dia":" dias"))+'</span></td><td class="cenPr">'+esc(d.cProt||"—")+'</td><td><div class="cenAcs">'+qa("det","Abrir",d.id)+(ed?qa("cenReag","Reagendar",d.id)+qa("cenAprov","Aprovar",d.id," p"):"")+'</div></td></tr>'}).join("")+'</tbody></table>'
+    :'<p class="empty">Nenhum certificado na central'+(cenFil?" com esse motivo":"")+'. Use “Enviar para a central” no cartão do atendimento quando um certificado não for aprovado direto.</p>'}
+function cenAbrir(id){var d=dados.find(function(x){return x.id===id});if(!d||!pode("editar"))return;
+  $("cSub").textContent=bonito(d.nome)+" · "+(d.agenda?fmtData(parseISO(d.agenda.slice(0,10)))+" "+(d.agenda.slice(11,16)||""):"sem data");
+  $("cCl").innerHTML='<span class="av">'+esc(ini(d.nome||"?"))+'</span><div><b>'+esc(bonito(d.nome)||"Sem nome")+'</b><small>'+esc([d.modelo,d.tipo].filter(Boolean).join(" · "))+'</small></div>';
+  $("c_motivo").value=d.cMotivo||"Divergência de dados";$("c_prot").value=d.cProt||"";$("c_prazo").value=d.cPrazo||"";$("c_resp").value=d.cResp||(($("usrNome")&&$("usrNome").textContent)||"").split(" ")[0];$("c_obs").value=d.cObs||"";
+  $("c_wa").checked=!!d.tel;$("dlgC").dataset.id=id;if(!$("c_prazo").dataset.dtp)initDtp($("c_prazo"));$("dlgC").showModal()}
+function cenSalvar(){var id=$("dlgC").dataset.id,d=dados.find(function(x){return x.id===id});if(!d)return;
+  var obs=$("c_obs").value.trim();if(!obs){toast("Descreva o que falta resolver.");$("c_obs").focus();return}
+  d.central="1";d.cMotivo=$("c_motivo").value;d.cProt=$("c_prot").value.trim();d.cPrazo=$("c_prazo").value;d.cResp=$("c_resp").value.trim();d.cObs=obs;if(!d.cDesde)d.cDesde=iso(new Date());
+  var wa=$("c_wa").checked;$("dlgC").close();gravar();render();toast("Enviado para a central ✓");
+  if(wa)waLink(d,"Olá, "+primeiro(d)+"! Sobre a validação do seu certificado digital, precisamos de um ajuste ("+d.cMotivo.toLowerCase()+"):\n\n"+obs+(d.cPrazo?"\n\nPode nos retornar até "+fmtData(parseISO(d.cPrazo.slice(0,10)))+"?":"")+"\n\nCertsiga Certificado Digital")}
+function cenReag(id){var d=dados.find(function(x){return x.id===id});if(!d||!pode("editar"))return;
+  d.hist=((d.hist?d.hist+" | ":"")+"Voltou da central ("+(d.cMotivo||"")+") em "+fmtData(new Date())).slice(0,400);cenLimpar(d);d.status="Agendado";gravar();render();editar(id);toast("Saiu da central. Escolha a nova data.")}
+function cenAprov(id){var d=dados.find(function(x){return x.id===id});if(!d||!pode("editar"))return;cenLimpar(d,true);gravar();render();abrirValidar(id)}
+
+var _rd=render;render=function(){var r=_rd.apply(this,arguments);try{renderCentral()}catch(e){}return r};
 function montarE(){var g=$("eGrid");if(g.firstChild)return;["nome","cpf","cnpj","nasc","rg","cnh","resp","email","tel","contab","pagador","agenda","status","tipo","link","modelo","validade","valor","pedido","hist"].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="e_"+n.id});[].forEach.call(l.querySelectorAll(".dtb"),function(n){n.remove()});[].forEach.call(l.querySelectorAll("[data-dtp]"),function(n){n.removeAttribute("data-dtp")});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});g.appendChild(l)});initDtp($("e_agenda"))}
 function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;if(!pode("editar")){abrirDet(id);return}
   montarE();CAMPOS.forEach(function(c){$("e_"+c).value=d[c]||""});eId=id;$("eSub").textContent=(bonito(d.nome)||"Sem nome")+(d.agenda?" · "+fmtAgenda(d.agenda):"");$("eDel").hidden=!pode("excluir");$("dlgE").showModal()}
 function salvarE(){var i=dados.findIndex(function(d){return d.id===eId});if(i<0)return;var o={};CAMPOS.forEach(function(c){o[c]=$("e_"+c).value.trim()});
   if(!o.nome){toast("Informe o nome.");$("e_nome").focus();return}
-  o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);var a=dados[i];o.id=eId;o.criado=a.criado;o.validadoEm=a.validadoEm;o.lembrete=a.agenda===o.agenda?a.lembrete:"";
+  o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);var a=dados[i];o.id=eId;o.criado=a.criado;o.validadoEm=a.validadoEm;o.lembrete=a.agenda===o.agenda?a.lembrete:"";cenPreservar(o,a);
   if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());dados[i]=o;gravar();render();$("dlgE").close();toast("Alterações salvas ✓")}
 var hvt=document.createElement("div");hvt.className="hvt";document.body.appendChild(hvt);
 function hideHov(){if(hovEl){hovEl.style.display="none"}hvt.style.display="none";[].forEach.call(document.querySelectorAll(".tgt .hl"),function(x){x.classList.remove("hl")})}
@@ -1121,7 +1199,7 @@ function salvar(){
   var o=ler();
   if(!o.nome){toast("Informe o nome.");$("nome").focus();return}
   var i=editId?dados.findIndex(function(d){return d.id===editId}):-1;
-  if(i>-1){o.id=editId;o.criado=dados[i].criado;o.validadoEm=dados[i].validadoEm;o.lembrete=dados[i].agenda===o.agenda?dados[i].lembrete:"";dados[i]=o}
+  if(i>-1){o.id=editId;o.criado=dados[i].criado;o.validadoEm=dados[i].validadoEm;o.lembrete=dados[i].agenda===o.agenda?dados[i].lembrete:"";cenPreservar(o,dados[i]);dados[i]=o}
   else{o.id=String(Date.now());o.criado=new Date().toISOString();dados.unshift(o)}
   if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());
   var fs=[].slice.call($("arqs").files),guardar=pode("anexos")&&$("guardar").checked&&fs.length;
@@ -1257,7 +1335,7 @@ function renderGrade(lista){
   var cols=keys.map(function(k){
     var ev=com.filter(function(d){return (d.agenda||"").slice(0,10)===k}).map(function(d){return {d:d,m:minDe(d)}});lanes(ev);
     var h=ev.map(function(e){var d=e.d,t=(e.m-h0*60)/60*HH,w=100/e.n,ico=d.tipo==="Videoconferência"?ic("video"):d.tipo==="Presencial"?ic("pin"):"";
-      return '<div class="ev '+(ST[d.status]||"")+(selId===d.id?" sel":"")+'" role="button" tabindex="0" data-act="sel" data-id="'+d.id+'"'+(ed?' draggable="true"':'')+' title="'+esc(bonito(d.nome)+" · "+hm(e.m)+(d.modelo?" · "+d.modelo:""))+'" style="top:'+t+'px;height:'+(DUR/60*HH-2)+'px;left:calc('+(e.l*w)+'% + 2px);width:calc('+w+'% - 4px)"><b>'+esc(bonito(d.nome)||"Sem nome")+'</b><span>'+ico+hm(e.m)+'</span></div>'}).join("");
+      return '<div class="ev '+(ST[d.status]||"")+(naCentral(d)?" cen":"")+(selId===d.id?" sel":"")+'" role="button" tabindex="0" data-act="sel" data-id="'+d.id+'"'+(ed?' draggable="true"':'')+' title="'+esc(bonito(d.nome)+" · "+hm(e.m)+(d.modelo?" · "+d.modelo:""))+'" style="top:'+t+'px;height:'+(DUR/60*HH-2)+'px;left:calc('+(e.l*w)+'% + 2px);width:calc('+w+'% - 4px)"><b>'+esc(bonito(d.nome)||"Sem nome")+'</b><span>'+ico+hm(e.m)+'</span></div>'}).join("");
     var now=(k===hojeI&&am>=h0*60&&am<=h1*60)?'<div class="agora" style="top:'+((am-h0*60)/60*HH)+'px"></div>':"";
     return '<div class="tgc'+(k===hojeI?" hoje":"")+'" data-k="'+k+'" data-h0="'+h0+'" style="height:'+alt+'px">'+h+now+'</div>'}).join("");
   box.innerHTML='<div class="tg" style="--n:'+n+';--hh:'+HH+'px"><div class="tgs"><div class="tgi">'+head+nh+'<div class="tgb"><div class="tgt" style="height:'+alt+'px">'+lab+'</div>'+cols+'</div></div></div></div>';
@@ -1298,7 +1376,7 @@ function selHtml(){
   var ed=pode("editar"),hora=(d.agenda||"").slice(11,16),dt=d.agenda?new Date(d.agenda.slice(0,10)+"T12:00"):null;
   var opts=ORD.map(function(s){return '<option'+(s===d.status?' selected':'')+'>'+s+'</option>'}).join("");
   var pill=ed?'<select class="pill '+(ST[d.status]||"")+'" data-id="'+d.id+'" aria-label="Status">'+opts+'</select>':'<span class="pill '+(ST[d.status]||"")+'" style="cursor:default">'+esc(d.status)+'</span>';
-  var q="";if(ed){if(d.status==="Agendado")q+=qa("conf","Confirmar",d.id);if(d.status==="Agendado"||d.status==="Confirmado")q+=qa("val","Validar",d.id," p");q+=ib("wa","chat","Confirmação no WhatsApp",d.id)+ib("wal","clock","Lembrete de 10 minutos no WhatsApp",d.id)}
+  var q="";if(ed){if(d.status==="Agendado")q+=qa("conf","Confirmar",d.id);if(d.status==="Agendado"||d.status==="Confirmado")q+=qa("val","Validar",d.id," p");if(!naCentral(d)&&(d.status==="Agendado"||d.status==="Confirmado"))q+=qa("cenEnv","Enviar para a central",d.id);q+=ib("wa","chat","Confirmação no WhatsApp",d.id)+ib("wal","clock","Lembrete de 10 minutos no WhatsApp",d.id)}
   var R=[["Tipo",d.tipo],["Modelo",d.modelo],["CPF",d.cpf],["CNPJ",d.cnpj],["Telefone",d.tel],["E-mail",d.email],["Contabilidade",d.contab],["Valor",d.valor?"R$ "+d.valor:""],["Quem paga",d.pagador==="contabilidade"?"Contabilidade":"Cliente"]].filter(function(r){return r[1]});
   return '<div class="sheet selp"><div class="sel-h"><div><div class="sl">SELECIONADO</div><strong>'+esc(bonito(d.nome)||"Sem nome")+'</strong><small>'+(dt?dt.toLocaleDateString("pt-BR",{weekday:"short",day:"numeric"}).replace(".","")+" · ":"")+(hora||"sem horário")+'</small></div><div style="display:flex;gap:6px;align-items:center">'+pill+'<button class="ib" data-act="selx" aria-label="Fechar detalhes">'+ic("x")+'</button></div></div>'
     +(q?'<div class="acts" style="margin:0">'+q+'</div>':'')
@@ -1358,6 +1436,12 @@ document.addEventListener("click",function(e){
   else if(a==="quitar")quitar(id);
   else if(a==="pgSalvar")salvarPgto();
   else if(a==="pgFechar")$("dlgP").close();
+  else if(a==="cenEnv")cenAbrir(id);
+  else if(a==="cSalvar")cenSalvar();
+  else if(a==="cFechar")$("dlgC").close();
+  else if(a==="cenReag")cenReag(id);
+  else if(a==="cenAprov")cenAprov(id);
+  else if(a==="cenFil"){cenFil=id||"";renderCentral()}
   else if(a==="det")abrirDet(id);
   else if(a==="dFechar")$("dlgD").close();
   else if(a==="cmtEnviar")enviarCmt();
@@ -1538,12 +1622,12 @@ async function testarGemini(){
 /* ---------- níveis de acesso ---------- */
 var papel=null,pgtos={},meuEmail="",perI="mes",finF="todos",detId=null,pgId=null;
 var PAPEL_NOME={admin:"Administrador",financeiro:"Financeiro",comercial:"Comercial"};
-var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],renovacoes:["Renovações","refresh"],novo:["Novo atendimento","plus"],financeiro:["Financeiro","money"],contabs:["Contabilidades","brief"],backup:["Ajustes","shield"],usuarios:["Usuários","user"]};
+var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],central:["Central","eye"],renovacoes:["Renovações","refresh"],novo:["Novo atendimento","plus"],financeiro:["Financeiro","money"],contabs:["Contabilidades","brief"],backup:["Ajustes","shield"],usuarios:["Usuários","user"]};
 var NAVT={novo:"Novo",renovacoes:"Renovar"};
-var GRUPOS=[["Principal",["inicio","agenda","renovacoes","novo"]],["Financeiro",["financeiro","contabs"]],["Sistema",["backup","usuarios"]]];
+var GRUPOS=[["Principal",["inicio","agenda","central","renovacoes","novo"]],["Financeiro",["financeiro","contabs"]],["Sistema",["backup","usuarios"]]];
 var ACESSO={
-  admin:{pags:["inicio","agenda","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","renovacoes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
-  comercial:{pags:["inicio","agenda","renovacoes","novo","perfil"],menu:["inicio","agenda","renovacoes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
+  admin:{pags:["inicio","agenda","central","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","central","renovacoes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
+  comercial:{pags:["inicio","agenda","central","renovacoes","novo","perfil"],menu:["inicio","agenda","central","renovacoes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
   financeiro:{pags:["inicio","agenda","financeiro","contabs","perfil"],menu:["inicio","agenda","financeiro","contabs"],tab:["inicio","agenda","financeiro","contabs"]}};
 function pode(a){var p=papel;
   if(a==="editar"||a==="anexos")return p==="admin"||p==="comercial";
