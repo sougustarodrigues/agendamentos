@@ -591,8 +591,17 @@ dialog.ed.wide{width:min(860px,96vw)}
 .iOp{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-weight:600}.iOp label{display:flex;gap:8px;align-items:center}.iOp input{width:auto}
 @media(max-width:600px){.clAc{margin-left:0}#dlgCl .mb{grid-template-columns:1fr!important}}
 
+
+.fgr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.fbr{margin-top:12px}.fbr div{display:flex;justify-content:space-between;gap:10px;font-size:13.5px}.fbr div span{color:var(--mu);font-weight:700}.fbr i{display:block;height:10px;background:var(--softer);border-radius:99px;margin-top:6px;overflow:hidden}.fbr u{display:block;height:100%;border-radius:99px}
+.fch{display:flex;gap:10px;align-items:flex-end;height:150px;margin-top:14px}.fch>div{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;min-width:0}.fch span{flex:1;width:100%;display:flex;gap:3px;align-items:flex-end}.fch u{flex:1;border-radius:5px 5px 0 0;min-height:2px}.fch small{font-size:11px;color:var(--mu);font-weight:700}
+.fch .f,.fleg .f{background:#e8c6c2}.fch .r,.fleg .r{background:var(--pr)}.fleg{display:flex;gap:16px;font-size:12.5px;color:var(--mu);font-weight:700;margin-top:10px}.fleg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.fct{display:flex;align-items:center;gap:10px;padding:8px 0}.fct div{flex:1;min-width:0;line-height:1.3}.fct b{font-size:14px;display:block}.fct small{font-size:12px;color:var(--mu)}
+.fsel{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 16px;border-radius:14px;background:var(--pr);color:var(--onpr);margin-bottom:12px;font-size:14px}.fsel[hidden]{display:none}.fsel .btn{min-height:34px;padding:5px 12px;font-size:13px}
+.fck{width:18px;height:18px;min-height:0;flex:none;accent-color:var(--pr)}
+@media(max-width:900px){.fgr{grid-template-columns:1fr}}
 /* página do atendimento */
-body[data-pg="atend"] .rail{display:none!important}body[data-pg="atend"] .app{grid-template-columns:248px minmax(0,1fr)}body[data-pg="atend"] .app.rec{grid-template-columns:76px minmax(0,1fr)}
+body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .rail{display:none!important}body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .app{grid-template-columns:248px minmax(0,1fr)}body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .app.rec{grid-template-columns:76px minmax(0,1fr)}
 .atp{display:grid;gap:18px}.atbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .atcr{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mu);font-weight:600}.atcr .lk{background:none;border:0;color:var(--pr);font:inherit;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;padding:0}
 .atg{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:20px;align-items:start}.atl,.atr{display:grid;gap:16px;min-width:0}
@@ -687,9 +696,12 @@ body[data-pg="atend"] .rail{display:none!important}body[data-pg="atend"] .app{gr
 <section class="pg" id="v-atend"><div id="atBox"></div></section>
 
 <section class="pg" id="v-financeiro">
-<div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e relatório mensal →</a></div>
-<div class="seg" id="segFin"><button data-act="finf" data-v="todos" class="on">Todos</button><button data-act="finf" data-v="contab">Contabilidades</button><button data-act="finf" data-v="receber">A receber</button><button data-act="finf" data-v="parcial">Parciais</button><button data-act="finf" data-v="atraso">Em atraso</button><button data-act="finf" data-v="pago">Pagos</button></div></div>
-<div class="kpis" id="finKpis"></div>
+<div class="ph"><div><h1>Financeiro</h1><p class="sub">Visão do período, cobranças e recebimentos. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e relatório mensal →</a></div>
+<div class="row" style="margin:0"><div class="seg" id="segFinP"><button data-act="finp" data-v="mes" class="on">Este mês</button><button data-act="finp" data-v="30">30 dias</button><button data-act="finp" data-v="90">90 dias</button><button data-act="finp" data-v="ano">Ano</button><button data-act="finp" data-v="tudo">Tudo</button></div><button class="btn" type="button" data-act="finExp">Exportar planilha</button></div></div>
+<div class="kpis" id="finKpis" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))"></div>
+<div class="fgr" id="finCards"></div>
+<div class="seg" id="segFin" style="margin:6px 0 14px"><button data-act="finf" data-v="todos" class="on">Todos</button><button data-act="finf" data-v="contab">Contabilidades</button><button data-act="finf" data-v="receber">A receber</button><button data-act="finf" data-v="parcial">Parciais</button><button data-act="finf" data-v="atraso">Em atraso</button><button data-act="finf" data-v="pago">Pagos</button></div>
+<div id="finSel" class="fsel" hidden></div>
 <div class="sheet"><div id="finLista"></div></div>
 </section>
 
@@ -1654,6 +1666,12 @@ document.addEventListener("click",function(e){
   else if(a==="det")abrirDet(id);
   else if(a==="dFechar")$("dlgD").close();
   else if(a==="atVoltar")aba("agenda");
+  else if(a==="finp"){finP=b.dataset.v;[].forEach.call($("segFinP").children,function(x){x.classList.toggle("on",x===b)});renderFin()}
+  else if(a==="finExp")finExportar(id==="sel");
+  else if(a==="finLote")finLote();
+  else if(a==="finLimpa"){finSel={};renderFin()}
+  else if(a==="finCt"){location.hash="contabs/"+id}
+  else if(a==="cobr"&&d)waLink(d,msgCobr(d));
   else if(a==="atSt")atStatus(b.dataset.v);
   else if(a==="atCk")atCk(+b.dataset.i);
   else if(a==="atCkDel")atCkDel(+b.dataset.i);
@@ -1879,16 +1897,54 @@ function pgSt(d){var p=pgtos[d.id];if(p&&p.status==="pago")return"pago";if(p&&p.
 var PG_TXT={receber:"○ A receber",parcial:"◐ Parcial",pago:"✓ Pago",atraso:"! Em atraso"};
 function pgBadge(d){var s=pgSt(d);return '<span class="pay p-'+s+'">'+PG_TXT[s]+'</span>'}
 function cobraveis(){return dados.filter(function(d){return d.status==="Validado"||pgtos[d.id]})}
+var finP="mes",finSel={};
+function finIni(){var h=new Date();if(finP==="mes")return iso(new Date(h.getFullYear(),h.getMonth(),1));if(finP==="30"||finP==="90"){var x=new Date();x.setDate(x.getDate()-(+finP-1));return iso(x)}if(finP==="ano")return h.getFullYear()+"-01-01";return"0000-00-00"}
+function finFim(){var h=new Date();if(finP==="mes")return iso(new Date(h.getFullYear(),h.getMonth()+1,0));if(finP==="ano")return h.getFullYear()+"-12-31";if(finP==="tudo")return"9999-12-31";return iso(h)}
+function finFiltro(d){var s=pgSt(d);return finF==="todos"||(finF==="contab"?d.pagador==="contabilidade":finF==="atraso"?s==="atraso":finF==="receber"?(s==="receber"||s==="atraso"):s===finF)}
+function finLinhas(){var a=finIni(),b=finFim();return cobraveis().filter(function(d){var k=dataVal(d);return k>=a&&k<=b&&finFiltro(d)}).sort(function(x,y){return dataVal(y).localeCompare(dataVal(x))})}
+function finBarra(l,v,n,w,c){return '<div class="fbr"><div><b>'+l+'</b><span>'+(n!=null?n+" · ":"")+v+'</span></div><i><u style="width:'+w+'%;background:'+c+'"></u></i></div>'}
+function msgCobr(d){return "Olá, "+primeiro(d)+"! Tudo bem? Aqui é o Gustavo, da Certsiga Certificado Digital. Passando para lembrar do pagamento do seu certificado digital"+(d.modelo?" ("+d.modelo+")":"")+(d.valor?", no valor de R$ "+d.valor:"")+". Posso te enviar os dados para pagamento? Qualquer dúvida, é só chamar."}
 function renderFin(){
   if(!pode("fin")){return}
-  var L=cobraveis(),mes=iso(new Date()).slice(0,7),rec=0,atr=0,par=0,tot=0;
-  L.forEach(function(d){var s=pgSt(d),sd=saldo(d);if(s!=="pago")tot+=sd;if(s==="atraso")atr+=sd;if(s==="parcial")par++});
-  Object.keys(pgtos).forEach(function(k){var p=pgtos[k];if(p.data_pgto&&p.data_pgto.slice(0,7)===mes)rec+=+p.valor_pago});
-  $("finKpis").innerHTML=kpi("money",brl(tot),"a receber")+kpi("clock",brl(atr),"em atraso")+kpi("check",brl(rec),"recebido no mês")+kpi("refresh",par,"pagamentos parciais");
-  var f=L.filter(function(d){var s=pgSt(d);return finF==="todos"||(finF==="contab"?d.pagador==="contabilidade":finF==="atraso"?s==="atraso":finF==="receber"?(s==="receber"||s==="atraso"):s===finF)}).sort(function(a,b){return dataVal(b).localeCompare(dataVal(a))});
+  var a=finIni(),b=finFim(),L=cobraveis(),fat=0,rec=0,aber=0,atr=0,atrN={},prazoS=0,prazoN=0,formas={},ag=[[0,0],[0,0],[0,0]];
+  L.forEach(function(d){var k=dataVal(d),s=pgSt(d),sd=saldo(d);
+    if(d.status==="Validado"&&k>=a&&k<=b)fat+=num(d.valor);
+    if(s!=="pago"){aber+=sd;var dias=diasDesde(k),i=dias<=7?0:dias<=30?1:2;ag[i][0]+=sd;ag[i][1]++}
+    if(s==="atraso"){atr+=sd;atrN[(d.nome||"")+"|"+d.id]=1}});
+  Object.keys(pgtos).forEach(function(k){var p=pgtos[k];if(!p.data_pgto||p.data_pgto.slice(0,10)<a||p.data_pgto.slice(0,10)>b)return;var v=+p.valor_pago||0;rec+=v;var f=p.forma||"Outros";formas[f]=(formas[f]||0)+v;
+    var d=dados.find(function(x){return x.id===k});if(d&&p.status==="pago"){var df=diasDesde(dataVal(d))-diasDesde(p.data_pgto);if(df>=0){prazoS+=df;prazoN++}}});
+  var nAtr=Object.keys(atrN).length,pz=prazoN?Math.round(prazoS/prazoN):null;
+  $("finKpis").innerHTML=kpi("money",brl(fat),"faturado no período")+kpi("check",brl(rec),"recebido"+(fat?" · "+Math.round(rec*100/fat)+"% do faturado":""))+kpi("clock",brl(aber),"a receber (total)")+kpi("alert",brl(atr),"em atraso"+(nAtr?" · "+nAtr+(nAtr===1?" cliente":" clientes"):""))+kpi("refresh",pz==null?"—":pz+(pz===1?" dia":" dias"),"prazo médio de recebimento");
+  /* gráfico 6 meses */
+  var hj=new Date(),ms=[];for(var i=5;i>=0;i--){var m=new Date(hj.getFullYear(),hj.getMonth()-i,1);ms.push({k:m.getFullYear()+"-"+p2(m.getMonth()+1),n:MESES[m.getMonth()],f:0,r:0})}
+  L.forEach(function(d){if(d.status!=="Validado")return;var m=ms.find(function(x){return x.k===dataVal(d).slice(0,7)});if(m)m.f+=num(d.valor)});
+  Object.keys(pgtos).forEach(function(k){var p=pgtos[k];if(!p.data_pgto)return;var m=ms.find(function(x){return x.k===p.data_pgto.slice(0,7)});if(m)m.r+=+p.valor_pago||0});
+  var mx=Math.max.apply(null,ms.map(function(x){return Math.max(x.f,x.r)}).concat([1]));
+  var graf='<div class="sheet"><h2 style="margin-top:0">Faturado × recebido</h2><div class="fch">'+ms.map(function(x){return '<div title="'+esc(x.n+": faturado "+brl(x.f)+" · recebido "+brl(x.r))+'"><span><u class="f" style="height:'+Math.round(x.f*100/mx)+'%"></u><u class="r" style="height:'+Math.round(x.r*100/mx)+'%"></u></span><small>'+x.n+'</small></div>'}).join("")+'</div><div class="fleg"><span><i class="f"></i>Faturado</span><span><i class="r"></i>Recebido</span></div></div>';
+  var tg=ag[0][0]+ag[1][0]+ag[2][0]||1;
+  var agin='<div class="sheet"><h2 style="margin-top:0">Cobranças em aberto</h2>'+[["No prazo (até 7 dias)","#c9a86a"],["8 a 30 dias","#e08a3a"],["Mais de 30 dias","#a8202a"]].map(function(x,i){return finBarra(x[0],brl(ag[i][0]),ag[i][1],Math.round(ag[i][0]*100/tg),x[1])}).join("")+'</div>';
+  var ft=Object.keys(formas).reduce(function(s,k){return s+formas[k]},0)||1,cores=["#a8202a","#c0303a","#d98b92","#e8c6c2","#c9a86a"];
+  var fm='<div class="sheet"><h2 style="margin-top:0">Recebido por forma de pagamento</h2>'+(Object.keys(formas).length?Object.keys(formas).sort(function(x,y){return formas[y]-formas[x]}).map(function(k,i){return finBarra(esc(k),brl(formas[k]),null,Math.round(formas[k]*100/ft),cores[i%cores.length])}).join(""):'<p class="hint">Nenhum pagamento registrado no período.</p>')+'</div>';
+  var cts={};L.forEach(function(d){if(d.pagador!=="contabilidade"||d.status!=="Validado"||pgSt(d)==="pago")return;var c=achaContab(d.contab),k=c?c.id:"x:"+(d.contab||"");(cts[k]=cts[k]||{c:c,nome:c?c.nome:(d.contab||"Sem contabilidade"),n:0,v:0});cts[k].n++;cts[k].v+=num(d.valor)});
+  var cl=Object.keys(cts).map(function(k){return cts[k]}).sort(function(x,y){return y.v-x.v});
+  var ctc='<div class="sheet"><h2 style="margin-top:0">Contabilidades a fechar</h2>'+(cl.length?cl.slice(0,5).map(function(x){return '<div class="fct"><span class="av">'+esc(ini(x.nome))+'</span><div><b>'+esc(bonito(x.nome))+'</b><small>'+x.n+(x.n===1?" certificado":" certificados")+' · '+brl(x.v)+'</small></div>'+(x.c?'<button class="qa" type="button" data-act="finCt" data-id="'+esc(x.c.id)+'">Abrir relatório</button>':'')+'</div>'}).join(""):'<p class="hint">Nenhuma contabilidade com valores em aberto.</p>')+'</div>';
+  $("finCards").innerHTML=graf+agin+fm+ctc;
+  var f=finLinhas();Object.keys(finSel).forEach(function(k){if(!dados.some(function(d){return d.id===k}))delete finSel[k]});
   $("finLista").innerHTML=f.length?f.map(function(d){var p=pgtos[d.id],s=pgSt(d);
     var inf=[p&&p.forma,p&&p.data_pgto?"em "+fmtData(parseISO(p.data_pgto)):"",p&&p.status==="parcial"?"recebido "+brl(+p.valor_pago):""].filter(Boolean).join(" · ");
-    return '<article class="fr"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong>'+(d.pagador==="contabilidade"?'<span class="tag" style="margin:0 0 0 0">Contabilidade'+(d.contab?": "+esc(bonito(d.contab)):"")+'</span>':"")+'<small>'+esc([d.modelo,fmtAgenda(dataVal(d))].filter(Boolean).join(" · ")+(inf?" · "+inf:""))+'</small></div><span class="vl">'+(d.valor?"R$ "+esc(d.valor):"—")+'</span>'+pgBadge(d)+'<div class="acts" style="margin:0">'+(s!=="pago"?qa("quitar","Marcar como pago",d.id," p"):"")+qa("pagar","Registrar",d.id)+'</div></article>'}).join(""):'<p class="empty">Nada por aqui. Atendimentos validados aparecem nesta lista para você controlar o pagamento.</p>'}
+    return '<article class="fr"><input type="checkbox" class="fck" data-id="'+esc(d.id)+'"'+(finSel[d.id]?" checked":"")+' aria-label="Selecionar"><span class="av">'+esc(ini(d.nome))+'</span><div class="nm"><strong>'+esc(bonito(d.nome))+'</strong>'+(d.pagador==="contabilidade"?'<span class="tag" style="margin:0 0 0 0">Contabilidade'+(d.contab?": "+esc(bonito(d.contab)):"")+'</span>':"")+'<small>'+esc([d.modelo,fmtAgenda(dataVal(d))].filter(Boolean).join(" · ")+(inf?" · "+inf:""))+'</small></div><span class="vl">'+(d.valor?"R$ "+esc(d.valor):"—")+'</span>'+pgBadge(d)+'<div class="acts" style="margin:0">'+(s!=="pago"&&d.pagador!=="contabilidade"?ib("cobr","chat","Cobrar por WhatsApp",d.id):"")+(s!=="pago"?qa("quitar","Marcar como pago",d.id," p"):"")+qa("pagar","Registrar",d.id)+'</div></article>'}).join(""):'<p class="empty">Nada por aqui neste período. Atendimentos validados aparecem nesta lista para você controlar o pagamento.</p>';
+  finBar()}
+function finBar(){var ids=Object.keys(finSel),el=$("finSel");if(!ids.length){el.hidden=true;return}
+  var v=0;ids.forEach(function(k){var d=dados.find(function(x){return x.id===k});if(d)v+=saldo(d)});
+  el.hidden=false;el.innerHTML='<b>'+ids.length+(ids.length===1?" selecionado":" selecionados")+' · '+brl(v)+'</b><span style="flex:1"></span><button class="btn" type="button" data-act="finLote">Marcar como pago</button><button class="btn" type="button" data-act="finExp" data-id="sel">Exportar seleção</button><button class="btn" type="button" data-act="finLimpa">Limpar</button>'}
+function finExportar(soSel){
+  var L=finLinhas();if(soSel)L=L.filter(function(d){return finSel[d.id]});
+  var H=["Cliente","Modelo","Validado em","Valor","Situação","Forma","Data do pagamento","Valor pago","Quem paga","Contabilidade"];
+  var R=L.map(function(d){var p=pgtos[d.id]||{};return [bonito(d.nome),d.modelo,fmtAgenda(dataVal(d)),d.valor,PG_TXT[pgSt(d)].replace(/^\S+ /,""),p.forma||"",p.data_pgto?fmtData(parseISO(p.data_pgto)):"",p.valor_pago||"",d.pagador==="contabilidade"?"Contabilidade":"Cliente",d.contab]});
+  baixar("financeiro-"+iso(new Date())+".csv",[H].concat(R).map(function(r){return r.map(csvCel).join(";")}).join("\r\n"))}
+async function finLote(){var ids=Object.keys(finSel);if(!ids.length||!confirm("Marcar "+ids.length+" atendimento(s) como pago?"))return;var ok=0;
+  for(var i=0;i<ids.length;i++){var d=dados.find(function(x){return x.id===ids[i]});if(!d||pgSt(d)==="pago")continue;var p=pgtos[d.id]||{};if(await gravarPgto(d.id,{status:"pago",valor_pago:num(d.valor),forma:p.forma||"Pix",data_pgto:iso(new Date()),obs:p.obs||""}))ok++}
+  finSel={};render();toast(ok+(ok===1?" pagamento registrado ✓":" pagamentos registrados ✓"))}
 async function gravarPgto(id,o){
   await sincFila;
   var r=await sb.from("pagamentos").upsert([Object.assign({registro_id:id,atualizado:new Date().toISOString()},o)]).select().single();
@@ -2131,6 +2187,7 @@ function atRefresh(){
   $("atFin").innerHTML='<h2 style="margin-top:0">Financeiro</h2>'+(pode("fin")&&val?'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Pago</small><b style="color:var(--s-va)">'+brl(pagoV)+'</b></div><div><small>Saldo</small><b>'+brl(sd)+'</b></div></div><div class="row"><button class="btn p" type="button" data-act="pagar" data-id="'+esc(d.id)+'">Registrar pagamento</button>'+(pago?'':'<button class="btn" type="button" data-act="quitar" data-id="'+esc(d.id)+'">Marcar como pago</button>')+'</div>'
     :'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Quem paga</small><b>'+(d.pagador==="contabilidade"?"Contabilidade":"Cliente")+'</b></div><div><small>Situação</small><b>'+esc(d.status)+'</b></div></div><p class="hint" style="margin-top:10px">O pagamento é registrado pelo financeiro depois que o atendimento for validado.</p>')}
 
+document.addEventListener("change",function(e){var c=e.target.closest&&e.target.closest("input.fck");if(!c)return;if(c.checked)finSel[c.dataset.id]=1;else delete finSel[c.dataset.id];finBar()});
 /* ---------- contabilidades parceiras ---------- */
 var contabs=[],ctEdit=null;
 function semAcento(s){return String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g," ").trim()}
