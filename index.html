@@ -590,6 +590,23 @@ dialog.ed.wide{width:min(860px,96vw)}
 .iFile b{display:block}.iFile small{color:var(--mu)}
 .iOp{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-weight:600}.iOp label{display:flex;gap:8px;align-items:center}.iOp input{width:auto}
 @media(max-width:600px){.clAc{margin-left:0}#dlgCl .mb{grid-template-columns:1fr!important}}
+
+/* página do atendimento */
+body[data-pg="atend"] .rail{display:none!important}body[data-pg="atend"] .app{grid-template-columns:248px minmax(0,1fr)}body[data-pg="atend"] .app.rec{grid-template-columns:76px minmax(0,1fr)}
+.atp{display:grid;gap:18px}.atbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.atcr{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mu);font-weight:600}.atcr .lk{background:none;border:0;color:var(--pr);font:inherit;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;padding:0}
+.atg{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:20px;align-items:start}.atl,.atr{display:grid;gap:16px;min-width:0}
+.atsh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.atsh h2{margin:0}
+.ath{display:flex;gap:18px;align-items:center}.ath .av{width:64px;height:64px;font-size:22px}.ath h1{font-size:26px;letter-spacing:-.02em;line-height:1.2;margin:0;overflow-wrap:anywhere}
+.attg{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}.attg .tag{margin:0;font-size:12px;padding:4px 10px}
+.stp{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}.stp button{display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;border:1px solid var(--ln);background:var(--sf);color:var(--mu);font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.stp button.on{background:var(--soft);color:var(--pr);border-color:transparent}.stp button.ok{background:color-mix(in srgb,var(--s-va) 16%,transparent);color:var(--s-va);border-color:transparent}.stp i{width:22px;height:2px;background:var(--ln)}
+.agrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.agrid label:has(#a_hist){grid-column:1/-1}.agrid label:has(>.dtb){grid-column:span 2}
+.prog{display:flex;align-items:center;gap:12px;margin:14px 0 6px;font-size:12px;font-weight:800;color:var(--mu)}.prog div{flex:1;height:8px;background:var(--softer);border-radius:99px;overflow:hidden}.prog b{display:block;height:100%;background:var(--pr);border-radius:99px}
+.ckr{display:flex;align-items:center;gap:12px;padding:8px 0;font-size:14px;font-weight:600;border-top:1px solid var(--ln)}.ckr input{width:18px;height:18px;min-height:0;flex:none;accent-color:var(--pr)}.ckr span{flex:1;min-width:0;overflow-wrap:anywhere}.ckr.o span{color:var(--mu);text-decoration:line-through}.ckr button{background:none;border:0;color:var(--mu);cursor:pointer;font-size:12px}
+.fin3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}.fin3 div{padding:12px;border-radius:14px;background:var(--softer);border:1px solid var(--ln)}.fin3 small{display:block;font-size:12px;color:var(--mu);font-weight:700}.fin3 b{font-size:16px;white-space:nowrap}
+@media(max-width:1180px){.atg{grid-template-columns:minmax(0,1fr)}.agrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.agrid{grid-template-columns:minmax(0,1fr)}.agrid label:has(>.dtb){grid-column:auto}.ath{flex-direction:column;align-items:flex-start}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -666,6 +683,8 @@ dialog.ed.wide{width:min(860px,96vw)}
 <div class="kpis" id="dKpis"></div>
 <div class="dg" id="dGrid"></div>
 </section>
+
+<section class="pg" id="v-atend"><div id="atBox"></div></section>
 
 <section class="pg" id="v-financeiro">
 <div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e relatório mensal →</a></div>
@@ -931,7 +950,7 @@ dialog.ed.wide{width:min(860px,96vw)}
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis=(window.innerWidth<900?"dia":"semana"),renJan=60,dlgId=null,selId=null,diaSel=null,fSt="",fTp="",calM=new Date(),HH=96,DUR=30,arr=null,grab=0;
 var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade","pagador"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
-var PAGS=["inicio","agenda","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
+var PAGS=["inicio","agenda","atend","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
 function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
 function dig(s){return (s||"").replace(/\D/g,"")}
@@ -1111,7 +1130,7 @@ function cenReag(id){var d=dados.find(function(x){return x.id===id});if(!d||!pod
   d.hist=((d.hist?d.hist+" | ":"")+"Voltou da central ("+(d.cMotivo||"")+") em "+fmtData(new Date())).slice(0,400);cenLimpar(d);d.status="Agendado";gravar();render();editar(id);toast("Saiu da central. Escolha a nova data.")}
 function cenAprov(id){var d=dados.find(function(x){return x.id===id});if(!d||!pode("editar"))return;cenLimpar(d,true);gravar();render();abrirValidar(id)}
 
-var _rd=render;render=function(){var r=_rd.apply(this,arguments);try{renderCentral()}catch(e){}return r};
+var _rd=render;render=function(){var r=_rd.apply(this,arguments);try{renderCentral()}catch(e){}try{atRefresh()}catch(e){}return r};
 $("clBusca").addEventListener("input",function(){clLim=100;renderClientes()});
 $("nome").addEventListener("change",function(){var c=clientes.find(function(x){return semAcento(x.nome)===semAcento($("nome").value)});if(!c)return;[["cnpj","cnpj"],["cpf","cpf"],["tel","tel"],["email","email"],["contab","contab"],["nasc","nasc"]].forEach(function(k){if(!$(k[0]).value&&c[k[1]])$(k[0]).value=c[k[1]]});previa()});
 /* ---------- clientes e importação de planilha ---------- */
@@ -1244,7 +1263,7 @@ function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return
   montarE();CAMPOS.forEach(function(c){$("e_"+c).value=d[c]||""});eId=id;$("eSub").textContent=(bonito(d.nome)||"Sem nome")+(d.agenda?" · "+fmtAgenda(d.agenda):"");$("eDel").hidden=!pode("excluir");$("dlgE").showModal()}
 function salvarE(){var i=dados.findIndex(function(d){return d.id===eId});if(i<0)return;var o={};CAMPOS.forEach(function(c){o[c]=$("e_"+c).value.trim()});
   if(!o.nome){toast("Informe o nome.");$("e_nome").focus();return}
-  o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);var a=dados[i];o.id=eId;o.criado=a.criado;o.validadoEm=a.validadoEm;o.lembrete=a.agenda===o.agenda?a.lembrete:"";cenPreservar(o,a);
+  o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);var a=dados[i];o.id=eId;o.criado=a.criado;o.validadoEm=a.validadoEm;o.lembrete=a.agenda===o.agenda?a.lembrete:"";cenPreservar(o,a);if(a.check)o.check=a.check;
   if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());dados[i]=o;gravar();render();$("dlgE").close();toast("Alterações salvas ✓")}
 var hvt=document.createElement("div");hvt.className="hvt";document.body.appendChild(hvt);
 function hideHov(){if(hovEl){hovEl.style.display="none"}hvt.style.display="none";[].forEach.call(document.querySelectorAll(".tgt .hl"),function(x){x.classList.remove("hl")})}
@@ -1257,9 +1276,9 @@ $("semana").addEventListener("mousemove",function(e){var c=e.target.closest(".tg
 $("semana").addEventListener("mouseleave",hideHov);
 document.addEventListener("click",function(e){var b=e.target.closest(".app.rec .brand");if(b){e.preventDefault();recolher(false)}});
 var ultEv=null,ultT=0;
-$("semana").addEventListener("dblclick",function(e){var ev=e.target.closest(".ev");if(ev&&ev.dataset.id&&!$("dlgE").open){e.preventDefault();editar(ev.dataset.id)}});
+$("semana").addEventListener("dblclick",function(e){var ev=e.target.closest(".ev");if(ev&&ev.dataset.id&&!$("dlgE").open){e.preventDefault();abrirAt(ev.dataset.id)}});
 document.addEventListener("click",function(e){
-  var ee=e.target.closest(".ev[data-id]");if(ee&&$("semana").contains(ee)){var tt=Date.now();if(ultEv===ee.dataset.id&&tt-ultT<450){ultEv=null;editar(ee.dataset.id)}else{ultEv=ee.dataset.id;ultT=tt}}
+  var ee=e.target.closest(".ev[data-id]");if(ee&&$("semana").contains(ee)){var tt=Date.now();if(ultEv===ee.dataset.id&&tt-ultT<450){ultEv=null;abrirAt(ee.dataset.id)}else{ultEv=ee.dataset.id;ultT=tt}}
   var um=$("umenu");if(um.classList.contains("on")&&!e.target.closest("#umenu")&&!e.target.closest('[data-act="umenu"]'))menuUsr(false);
   if(e.target.closest("#umenu")&&!e.target.closest('[data-act="modo"]'))setTimeout(function(){menuUsr(false)},0);
   var b=e.target.closest("button[data-act]");if(!b)return;var a=b.dataset.act;
@@ -1563,7 +1582,7 @@ function renderRail(){
   $("selMob").innerHTML=s1}
 
 /* ---------- navegação ---------- */
-function rota(){var h=(location.hash||"").slice(1),ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h)});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===h)});if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h;renderRail();window.scrollTo(0,0)}
+function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"").slice(1).split("/"),h=hp[0],ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";atId=h==="atend"?(hp[1]||null):null;if(!atId&&h==="atend")h="agenda";if(h!=="atend")atMon=null;PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h)});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===(h==="atend"?"agenda":h))});if(h==="atend")atMontar();if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h;renderRail();window.scrollTo(0,0)}
 function aba(v){if(location.hash==="#"+v)rota();else location.hash=v}
 window.addEventListener("hashchange",rota);
 function modo(m){var h=document.documentElement,sv;m=m||(h.dataset.modo==="escuro"?"claro":"escuro");sv=m;if(m==="auto")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";h.dataset.modo=m;try{localStorage.setItem("agend_modo",sv)}catch(e){}corBarra()}
@@ -1634,6 +1653,13 @@ document.addEventListener("click",function(e){
   else if(a==="iModelo"){e.preventDefault();iModelo()}
   else if(a==="det")abrirDet(id);
   else if(a==="dFechar")$("dlgD").close();
+  else if(a==="atVoltar")aba("agenda");
+  else if(a==="atSt")atStatus(b.dataset.v);
+  else if(a==="atCk")atCk(+b.dataset.i);
+  else if(a==="atCkDel")atCkDel(+b.dataset.i);
+  else if(a==="atCkAdd")atCkAdd();
+  else if(a==="atCkPad")atCkPad();
+  else if(a==="atDel"){var dd=dados.length;excluir(atId);if(dados.length<dd)aba("agenda")}
   else if(a==="cmtEnviar")enviarCmt();
   else if(a==="cmtDel"){sb.from("comentarios").delete().eq("id",id).then(listarCmt)}
   else if(a==="axEnviar")enviarAnx();
@@ -1816,8 +1842,8 @@ var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],central:["Central","e
 var NAVT={novo:"Novo",renovacoes:"Renovar"};
 var GRUPOS=[["Principal",["inicio","agenda","central","renovacoes","clientes","novo"]],["Financeiro",["financeiro","contabs"]],["Sistema",["backup","usuarios"]]];
 var ACESSO={
-  admin:{pags:["inicio","agenda","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
-  comercial:{pags:["inicio","agenda","central","clientes","renovacoes","novo","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
+  admin:{pags:["inicio","agenda","atend","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
+  comercial:{pags:["inicio","agenda","atend","central","clientes","renovacoes","novo","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
   financeiro:{pags:["inicio","agenda","financeiro","contabs","perfil"],menu:["inicio","agenda","financeiro","contabs"],tab:["inicio","agenda","financeiro","contabs"]}};
 function pode(a){var p=papel;
   if(a==="editar"||a==="anexos")return p==="admin"||p==="comercial";
@@ -1947,32 +1973,34 @@ function renderDash(){
 
 /* ---------- detalhes: comentários e anexos ---------- */
 var anx=[];
+var AMAP={dCmt:"aCmt",dAnx:"aAnx",dMsg:"aMsg",dTxt:"aTxt",dArq:"aArq",dTipo:"aTipo",btnZip:"aZip",btnEnv:"aEnv",zipApagar:"aZipApagar"};
+function W(n){return $(atId?AMAP[n]:n)}
 function curto(e){return String(e||"").split("@")[0]}
 function tam(n){return n>=1048576?(n/1048576).toFixed(1).replace(".",",")+" MB":Math.max(1,Math.round(n/1024))+" KB"}
 function fmtDH(x){var d=new Date(x);return p2(d.getDate())+"/"+p2(d.getMonth()+1)+" "+p2(d.getHours())+":"+p2(d.getMinutes())}
 async function abrirDet(id){
   var d=dados.find(function(x){return x.id===id});if(!d)return;detId=id;
   $("dNome").textContent=bonito(d.nome)||"Atendimento";$("dSub").textContent=[d.tipo,d.modelo,fmtAgenda(d.agenda)].filter(Boolean).join(" · ");
-  $("dAnxBox").hidden=!pode("anexos");$("dCmt").innerHTML='<p class="hint">Carregando…</p>';$("dAnx").innerHTML="";$("dMsg").textContent="";$("dTxt").value="";
+  $("dAnxBox").hidden=!pode("anexos");W("dCmt").innerHTML='<p class="hint">Carregando…</p>';W("dAnx").innerHTML="";W("dMsg").textContent="";W("dTxt").value="";
   $("dlgD").showModal();
   await sincFila;
   await Promise.all([listarCmt(),pode("anexos")?listarAnx():0])}
 async function listarCmt(){
   var r=await sb.from("comentarios").select("id,user_id,autor,texto,criado").eq("registro_id",detId).order("criado",{ascending:true});
-  if(r.error){$("dCmt").innerHTML='<p class="hint">Não foi possível carregar os comentários.</p>';return}
+  if(r.error){W("dCmt").innerHTML='<p class="hint">Não foi possível carregar os comentários.</p>';return}
   var eu=(await sb.auth.getUser()).data.user,uid=eu&&eu.id;
-  $("dCmt").innerHTML=r.data.length?r.data.map(function(c){return '<div class="cm"><small><span>'+esc((perfisMap[c.user_id]&&perfisMap[c.user_id].nome)||curto(c.autor)||"usuário")+' · '+esc(fmtDH(c.criado))+'</span>'+((pode("excluir")||c.user_id===uid)?'<button type="button" data-act="cmtDel" data-id="'+esc(c.id)+'">apagar</button>':'')+'</small><p>'+esc(c.texto)+'</p></div>'}).join(""):'<p class="hint">Nenhum comentário ainda.</p>'}
+  W("dCmt").innerHTML=r.data.length?r.data.map(function(c){return '<div class="cm"><small><span>'+esc((perfisMap[c.user_id]&&perfisMap[c.user_id].nome)||curto(c.autor)||"usuário")+' · '+esc(fmtDH(c.criado))+'</span>'+((pode("excluir")||c.user_id===uid)?'<button type="button" data-act="cmtDel" data-id="'+esc(c.id)+'">apagar</button>':'')+'</small><p>'+esc(c.texto)+'</p></div>'}).join(""):'<p class="hint">Nenhum comentário ainda.</p>'}
 async function enviarCmt(){
-  var t=$("dTxt").value.trim();if(!t||!detId)return;
+  var t=W("dTxt").value.trim();if(!t||!detId)return;
   var r=await sb.from("comentarios").insert({registro_id:detId,autor:meuEmail,texto:t});
   if(r.error){toast("Não foi possível comentar.");return}
-  $("dTxt").value="";listarCmt()}
+  W("dTxt").value="";listarCmt()}
 async function listarAnx(){
   var r=await sb.from("anexos").select("id,nome,caminho,tamanho,criado").eq("registro_id",detId).order("criado",{ascending:true});
-  if(r.error){anx=[];$("dAnx").innerHTML='<p class="hint">Não foi possível carregar os anexos.</p>';return}
+  if(r.error){anx=[];W("dAnx").innerHTML='<p class="hint">Não foi possível carregar os anexos.</p>';return}
   anx=r.data;
-  $("dAnx").innerHTML=anx.length?anx.map(function(a){return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}).join(""):'<p class="hint">Nenhum documento anexado.</p>';
-  $("btnZip").disabled=!anx.length}
+  W("dAnx").innerHTML=anx.length?anx.map(function(a){return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}).join(""):'<p class="hint">Nenhum documento anexado.</p>';
+  W("btnZip").disabled=!anx.length}
 function uid(){return(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10)}
 function limpaNome(s){return String(s||"").replace(/[\\\/:*?"<>|\u0000-\u001f]/g," ").replace(/\s+/g," ").trim()}
 async function anexarArquivos(id,files,tipo){
@@ -1990,11 +2018,11 @@ async function anexarArquivos(id,files,tipo){
     ok++}
   return{ok:ok,rej:rej}}
 async function enviarAnx(){
-  var fs=[].slice.call($("dArq").files);if(!fs.length){$("dMsg").textContent="Escolha ao menos um arquivo.";return}
-  $("btnEnv").disabled=true;$("dMsg").textContent="Enviando…";
-  var r=await anexarArquivos(detId,fs,$("dTipo").value);
-  $("dArq").value="";$("btnEnv").disabled=false;
-  $("dMsg").textContent=(r.ok?r.ok+" arquivo(s) anexado(s). ":"")+(r.rej.length?"Não enviados: "+r.rej.join(", ")+". Use JPG, PNG, WEBP ou PDF de até 5 MB.":"");
+  var fs=[].slice.call(W("dArq").files);if(!fs.length){W("dMsg").textContent="Escolha ao menos um arquivo.";return}
+  W("btnEnv").disabled=true;W("dMsg").textContent="Enviando…";
+  var r=await anexarArquivos(detId,fs,W("dTipo").value);
+  W("dArq").value="";W("btnEnv").disabled=false;
+  W("dMsg").textContent=(r.ok?r.ok+" arquivo(s) anexado(s). ":"")+(r.rej.length?"Não enviados: "+r.rej.join(", ")+". Use JPG, PNG, WEBP ou PDF de até 5 MB.":"");
   listarAnx()}
 function baixarBlob(nome,blob){var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},4000)}
 async function baixarAnx(id){var a=anx.find(function(x){return x.id===id});if(!a)return;
@@ -2020,19 +2048,88 @@ function montarZip(arq){
   return new Blob(partes.concat(central,[e.buffer]),{type:"application/zip"})}
 async function baixarPacote(){
   var d=dados.find(function(x){return x.id===detId});if(!d||!anx.length)return;
-  var btn=$("btnZip");btn.disabled=true;$("dMsg").textContent="Preparando o pacote…";
+  var btn=W("btnZip");btn.disabled=true;W("dMsg").textContent="Preparando o pacote…";
   try{var arq=[],usados={};
     for(var i=0;i<anx.length;i++){var a=anx[i],r=await sb.storage.from("anexos").download(a.caminho);if(r.error)throw 0;
       var nome=a.nome,k=0;while(usados[nome.toLowerCase()]){k++;nome=a.nome.replace(/(\.[^.]+)?$/,function(x){return " ("+(k+1)+")"+(x||"")})}
       usados[nome.toLowerCase()]=1;arq.push({nome:nome,dados:new Uint8Array(await r.data.arrayBuffer())})}
     var doc=d.cnpj||d.cpf||"",dt=d.agenda?d.agenda.slice(0,10).split("-").reverse().join("-"):fmtData(new Date()).replace(/\//g,"-");
     var zn=limpaNome([bonito(d.nome)||"Cliente",doc,dt].filter(Boolean).join(" - "))+".zip";
-    baixarBlob(zn,montarZip(arq));$("dMsg").textContent="Pacote baixado: "+zn;
-    if($("zipApagar").checked&&confirm("Apagar os "+anx.length+" documento(s) do sistema agora? Confira se o ZIP abriu corretamente antes de confirmar.")){
+    baixarBlob(zn,montarZip(arq));W("dMsg").textContent="Pacote baixado: "+zn;
+    if(W("zipApagar").checked&&confirm("Apagar os "+anx.length+" documento(s) do sistema agora? Confira se o ZIP abriu corretamente antes de confirmar.")){
       var rm=await sb.storage.from("anexos").remove(anx.map(function(x){return x.caminho}));
-      if(!rm.error){await sb.from("anexos").delete().eq("registro_id",detId);$("dMsg").textContent="Pacote baixado e documentos apagados do sistema."}else $("dMsg").textContent="Pacote baixado, mas não foi possível apagar os documentos."}
-  }catch(e){$("dMsg").textContent="Não foi possível montar o pacote. Tente de novo."}
+      if(!rm.error){await sb.from("anexos").delete().eq("registro_id",detId);W("dMsg").textContent="Pacote baixado e documentos apagados do sistema."}else W("dMsg").textContent="Pacote baixado, mas não foi possível apagar os documentos."}
+  }catch(e){W("dMsg").textContent="Não foi possível montar o pacote. Tente de novo."}
   btn.disabled=false;listarAnx()}
+
+/* ---------- página do atendimento (duplo clique) ---------- */
+var atId=null,atT=0,atPend=false,atMon=null;
+function abrirAt(id){if(!pode("editar")){abrirDet(id);return}location.hash="atend/"+id}
+function atDados(){return dados.find(function(x){return x.id===atId})}
+function atLista(d){try{var c=JSON.parse(d.check||"[]");return Array.isArray(c)?c:[]}catch(e){return[]}}
+function atMontar(){
+  var d=atDados(),box=$("atBox");
+  if(!d){box.innerHTML='<div class="sheet"><p class="empty">Atendimento não encontrado. Ele pode ter sido excluído.</p><div class="row" style="justify-content:center"><button class="btn" type="button" data-act="atVoltar">Voltar para a agenda</button></div></div>';atMon=null;return}
+  if(atMon===atId&&$("a_nome"))return;
+  detId=atId;
+  box.innerHTML='<div class="atp"><div class="atbar"><div class="atcr"><button class="lk" type="button" data-act="atVoltar">'+ic("left")+' Agenda</button><span>›</span><span id="atCrumb"></span></div><div class="acts" style="margin:0"><button class="btn" type="button" data-act="desc" data-id="'+esc(atId)+'">Copiar dados</button>'+(pode("excluir")?'<button class="btn" type="button" data-act="atDel">Excluir</button>':'')+'</div></div>'
+   +'<div class="atg"><div class="atl"><div class="sheet" id="atHead"></div>'
+   +'<div class="sheet"><div class="atsh"><h2 style="margin:0">Dados do atendimento</h2><span class="hint" id="atSave">Alterações salvas automaticamente</span></div><div class="agrid" id="aGrid"></div></div>'
+   +'<div class="sheet" id="atCheck"></div></div>'
+   +'<div class="atr"><div class="sheet" id="atFin"></div>'
+   +'<div class="sheet"><h2 style="margin-top:0">Comentários</h2><div id="aCmt"></div><textarea id="aTxt" rows="2" maxlength="2000" placeholder="Escreva um comentário…"></textarea><div class="row" style="margin-top:10px"><button class="btn p" type="button" data-act="cmtEnviar">Comentar</button></div><p class="hint" id="aMsg" role="status"></p></div>'
+   +'<div class="sheet"><h2 style="margin-top:0">Anexos</h2><div id="aAnx"></div>'
+   +'<div class="row"><select id="aTipo" style="flex:0 0 140px" aria-label="Tipo do documento"><option>RG</option><option>CNH</option><option>CPF</option><option>Cartão CNPJ</option><option>Comprovante</option><option>Outro</option></select><input id="aArq" type="file" multiple accept="image/*,application/pdf" style="flex:1 1 160px"><button class="btn" id="aEnv" type="button" data-act="axEnviar">Anexar</button></div>'
+   +'<div class="row"><button class="btn p" id="aZip" type="button" data-act="zip" disabled>Baixar tudo (.zip)</button><label class="chk"><input type="checkbox" id="aZipApagar">Apagar do sistema depois</label></div>'
+   +'<p class="hint">JPG, PNG, WEBP ou PDF de até 5 MB.</p></div></div></div></div>';
+  var g=$("aGrid");["pedido","nome","modelo","cnpj","cpf","nasc","rg","cnh","resp","contab","email","tel","valor","validade","agenda","status","tipo","link","pagador","hist"].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="a_"+n.id});[].forEach.call(l.querySelectorAll(".dtb"),function(n){n.remove()});[].forEach.call(l.querySelectorAll("[data-dtp]"),function(n){n.removeAttribute("data-dtp")});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});g.appendChild(l)});
+  initDtp($("a_agenda"));CAMPOS.forEach(function(c){var el=$("a_"+c);if(el)el.value=d[c]||""});
+  g.addEventListener("input",atAuto);g.addEventListener("change",function(e){var t=e.target.id;if(t==="a_cpf")e.target.value=fmtCPF(e.target.value);else if(t==="a_cnpj")e.target.value=fmtCNPJ(e.target.value);else if(t==="a_tel")e.target.value=fmtTel(e.target.value);atAuto()});
+  box.addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.act==="atCk")atCk(+e.target.dataset.i)});
+  box.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="atCkNovo"){e.preventDefault();atCkAdd()}});
+  atMon=atId;atRefresh();listarCmt();if(pode("anexos"))listarAnx();window.scrollTo(0,0)}
+function atAuto(){atPend=true;$("atSave").textContent="Salvando…";clearTimeout(atT);atT=setTimeout(atSalvar,700)}
+function atSalvar(){
+  clearTimeout(atT);atPend=false;var i=dados.findIndex(function(d){return d.id===atId});if(i<0||!$("a_nome"))return;
+  var a=dados[i],o=Object.assign({},a);CAMPOS.forEach(function(c){var el=$("a_"+c);if(el)o[c]=el.value.trim()});
+  if(!o.nome){$("atSave").textContent="Informe o nome para salvar";return}
+  o.cpf=fmtCPF(o.cpf);o.cnpj=fmtCNPJ(o.cnpj);o.tel=fmtTel(o.tel);o.lembrete=a.agenda===o.agenda?a.lembrete:"";
+  if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());
+  if(JSON.stringify(o)!==JSON.stringify(a)){dados[i]=o;gravar();render()}
+  var n=new Date();$("atSave").textContent="Salvo ✓ "+p2(n.getHours())+":"+p2(n.getMinutes())}
+function atStatus(v){var d=atDados();if(!d)return;
+  if(v==="Validado"){abrirValidar(d.id);return}
+  if(v==="Pago"){if(d.status==="Validado"&&pode("fin")&&pgSt(d)!=="pago")quitar(d.id);return}
+  atSalvar();d=atDados();d.status=v;if($("a_status"))$("a_status").value=v;gravar();render();toast("Status: "+v)}
+function atGravaCk(L){var d=atDados();if(!d)return;d.check=L.length?JSON.stringify(L):"";gravar();render()}
+function atCk(i){var d=atDados(),L=atLista(d);if(L[i]){L[i].o=!L[i].o;atGravaCk(L)}}
+function atCkDel(i){var d=atDados(),L=atLista(d);L.splice(i,1);atGravaCk(L)}
+function atCkAdd(){var el=$("atCkNovo"),t=el&&el.value.trim();if(!t)return;var d=atDados(),L=atLista(d);L.push({t:t,o:false});atGravaCk(L);var e2=$("atCkNovo");if(e2)e2.focus()}
+function atCkPad(){var d=atDados(),L=atLista(d),ja=L.map(function(x){return semAcento(x.t)});
+  (d.cnpj?["RG do responsável","CNH do responsável","Cartão CNPJ","Comprovante de endereço"]:["RG","CNH","Comprovante de endereço"]).forEach(function(t){if(ja.indexOf(semAcento(t))<0)L.push({t:t,o:false})});atGravaCk(L)}
+function atRefresh(){
+  if(!atId||!$("atHead"))return;var d=atDados();if(!d)return;
+  var val=d.status==="Validado",ps=val?pgSt(d):"",pago=ps==="pago",ix={Agendado:0,Confirmado:1,Validado:2}[d.status];
+  $("atCrumb").textContent="Atendimento"+(d.agenda?" de "+fmtAgenda(d.agenda.slice(0,10)):"");
+  var steps=["Agendado","Confirmado","Validado","Pago"].map(function(e,k){var on=ix!=null&&k<=ix&&!(k===3),ok=(k===2&&val&&pago)||k===3&&pago||(k===2&&val),cls=k===3?(pago?"ok":""):(on?(k===2&&val?"ok":"on"):"");
+    return '<button type="button" data-act="atSt" data-v="'+e+'" class="'+cls+'"'+(k===3&&!(val&&pode("fin")&&!pago)?' tabindex="-1"':'')+'>'+(cls?ic("check")+" ":"")+e+'</button>'+(k<3?'<i></i>':'')}).join("");
+  var tags=[];if(val)tags.push(pgBadge(d));if(d.status==="Faltou"||d.status==="Cancelado")tags.push('<span class="pill '+(ST[d.status]||"")+'" style="cursor:default">'+esc(d.status)+'</span>');
+  [d.tipo,d.modelo,d.valor?"R$ "+d.valor:""].forEach(function(t){if(t)tags.push('<span class="tag" style="background:var(--softer);color:var(--tx)">'+esc(t)+'</span>')});
+  if(d.contab)tags.push('<span class="tag">Contabilidade: '+esc(bonito(d.contab))+'</span>');if(naCentral(d))tags.push('<span class="tag">Na central de verificação</span>');
+  var q="";if(!naCentral(d)&&(d.status==="Agendado"||d.status==="Confirmado"))q+='<button class="btn" type="button" data-act="cenEnv" data-id="'+esc(d.id)+'">Enviar para a central de verificação</button>';
+  q+='<button class="btn" type="button" data-act="wa" data-id="'+esc(d.id)+'">Confirmar no WhatsApp</button><button class="btn" type="button" data-act="wal" data-id="'+esc(d.id)+'">Lembrete de 10 min</button>';
+  if(/^https?:\/\//i.test(d.link||""))q+='<a class="btn" href="'+esc(d.link)+'" target="_blank" rel="noopener">Abrir videoconferência</a>';
+  $("atHead").innerHTML='<div class="ath"><span class="av">'+esc(ini(d.nome))+'</span><div style="min-width:0"><h1>'+esc(bonito(d.nome)||"Sem nome")+'</h1><div class="attg">'+tags.join("")+'</div></div></div><div class="stp">'+steps+'</div><div class="row">'+q+'</div>';
+  var L=atLista(d),fe=L.filter(function(x){return x.o}).length,pc=L.length?Math.round(fe*100/L.length):0;
+  var kf=document.activeElement&&document.activeElement.id==="atCkNovo"?$("atCkNovo").value:"";
+  $("atCheck").innerHTML='<div class="atsh"><h2 style="margin:0">Documentos</h2>'+(L.length?'':'<button class="btn" type="button" data-act="atCkPad">Usar lista padrão</button>')+'</div>'
+   +(L.length?'<div class="prog"><span>'+pc+'%</span><div><b style="width:'+pc+'%"></b></div><span>'+fe+'/'+L.length+'</span></div>':'<p class="hint" style="margin-top:10px">Monte a lista de documentos que o cliente precisa entregar e vá marcando.</p>')
+   +L.map(function(x,k){return '<div class="ckr'+(x.o?' o':'')+'"><input type="checkbox" data-act="atCk" data-i="'+k+'"'+(x.o?' checked':'')+' aria-label="'+esc(x.t)+'"><span>'+esc(x.t)+'</span><button type="button" data-act="atCkDel" data-i="'+k+'">remover</button></div>'}).join("")
+   +'<div class="row"><input id="atCkNovo" placeholder="Novo item (ex.: Comprovante de endereço)" style="flex:1 1 200px"><button class="btn" type="button" data-act="atCkAdd">+ Item</button></div>';
+  if(kf){var n=$("atCkNovo");n.value=kf;n.focus()}
+  var v=num(d.valor),pg=pgtos[d.id],pagoV=ps==="pago"?v:(pg?+pg.valor_pago:0),sd=saldo(d);
+  $("atFin").innerHTML='<h2 style="margin-top:0">Financeiro</h2>'+(pode("fin")&&val?'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Pago</small><b style="color:var(--s-va)">'+brl(pagoV)+'</b></div><div><small>Saldo</small><b>'+brl(sd)+'</b></div></div><div class="row"><button class="btn p" type="button" data-act="pagar" data-id="'+esc(d.id)+'">Registrar pagamento</button>'+(pago?'':'<button class="btn" type="button" data-act="quitar" data-id="'+esc(d.id)+'">Marcar como pago</button>')+'</div>'
+    :'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Quem paga</small><b>'+(d.pagador==="contabilidade"?"Contabilidade":"Cliente")+'</b></div><div><small>Situação</small><b>'+esc(d.status)+'</b></div></div><p class="hint" style="margin-top:10px">O pagamento é registrado pelo financeiro depois que o atendimento for validado.</p>')}
 
 /* ---------- contabilidades parceiras ---------- */
 var contabs=[],ctEdit=null;
