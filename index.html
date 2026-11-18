@@ -563,6 +563,33 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 #dlgC label.ck{display:flex;align-items:center;gap:10px;font-weight:600}
 #dlgC label.ck input{width:18px;height:18px}
 @media(max-width:600px){#dlgC .g2{grid-template-columns:1fr}}
+
+.clBar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.clS{flex:1;min-width:240px;max-width:520px}
+.clAc{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.clAv{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--soft);color:var(--pr);font-weight:800;font-size:12px;flex:none}
+.clN{display:flex;align-items:center;gap:10px;font-weight:800}
+.clN span.t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px}
+#clLista .tb2{table-layout:fixed;font-size:12.5px}
+#clLista .tb2 td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#clLista .tb2 th:nth-child(1){width:27%}#clLista .tb2 th:nth-child(2){width:20%}#clLista .tb2 th:nth-child(3){width:17%}#clLista .tb2 th:nth-child(4){width:19%}#clLista .tb2 th:nth-child(5){width:11%}#clLista .tb2 th:nth-child(6){width:48px}
+.clN .t{display:flex;flex-direction:column;line-height:1.25}.clN .t small{color:var(--mu);font-weight:600;font-size:11.5px}
+#clLista .tb2 tr.lin{cursor:pointer}#clLista .tb2 tr.lin:hover td{background:var(--softer)}
+#dlgI .mb{display:flex;flex-direction:column;gap:14px}
+dialog.ed.wide{width:min(860px,96vw)}
+.iDrop{border:2px dashed var(--ln);border-radius:18px;padding:34px 18px;text-align:center;background:var(--softer);cursor:pointer}
+.iDrop.on,.iDrop:hover{border-color:var(--pr);background:var(--soft)}
+.iDrop b{display:block;font-size:15px}.iDrop small{color:var(--mu)}
+.iSt{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--mu)}
+.iSt span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--bg);border:1px solid var(--ln);font-size:12px}
+.iSt .on{color:var(--pr)}.iSt .on span{background:var(--btn);color:#fff;border-color:var(--btn)}.iSt .ln{flex:1;height:2px;background:var(--ln)}
+.iMap{width:100%;border-collapse:collapse;font-size:13.5px}.iMap th{text-align:left;font-size:12px;color:var(--mu);padding:8px;background:var(--bg)}.iMap td{padding:8px;border-bottom:1px solid var(--ln)}
+.iMap select{min-height:38px;max-width:240px}
+.iTags{display:flex;gap:8px;flex-wrap:wrap}.iTag{padding:6px 12px;border-radius:99px;font-weight:800;font-size:12.5px;background:#e3f4e3;color:#006300}.iTag.am{background:#fff0c9;color:#8a5a00}.iTag.vm{background:#fde2e2;color:#a01818}
+.iFile{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--ln);border-radius:14px;background:var(--bg)}
+.iFile b{display:block}.iFile small{color:var(--mu)}
+.iOp{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-weight:600}.iOp label{display:flex;gap:8px;align-items:center}.iOp input{width:auto}
+@media(max-width:600px){.clAc{margin-left:0}#dlgCl .mb{grid-template-columns:1fr!important}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -591,6 +618,7 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
 <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
 <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M17 14.2c2.5.1 4.2 1.7 4.6 4.8"/></symbol>
 <symbol id="i-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
 <symbol id="i-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -667,6 +695,14 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 <div class="sheet"><div class="tbw" id="cenLista"></div></div>
 </section>
 
+<section class="pg" id="v-clientes">
+<div class="ph"><div><h1>Clientes</h1><p class="sub">Sua base de clientes. Ao criar um atendimento, os dados podem ser preenchidos a partir daqui.</p></div></div>
+<div class="clBar"><label class="srch clS"><svg class="ic"><use href="#i-search"/></svg><input id="clBusca" type="search" placeholder="Nome, CPF, CNPJ, telefone ou contabilidade" autocomplete="off" aria-label="Buscar na base de clientes"></label>
+<div class="clAc"><button class="btn" data-act="clExp" type="button">Exportar</button><button class="btn p" data-act="clImp" type="button">Importar planilha</button><button class="btn" data-act="clNovo" type="button">+ Novo cliente</button></div></div>
+<div class="fl" id="clFiltros"></div>
+<div class="sheet"><div class="tbw" id="clLista"></div><div id="clMais"></div></div>
+</section>
+
 <section class="pg" id="v-renovacoes">
 <div class="ph"><div><h1>Renovações</h1><p class="sub">Certificados validados que estão perto de vencer. Avise o cliente a tempo.</p></div>
 <div class="seg" id="segRen"><button data-act="rjan" data-v="60" class="on">60 dias</button><button data-act="rjan" data-v="180">6 meses</button><button data-act="rjan" data-v="9999">Todos</button></div></div>
@@ -686,7 +722,7 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 
 <h2>Cliente</h2>
 <div class="grid">
-<label>Nome ou razão social<input id="nome"></label>
+<label>Nome ou razão social<input id="nome" list="dlClientes" autocomplete="off"></label>
 <label>CPF<input id="cpf" inputmode="numeric" placeholder="000.000.000-00" onchange="buscarCliente()"></label>
 <label>CNPJ<input id="cnpj" inputmode="numeric" placeholder="00.000.000/0000-00" onchange="buscarCliente()"></label>
 <label>Data de nascimento<input id="nasc" placeholder="dd/mm/aaaa"></label>
@@ -857,6 +893,17 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 <dialog id="dlgOb" class="ob"><div class="dl"><div class="obh"><img src="logo-branca.png" alt="CertSiga"><h3>Bem-vindo à Certsiga!</h3><p>Vamos configurar o seu perfil. Leva menos de um minuto.</p></div>
 <div class="mb"><div class="obr"><button type="button" class="avb vz" id="obAv" data-act="obFoto" aria-label="Adicionar foto">Adicionar foto</button><div style="flex:1;min-width:0"><label>Como você quer ser chamado?<input id="obNome" maxlength="80" autocomplete="name"></label><p class="hint" style="margin-top:6px">Esse nome aparece na saudação e nos comentários.</p></div></div><p class="hint">A foto é opcional. Você muda tudo isso depois em Meu perfil.</p><input type="file" id="obArq" accept="image/*" hidden></div>
 <div class="mf"><button class="btn" data-act="obPular" type="button">Pular por enquanto</button><button class="btn p" data-act="obOk" type="button">Continuar para o tour</button></div></div></dialog>
+<datalist id="dlClientes"></datalist>
+<dialog id="dlgCl" class="ed"><div class="dl"><div class="mh"><div><h3 id="clTit">Novo cliente</h3><p class="sub" id="clSub"></p></div><button class="ib" type="button" data-act="clFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<div class="mb" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<label style="grid-column:1/-1">Nome ou razão social<input id="cl_nome" autocomplete="off"></label>
+<label>CNPJ<input id="cl_cnpj" inputmode="numeric" autocomplete="off"></label><label>CPF<input id="cl_cpf" inputmode="numeric" autocomplete="off"></label>
+<label>Telefone<input id="cl_tel" inputmode="tel" autocomplete="off"></label><label>E-mail<input id="cl_email" type="email" autocomplete="off"></label>
+<label>Contabilidade<input id="cl_contab" list="dlContab" autocomplete="off"></label><label>Nascimento<input id="cl_nasc" placeholder="dd/mm/aaaa" autocomplete="off"></label>
+<label style="grid-column:1/-1">Observações<textarea id="cl_obs" rows="2"></textarea></label></div>
+<div class="mf"><button class="btn" id="clDel" data-act="clDel" type="button">Excluir</button><span class="fx"></span><button class="btn" data-act="clFechar" type="button">Cancelar</button><button class="btn p" data-act="clSalvar" type="button">Salvar cliente</button></div></div></dialog>
+<dialog id="dlgI" class="ed wide"><div class="dl"><div class="mh"><div><h3>Importar planilha de clientes</h3><p class="sub">Aceita .xlsx e .csv</p></div><button class="ib" type="button" data-act="iFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
+<div class="mb" id="iCorpo"></div><div class="mf" id="iRod"></div></div></dialog>
 <dialog id="dlgC" class="ed"><div class="dl"><div class="mh"><div><h3>Enviar para a central de verificação</h3><p class="sub" id="cSub"></p></div><button class="ib" type="button" data-act="cFechar" aria-label="Fechar"><svg class="ic"><use href="#i-x"/></svg></button></div>
 <div class="mb"><div class="cenCl" id="cCl"></div>
 <div class="g2"><label>Motivo<select id="c_motivo"><option>Divergência de dados</option><option>Documento ilegível</option><option>Análise da AR</option><option>Aguardando cliente</option><option>Outros</option></select></label>
@@ -884,7 +931,7 @@ html[data-modo="escuro"] .cenMt{background:#3b2a6b;color:#d8c8ff}
 var KEY="agend_certificado_v1",TKEY="agend_tema",dados=[],editId=null,semOff=0,vis=(window.innerWidth<900?"dia":"semana"),renJan=60,dlgId=null,selId=null,diaSel=null,fSt="",fTp="",calM=new Date(),HH=96,DUR=30,arr=null,grab=0;
 var CAMPOS=["nome","cpf","cnpj","nasc","valor","email","tel","modelo","contab","agenda","tipo","link","status","pedido","resp","hist","cnh","rg","validade","pagador"];
 var ORD=["Agendado","Confirmado","Validado","Faltou","Cancelado"],ST={Agendado:"",Confirmado:"st-co",Validado:"st-va",Faltou:"st-fa",Cancelado:"st-ca"};
-var PAGS=["inicio","agenda","central","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
+var PAGS=["inicio","agenda","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],ehAdmin=false;
 function $(i){return document.getElementById(i)}
 function ic(n){return '<svg class="ic"><use href="#i-'+n+'"/></svg>'}
 function dig(s){return (s||"").replace(/\D/g,"")}
@@ -1065,6 +1112,133 @@ function cenReag(id){var d=dados.find(function(x){return x.id===id});if(!d||!pod
 function cenAprov(id){var d=dados.find(function(x){return x.id===id});if(!d||!pode("editar"))return;cenLimpar(d,true);gravar();render();abrirValidar(id)}
 
 var _rd=render;render=function(){var r=_rd.apply(this,arguments);try{renderCentral()}catch(e){}return r};
+$("clBusca").addEventListener("input",function(){clLim=100;renderClientes()});
+$("nome").addEventListener("change",function(){var c=clientes.find(function(x){return semAcento(x.nome)===semAcento($("nome").value)});if(!c)return;[["cnpj","cnpj"],["cpf","cpf"],["tel","tel"],["email","email"],["contab","contab"],["nasc","nasc"]].forEach(function(k){if(!$(k[0]).value&&c[k[1]])$(k[0]).value=c[k[1]]});previa()});
+/* ---------- clientes e importação de planilha ---------- */
+var clientes=[],clFil="",clLim=100,clEd=null,imp=null,FCAMPOS=[["nome","Nome ou razão social"],["cnpj","CNPJ"],["cpf","CPF"],["tel","Telefone"],["email","E-mail"],["contab","Contabilidade"],["nasc","Nascimento"],["obs","Observações"],["","Não importar"]];
+async function carregarClientes(){
+  if(!pode("editar")){clientes=[];return}
+  var all=[],f=0,r;
+  for(;;){r=await sb.from("clientes").select("*").order("nome",{ascending:true}).range(f,f+999);if(r.error||!r.data)break;all=all.concat(r.data);if(r.data.length<1000)break;f+=1000}
+  clientes=all;
+  var dl=$("dlClientes");if(dl)dl.innerHTML=clientes.slice(0,3000).map(function(c){return '<option value="'+esc(c.nome)+'">'}).join("")}
+function clUltMapa(){var m={};dados.forEach(function(d){var a=(d.agenda||"").slice(0,10)||(d.criado||"").slice(0,10);[dig(d.cnpj),dig(d.cpf),semAcento(d.nome)].filter(Boolean).forEach(function(k){if(!m[k]||a>m[k])m[k]=a})});return m}
+function clUltDe(m,c){return [dig(c.cnpj),dig(c.cpf),semAcento(c.nome)].filter(Boolean).map(function(k){return m[k]||""}).sort().pop()||""}
+function renderClientes(){
+  if(!$("clLista"))return;
+  var q=semAcento($("clBusca").value),qd=dig($("clBusca").value),um=clUltMapa();
+  var base=clientes,cont={t:base.length,tel:base.filter(function(c){return !c.tel}).length,em:base.filter(function(c){return !c.email}).length,at:base.filter(function(c){return clUltDe(um,c)}).length};
+  $("clFiltros").innerHTML=[["","Todos",cont.t],["at","Com atendimento",cont.at],["tel","Sem telefone",cont.tel],["em","Sem e-mail",cont.em]].map(function(x){return '<button class="fc'+(clFil===x[0]?" on":"")+'" data-act="clFil" data-id="'+x[0]+'">'+x[1]+' <em>'+x[2]+'</em></button>'}).join("");
+  var V=base.filter(function(c){
+    if(clFil==="tel"&&c.tel)return false;if(clFil==="em"&&c.email)return false;if(clFil==="at"&&!clUltDe(um,c))return false;
+    if(!q)return true;return semAcento([c.nome,c.cnpj,c.cpf,c.tel,c.email,c.contab].join(" ")).indexOf(q)>-1||(qd.length>3&&dig([c.cnpj,c.cpf,c.tel].join(" ")).indexOf(qd)>-1)});
+  var ed=pode("editar");
+  if(!clientes.length){$("clLista").innerHTML='<p class="empty">Nenhum cliente cadastrado ainda. Use “Importar planilha” para trazer sua lista ou “+ Novo cliente”.</p>';$("clMais").innerHTML="";return}
+  $("clLista").innerHTML=V.length?'<table class="tb2"><thead><tr><th>Cliente</th><th>CPF / CNPJ</th><th>Telefone</th><th>E-mail</th><th>Último atend.</th><th></th></tr></thead><tbody>'+V.slice(0,clLim).map(function(c){var u=clUltDe(um,c);
+    return '<tr class="lin" data-act="clEdit" data-id="'+c.id+'"><td><div class="clN"><span class="clAv">'+esc(ini(c.nome))+'</span><span class="t"><b>'+esc(bonito(c.nome))+'</b>'+(c.contab?'<small>'+esc(c.contab)+'</small>':'')+'</span></div></td><td>'+esc(c.cnpj||c.cpf||"—")+'</td><td>'+esc(c.tel||"—")+'</td><td>'+esc(c.email||"—")+'</td><td>'+(u?esc(fmtData(parseISO(u))):"—")+'</td><td><button class="ib" data-act="clAt" data-id="'+c.id+'" title="Novo atendimento" aria-label="Novo atendimento">'+ic("plus")+'</button></td></tr>'}).join("")+'</tbody></table>':'<p class="empty">Nenhum cliente encontrado.</p>';
+  $("clMais").innerHTML=V.length>clLim?'<div class="row" style="justify-content:center;margin-top:12px"><button class="btn" data-act="clMais" type="button">Mostrar mais ('+(V.length-clLim)+')</button></div>':""}
+function clAbrir(id){var c=id?clientes.find(function(x){return x.id===id}):null;if(!pode("editar"))return;clEd=c?c.id:null;
+  $("clTit").textContent=c?"Editar cliente":"Novo cliente";$("clSub").textContent=c?c.nome:"";
+  ["nome","cnpj","cpf","tel","email","contab","nasc","obs"].forEach(function(k){$("cl_"+k).value=c?(c[k]||""):""});
+  $("clDel").hidden=!c||!ehAdmin;$("dlgCl").showModal()}
+async function clSalvar(){
+  var o={nome:$("cl_nome").value.trim().replace(/\s+/g," "),cnpj:fmtCNPJ($("cl_cnpj").value.trim()),cpf:fmtCPF($("cl_cpf").value.trim()),tel:fmtTel($("cl_tel").value.trim()),email:$("cl_email").value.trim(),contab:$("cl_contab").value.trim(),nasc:$("cl_nasc").value.trim(),obs:$("cl_obs").value.trim()};
+  if(o.nome.length<2){toast("Informe o nome.");$("cl_nome").focus();return}
+  if(o.cnpj&&dig(o.cnpj).length!==14){toast("CNPJ deve ter 14 dígitos.");return}
+  if(o.cpf&&dig(o.cpf).length!==11){toast("CPF deve ter 11 dígitos.");return}
+  var r=clEd?await sb.from("clientes").update(o).eq("id",clEd):await sb.from("clientes").insert(o);
+  if(r.error){toast(r.error.code==="23505"?"Já existe cliente com esse CPF ou CNPJ.":"Não foi possível salvar o cliente.");return}
+  $("dlgCl").close();await carregarClientes();renderClientes();toast("Cliente salvo ✓")}
+async function clExcluir(){if(!clEd||!ehAdmin)return;var c=clientes.find(function(x){return x.id===clEd});if(!c||!confirm("Excluir o cliente "+c.nome+"? Os atendimentos não são apagados."))return;
+  var r=await sb.from("clientes").delete().eq("id",clEd);if(r.error){toast("Não foi possível excluir.");return}$("dlgCl").close();await carregarClientes();renderClientes();toast("Cliente excluído")}
+function clAtender(id){var c=clientes.find(function(x){return x.id===id});if(!c)return;limpar();$("nome").value=c.nome;$("cnpj").value=c.cnpj||"";$("cpf").value=c.cpf||"";$("tel").value=c.tel||"";$("email").value=c.email||"";$("contab").value=c.contab||"";$("nasc").value=c.nasc||"";previa();aba("novo");toast("Dados do cliente preenchidos")}
+function csvCel(v){v=String(v==null?"":v);return /[;"\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function baixar(nome,txt,tipo){var b=new Blob(["﻿"+txt],{type:tipo||"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=nome;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)}
+function clExportar(){if(!clientes.length){toast("Não há clientes para exportar.");return}
+  var H=["Nome","CNPJ","CPF","Telefone","E-mail","Contabilidade","Nascimento","Observações"];
+  baixar("clientes-certsiga.csv",[H.join(";")].concat(clientes.map(function(c){return [c.nome,c.cnpj,c.cpf,c.tel,c.email,c.contab,c.nasc,c.obs].map(csvCel).join(";")})).join("\r\n"))}
+/* leitura de planilhas */
+function lerCSV(txt){var d=(txt.split(/\r?\n/)[0]||""),sep=[";","\t",","].map(function(x){return[x,d.split(x).length]}).sort(function(a,b){return b[1]-a[1]})[0][0],R=[],L=[],c="",q=false;
+  for(var i=0;i<txt.length;i++){var ch=txt[i];
+    if(q){if(ch==='"'){if(txt[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}
+    else if(ch==='"')q=true;else if(ch===sep){L.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&txt[i+1]==="\n")i++;L.push(c);c="";R.push(L);L=[]}else c+=ch}
+  if(c!==""||L.length){L.push(c);R.push(L)}return R.filter(function(r){return r.some(function(x){return String(x).trim()})})}
+async function zipArq(buf){var v=new DataView(buf),u=new Uint8Array(buf),e=-1;for(var i=buf.byteLength-22;i>=Math.max(0,buf.byteLength-70000);i--){if(v.getUint32(i,true)===0x06054b50){e=i;break}}
+  if(e<0)throw new Error("zip");var n=v.getUint16(e+10,true),p=v.getUint32(e+16,true),F={};
+  for(var k=0;k<n;k++){if(v.getUint32(p,true)!==0x02014b50)break;var m=v.getUint16(p+10,true),cs=v.getUint32(p+20,true),nl=v.getUint16(p+28,true),xl=v.getUint16(p+30,true),cl=v.getUint16(p+32,true),off=v.getUint32(p+42,true),nome=new TextDecoder().decode(u.subarray(p+46,p+46+nl));F[nome]={m:m,cs:cs,off:off};p+=46+nl+xl+cl}
+  return async function(nome){var f=F[nome];if(!f)return null;var o=f.off,ln=v.getUint16(o+26,true),lx=v.getUint16(o+28,true),d=u.subarray(o+30+ln+lx,o+30+ln+lx+f.cs);
+    if(f.m===0)return new TextDecoder().decode(d);
+    var ds=new DecompressionStream("deflate-raw"),w=ds.writable.getWriter();w.write(d);w.close();return await new Response(ds.readable).text()}}
+async function lerXLSX(buf){var get=await zipArq(buf),X=function(t){return new DOMParser().parseFromString(t,"application/xml")},ss=[],sx=await get("xl/sharedStrings.xml");
+  if(sx){[].forEach.call(X(sx).getElementsByTagName("si"),function(si){ss.push([].map.call(si.getElementsByTagName("t"),function(t){return t.textContent}).join(""))})}
+  var nome="xl/worksheets/sheet1.xml",wb=await get("xl/workbook.xml"),rl=await get("xl/_rels/workbook.xml.rels");
+  if(wb&&rl){var sh=X(wb).getElementsByTagName("sheet")[0];if(sh){var rid=sh.getAttribute("r:id")||sh.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships","id"),rel=[].find.call(X(rl).getElementsByTagName("Relationship"),function(r){return r.getAttribute("Id")===rid});if(rel){var tg=rel.getAttribute("Target").replace(/^\/?(xl\/)?/,"");nome="xl/"+tg}}}
+  var st=await get(nome);if(!st)throw new Error("sheet");var R=[];
+  [].forEach.call(X(st).getElementsByTagName("row"),function(row){var L=[];[].forEach.call(row.getElementsByTagName("c"),function(c){var ref=c.getAttribute("r")||"",col=0;ref.replace(/[A-Z]+/,function(a){for(var i=0;i<a.length;i++)col=col*26+a.charCodeAt(i)-64;col--});
+    var t=c.getAttribute("t"),ve=c.getElementsByTagName("v")[0],val="";
+    if(t==="s")val=ss[+ve.textContent]||"";else if(t==="inlineStr")val=[].map.call(c.getElementsByTagName("t"),function(x){return x.textContent}).join("");else if(ve){val=ve.textContent;if(/e/i.test(val)&&!isNaN(+val))val=Number(val).toFixed(0)}
+    L[col]=val});for(var i=0;i<L.length;i++)if(L[i]==null)L[i]="";R.push(L)});
+  return R.filter(function(r){return r.some(function(x){return String(x).trim()})})}
+async function lerPlanilha(f){var buf=await f.arrayBuffer();
+  if(/\.xlsx$/i.test(f.name)||(new Uint8Array(buf.slice(0,2)).join()==="80,75")){return await lerXLSX(buf)}
+  if(/\.xls$/i.test(f.name))throw new Error("xls");
+  var t=new TextDecoder("utf-8").decode(buf);if(t.indexOf("�")>-1)t=new TextDecoder("windows-1252").decode(buf);return lerCSV(t.replace(/^﻿/,""))}
+function iAuto(head){var P=[["cnpj",/cnpj/],["cpf",/cpf/],["tel",/tel|cel|fone|whats/],["email",/mail/],["contab",/contab|contador|escrit/],["nasc",/nasc/],["nome",/nome|raz|cliente|empresa/],["obs",/obs|anota/]],map=head.map(function(){return""}),usado={};
+  P.forEach(function(p){for(var i=0;i<head.length;i++){if(map[i])continue;if(p[1].test(semAcento(head[i]))&&!usado[p[0]]){map[i]=p[0];usado[p[0]]=1;break}}});return map}
+function iSteps(n){return '<div class="iSt"><div class="'+(n>=1?"on":"")+'" style="display:flex;gap:8px;align-items:center"><span>'+(n>1?"✓":"1")+'</span>Arquivo</div><i class="ln"></i><div class="'+(n>=2?"on":"")+'" style="display:flex;gap:8px;align-items:center"><span>'+(n>2?"✓":"2")+'</span>Conferir colunas</div><i class="ln"></i><div class="'+(n>=3?"on":"")+'" style="display:flex;gap:8px;align-items:center"><span>3</span>Resultado</div></div>'}
+function iAbrir(){if(!pode("editar"))return;imp={modo:"completar"};iTela1();$("dlgI").showModal()}
+function iTela1(){$("iCorpo").innerHTML=iSteps(1)+'<div class="iDrop" id="iDrop"><b>Arraste a planilha aqui ou clique para escolher</b><small>.xlsx ou .csv · primeira linha com os títulos das colunas</small><input id="iArq" type="file" accept=".xlsx,.csv,.txt" hidden></div><p class="hint">Não tem um modelo? <a href="#" data-act="iModelo">Baixar planilha modelo</a></p>';
+  $("iRod").innerHTML='<span class="fx"></span><button class="btn" data-act="iFechar" type="button">Cancelar</button>';
+  var dz=$("iDrop"),ar=$("iArq");dz.onclick=function(){ar.click()};ar.onchange=function(){if(ar.files[0])iArquivo(ar.files[0])};
+  dz.ondragover=function(e){e.preventDefault();dz.classList.add("on")};dz.ondragleave=function(){dz.classList.remove("on")};dz.ondrop=function(e){e.preventDefault();dz.classList.remove("on");if(e.dataTransfer.files[0])iArquivo(e.dataTransfer.files[0])}}
+async function iArquivo(f){
+  try{var R=await lerPlanilha(f)}catch(e){toast(e.message==="xls"?"Arquivo .xls antigo: abra no Excel e salve como .xlsx ou .csv.":"Não consegui ler esse arquivo. Use .xlsx ou .csv.");return}
+  if(R.length<2){toast("A planilha precisa ter os títulos e ao menos uma linha de dados.");return}
+  var head=R[0].map(function(x){return String(x||"").trim()});imp.arq=f.name;imp.head=head;imp.rows=R.slice(1);imp.map=iAuto(head);iTela2()}
+function iObj(r){var o={},nasc=null;imp.map.forEach(function(k,i){if(!k)return;var v=String(r[i]==null?"":r[i]).trim();if(!v)return;if(!o[k])o[k]=v});
+  if(o.nasc&&/^\d{5}$/.test(o.nasc)){var d=new Date(Date.UTC(1899,11,30)+ +o.nasc*864e5);o.nasc=p2(d.getUTCDate())+"/"+p2(d.getUTCMonth()+1)+"/"+d.getUTCFullYear()}
+  if(o.cnpj){var d1=dig(o.cnpj);if(d1&&d1.length<14&&d1.length>=12)d1=d1.padStart(14,"0");o.cnpj=d1.length===14?fmtCNPJ(d1):o.cnpj}
+  if(o.cpf){var d2=dig(o.cpf);if(d2&&d2.length<11&&d2.length>=9)d2=d2.padStart(11,"0");o.cpf=d2.length===11?fmtCPF(d2):o.cpf}
+  if(o.tel)o.tel=fmtTel(o.tel);if(o.nome)o.nome=o.nome.replace(/\s+/g," ").slice(0,200);return o}
+function iCalc(){
+  var ix={};clientes.forEach(function(c){if(c.cnpj)ix["j"+dig(c.cnpj)]=c;if(c.cpf)ix["f"+dig(c.cpf)]=c;ix["n"+semAcento(c.nome)]=ix["n"+semAcento(c.nome)]||c});
+  var res={novos:[],atual:[],ign:0,rep:0,prob:[]},vis={};
+  imp.rows.forEach(function(r,n){var o=iObj(r),mot="";
+    if(!o.nome||o.nome.length<2)mot="Sem nome";else if(o.cnpj&&dig(o.cnpj).length!==14)mot="CNPJ inválido";else if(o.cpf&&dig(o.cpf).length!==11)mot="CPF inválido";
+    if(mot){res.prob.push({linha:n+2,mot:mot,r:r});return}
+    var k=o.cnpj?"j"+dig(o.cnpj):o.cpf?"f"+dig(o.cpf):"n"+semAcento(o.nome);if(vis[k]){res.rep++;return}vis[k]=1;
+    var ex=(o.cnpj&&ix["j"+dig(o.cnpj)])||(o.cpf&&ix["f"+dig(o.cpf)])||(!o.cnpj&&!o.cpf&&ix["n"+semAcento(o.nome)])||null;
+    if(!ex){res.novos.push(Object.assign({cnpj:"",cpf:"",tel:"",email:"",contab:"",nasc:"",obs:""},o));return}
+    if(imp.modo==="completar"){var m=Object.assign({},ex),mudou=false;["cnpj","cpf","tel","email","contab","nasc","obs"].forEach(function(f){if(!m[f]&&o[f]){m[f]=o[f];mudou=true}});if(mudou)res.atual.push(m);else res.ign++}else res.ign++});
+  imp.res=res;return res}
+function iTela2(){
+  var opt=function(sel){return FCAMPOS.map(function(f){return '<option value="'+f[0]+'"'+(f[0]===sel?" selected":"")+'>'+f[1]+'</option>'}).join("")},ex=imp.rows[0]||[];
+  $("iCorpo").innerHTML=iSteps(2)+'<div class="iFile"><svg class="ic">'+'<use href="#i-clip"/></svg><div><b>'+esc(imp.arq)+'</b><small>'+imp.rows.length+' linhas · primeira linha com títulos</small></div><span class="fx" style="flex:1"></span><button class="btn" data-act="iTrocar" type="button">Trocar arquivo</button></div>'
+   +'<div class="tbw"><table class="iMap"><thead><tr><th>Coluna da planilha</th><th>Exemplo</th><th>Campo no sistema</th></tr></thead><tbody>'+imp.head.map(function(h,i){return '<tr><td><b>'+esc(h||"(sem título)")+'</b></td><td style="color:var(--mu)">'+esc(String(ex[i]==null?"":ex[i]).slice(0,40)||"—")+'</td><td><select data-i="'+i+'" class="iSel">'+opt(imp.map[i])+'</select></td></tr>'}).join("")+'</tbody></table></div>'
+   +'<div class="iOp"><b>Se o cliente já existir:</b><label><input type="radio" name="iModo" value="completar"'+(imp.modo==="completar"?" checked":"")+'> Completar os dados vazios</label><label><input type="radio" name="iModo" value="ignorar"'+(imp.modo==="ignorar"?" checked":"")+'> Ignorar</label></div><div class="iTags" id="iTags"></div><p class="hint" id="iNota"></p>';
+  [].forEach.call($("iCorpo").querySelectorAll(".iSel"),function(s){s.onchange=function(){imp.map[+s.dataset.i]=s.value;iAtu()}});
+  [].forEach.call($("iCorpo").querySelectorAll('input[name="iModo"]'),function(r){r.onchange=function(){imp.modo=r.value;iAtu()}});iAtu()}
+function iAtu(){var r=iCalc(),tot=r.novos.length+r.atual.length;
+  $("iTags").innerHTML='<span class="iTag">'+r.novos.length+' novos clientes</span><span class="iTag am">'+(r.atual.length+r.ign)+' já existem'+(r.atual.length?" ("+r.atual.length+" serão completados)":"")+'</span>'+(r.prob.length?'<span class="iTag vm">'+r.prob.length+' com problema</span>':'')+(r.rep?'<span class="iTag am">'+r.rep+' repetidos no arquivo</span>':'');
+  var tem=imp.map.indexOf("nome")>-1;$("iNota").innerHTML=tem?(r.prob.length?'As linhas com problema não são importadas. <a href="#" data-act="iProb">Baixar essas linhas</a> para corrigir. Nada é apagado e dá para desfazer a importação.':'Nada é apagado e dá para desfazer a importação.'):'<b style="color:#b42318">Escolha qual coluna é o nome do cliente.</b>';
+  $("iRod").innerHTML='<span class="fx"></span><button class="btn" data-act="iVoltar" type="button">Voltar</button><button class="btn p" data-act="iExec" type="button"'+(tem&&tot?"":" disabled")+'>Importar '+tot+' cliente'+(tot===1?"":"s")+'</button>'}
+async function iExecutar(){
+  var r=imp.res,btn=document.querySelector('[data-act="iExec"]');if(btn){btn.disabled=true;btn.textContent="Importando…"}
+  var ok=0,att=0,falha=0,ids=[],i,B;
+  for(i=0;i<r.novos.length;i+=300){B=r.novos.slice(i,i+300);var x=await sb.from("clientes").insert(B).select("id");
+    if(!x.error){ok+=B.length;(x.data||[]).forEach(function(z){ids.push(z.id)})}
+    else{for(var j=0;j<B.length;j++){var y=await sb.from("clientes").insert(B[j]).select("id");if(y.error)falha++;else{ok++;(y.data||[]).forEach(function(z){ids.push(z.id)})}}}}
+  for(i=0;i<r.atual.length;i+=300){B=r.atual.slice(i,i+300);var u=await sb.from("clientes").upsert(B,{onConflict:"id"});if(!u.error)att+=B.length;else falha+=B.length}
+  imp.ids=ids;try{localStorage.setItem("agend_imp",JSON.stringify({ids:ids,em:Date.now()}))}catch(e){}
+  await carregarClientes();renderClientes();
+  $("iCorpo").innerHTML=iSteps(3)+'<div class="iTags"><span class="iTag">'+ok+' novos importados</span>'+(att?'<span class="iTag am">'+att+' completados</span>':'')+(falha?'<span class="iTag vm">'+falha+' não importados</span>':'')+(r.prob.length?'<span class="iTag vm">'+r.prob.length+' com problema</span>':'')+'</div><p class="hint">Importação concluída. '+(r.prob.length?'<a href="#" data-act="iProb">Baixar as linhas com problema</a> · ':'')+(ehAdmin&&ids.length?'<a href="#" data-act="iDesf">Desfazer esta importação</a>':'')+'</p>';
+  $("iRod").innerHTML='<span class="fx"></span><button class="btn p" data-act="iFechar" type="button">Concluir</button>'}
+async function iDesfazer(){var ids=imp&&imp.ids||[];if(!ids.length||!ehAdmin)return;if(!confirm("Apagar os "+ids.length+" clientes desta importação?"))return;
+  for(var i=0;i<ids.length;i+=200){var r=await sb.from("clientes").delete().in("id",ids.slice(i,i+200));if(r.error){toast("Não foi possível desfazer.");return}}
+  try{localStorage.removeItem("agend_imp")}catch(e){}$("dlgI").close();await carregarClientes();renderClientes();toast("Importação desfeita")}
+function iProblemas(){var r=imp.res;if(!r||!r.prob.length)return;baixar("linhas-com-problema.csv",[["Linha","Motivo"].concat(imp.head).map(csvCel).join(";")].concat(r.prob.map(function(p){return [p.linha,p.mot].concat(p.r).map(csvCel).join(";")})).join("\r\n"))}
+function iModelo(){baixar("modelo-clientes-certsiga.csv",["Nome;CNPJ;CPF;Telefone;E-mail;Contabilidade;Nascimento;Observações","Exemplo Comércio Ltda;12.345.678/0001-90;;(71) 99999-0000;contato@exemplo.com.br;Convirtual;;"].join("\r\n"))}
+
 function montarE(){var g=$("eGrid");if(g.firstChild)return;["nome","cpf","cnpj","nasc","rg","cnh","resp","email","tel","contab","pagador","agenda","status","tipo","link","modelo","validade","valor","pedido","hist"].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="e_"+n.id});[].forEach.call(l.querySelectorAll(".dtb"),function(n){n.remove()});[].forEach.call(l.querySelectorAll("[data-dtp]"),function(n){n.removeAttribute("data-dtp")});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});g.appendChild(l)});initDtp($("e_agenda"))}
 function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;if(!pode("editar")){abrirDet(id);return}
   montarE();CAMPOS.forEach(function(c){$("e_"+c).value=d[c]||""});eId=id;$("eSub").textContent=(bonito(d.nome)||"Sem nome")+(d.agenda?" · "+fmtAgenda(d.agenda):"");$("eDel").hidden=!pode("excluir");$("dlgE").showModal()}
@@ -1114,7 +1288,7 @@ async function entrar(){
   if(!papel){await sb.auth.signOut();document.body.classList.add("nauth");$("lgMsg").textContent="Seu usuário ainda não tem nível de acesso. Fale com o administrador.";return false}
   try{await carregar();await carregarPgtos()}catch(e){document.body.classList.add("nauth");$("lgMsg").textContent="Não foi possível carregar seus dados. Verifique a internet e tente de novo.";return false}
   document.body.classList.remove("nauth");
-  await carregarPerfil();montarMenu();await carregarCfg();await carregarContabs();rota();atualizaNotifTxt();
+  await carregarPerfil();montarMenu();await carregarCfg();await carregarContabs();await carregarClientes();rota();atualizaNotifTxt();
   var loc=lerCache();
   if(pode("editar")&&!dados.length&&loc.length&&confirm("Encontrei "+loc.length+" registro(s) salvos neste navegador. Enviar para a nuvem agora?")){dados=loc;gravar()}
   render();previa();if(!perfil.onboarding_ok)setTimeout(abrirOb,400);return true}
@@ -1397,7 +1571,7 @@ function corBarra(){var h=document.documentElement,mt=document.querySelector('me
 
 /* ---------- ações (um único ouvinte) ---------- */
 document.addEventListener("click",function(e){
-  var b=e.target.closest("button[data-act],.ev[data-act]");if(!b)return;
+  var b=e.target.closest("button[data-act],a[data-act],tr[data-act],.ev[data-act]");if(!b)return;
   var a=b.dataset.act,id=b.dataset.id,d=id?dados.find(function(x){return x.id===id}):null;
   if(a==="copy")copiar(b.dataset.v);
   else if(a==="desc"&&d)copiar(textoReg(d));
@@ -1442,6 +1616,22 @@ document.addEventListener("click",function(e){
   else if(a==="cenReag")cenReag(id);
   else if(a==="cenAprov")cenAprov(id);
   else if(a==="cenFil"){cenFil=id||"";renderCentral()}
+  else if(a==="clImp")iAbrir();
+  else if(a==="clNovo")clAbrir(null);
+  else if(a==="clExp")clExportar();
+  else if(a==="clFechar")$("dlgCl").close();
+  else if(a==="clSalvar")clSalvar();
+  else if(a==="clDel")clExcluir();
+  else if(a==="clFil"){clFil=id||"";clLim=100;renderClientes()}
+  else if(a==="clMais"){clLim+=200;renderClientes()}
+  else if(a==="clAt"){e.stopPropagation();clAtender(id)}
+  else if(a==="clEdit")clAbrir(id);
+  else if(a==="iFechar")$("dlgI").close();
+  else if(a==="iTrocar"||a==="iVoltar")iTela1();
+  else if(a==="iExec")iExecutar();
+  else if(a==="iProb"){e.preventDefault();iProblemas()}
+  else if(a==="iDesf"){e.preventDefault();iDesfazer()}
+  else if(a==="iModelo"){e.preventDefault();iModelo()}
   else if(a==="det")abrirDet(id);
   else if(a==="dFechar")$("dlgD").close();
   else if(a==="cmtEnviar")enviarCmt();
@@ -1622,12 +1812,12 @@ async function testarGemini(){
 /* ---------- níveis de acesso ---------- */
 var papel=null,pgtos={},meuEmail="",perI="mes",finF="todos",detId=null,pgId=null;
 var PAPEL_NOME={admin:"Administrador",financeiro:"Financeiro",comercial:"Comercial"};
-var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],central:["Central","eye"],renovacoes:["Renovações","refresh"],novo:["Novo atendimento","plus"],financeiro:["Financeiro","money"],contabs:["Contabilidades","brief"],backup:["Ajustes","shield"],usuarios:["Usuários","user"]};
+var NAVD={inicio:["Painel","home"],agenda:["Agenda","cal"],central:["Central","eye"],clientes:["Clientes","users"],renovacoes:["Renovações","refresh"],novo:["Novo atendimento","plus"],financeiro:["Financeiro","money"],contabs:["Contabilidades","brief"],backup:["Ajustes","shield"],usuarios:["Usuários","user"]};
 var NAVT={novo:"Novo",renovacoes:"Renovar"};
-var GRUPOS=[["Principal",["inicio","agenda","central","renovacoes","novo"]],["Financeiro",["financeiro","contabs"]],["Sistema",["backup","usuarios"]]];
+var GRUPOS=[["Principal",["inicio","agenda","central","renovacoes","clientes","novo"]],["Financeiro",["financeiro","contabs"]],["Sistema",["backup","usuarios"]]];
 var ACESSO={
-  admin:{pags:["inicio","agenda","central","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","central","renovacoes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
-  comercial:{pags:["inicio","agenda","central","renovacoes","novo","perfil"],menu:["inicio","agenda","central","renovacoes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
+  admin:{pags:["inicio","agenda","central","clientes","renovacoes","financeiro","contabs","novo","backup","usuarios","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo","financeiro","contabs","backup","usuarios"],tab:["inicio","agenda","novo","financeiro","backup"]},
+  comercial:{pags:["inicio","agenda","central","clientes","renovacoes","novo","perfil"],menu:["inicio","agenda","central","renovacoes","clientes","novo"],tab:["inicio","agenda","novo","renovacoes"]},
   financeiro:{pags:["inicio","agenda","financeiro","contabs","perfil"],menu:["inicio","agenda","financeiro","contabs"],tab:["inicio","agenda","financeiro","contabs"]}};
 function pode(a){var p=papel;
   if(a==="editar"||a==="anexos")return p==="admin"||p==="comercial";
