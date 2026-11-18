@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#a8202a">
 <link rel="icon" type="image/png" href="logo-vinho.png">
-<title>Certsiga – Agendamentos</title>
+<title>Certsiga – Dashboard</title>
 <script>(function(){var m;try{m=localStorage.getItem("agend_modo")}catch(e){}if(m!=="claro"&&m!=="escuro")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";document.documentElement.dataset.modo=m})()</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -359,6 +359,11 @@ html[data-modo="escuro"] #lgMsg{color:#ff8a8a}
   .rel tr{break-inside:avoid}
   .rel .rt{margin-top:14px;display:flex;justify-content:space-between;font-size:14px;font-weight:800;border-top:2px solid #000;padding-top:8px}
   .rel .rf{margin-top:18px;font-size:11px;color:#555}
+  .rel .rmb{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .rel .mb{border:1px solid #ccc;border-radius:6px;padding:6px 12px;min-width:90px}
+  .rel .mb b{display:block;font-size:16px;color:#a8202a}
+  .rel .mb span{font-size:11px;color:#333}
+  .rel .mb.t{background:#f3e3e4}
 }
 @media(max-width:1180px){
 .app{grid-template-columns:248px minmax(0,1fr)}
@@ -471,20 +476,40 @@ dialog.ed{width:min(720px,96vw)}
 .recb{flex:none;width:32px;height:32px;min-height:0}
 @media(min-width:901px){
 .app.rec{grid-template-columns:76px minmax(0,1fr) 344px}
-.app.rec .side{padding:20px 10px 16px;align-items:center;overflow-x:hidden}
-.app.rec .brr{flex-direction:column;gap:10px}
-.app.rec .brand{padding:0;width:32px;height:38px;overflow:hidden}
-.app.rec .brand img{height:38px;width:auto;max-width:none;object-position:left}
-.app.rec .recb svg{transform:rotate(180deg)}
-.app.rec .mg,.app.rec .menu a span,.app.rec .usr .un,.app.rec .usr .chev{display:none}
-.app.rec .menu{width:100%}
-.app.rec .menu a{justify-content:center;padding:11px 0;position:relative}
-.app.rec .menu a .bgn:not([hidden]){display:grid;position:absolute;top:2px;right:6px;min-width:16px;height:16px;font-size:10px;padding:0 4px}
-.app.rec .usr{width:auto;padding:6px;justify-content:center;background:none;border:0}
-}
+.app.rec .side{padding:20px 10px 16px;align-items:center;overflow:hidden}
+.app.rec .side>:not(.brr){display:none!important}
+.app.rec .recb{display:none}
+.app.rec .brr{justify-content:center}
+.app.rec .brand{padding:0;width:24px;height:40px;overflow:hidden;cursor:pointer}
+.app.rec .brand img{height:40px;width:auto;max-width:none;object-position:left}
 @media(min-width:901px) and (max-width:1280px){.app.rec{grid-template-columns:76px minmax(0,1fr)}}
 @media print{#umenu,#tourTip,#tourBg,#tourBlk,.hvt{display:none!important}}
 @media(min-width:601px){.kpis.k8{grid-template-columns:repeat(auto-fit,minmax(214px,1fr))}}
+
+.dtb{white-space:nowrap;display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:44px;margin-top:6px;padding:10px 14px;border:1px solid var(--ln);border-radius:12px;background:var(--sf);color:var(--tx);font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.dtb:hover,.dtb.on{border-color:var(--pr)}
+.dtb .ph0{color:var(--mu);font-weight:500}
+.dtb svg{width:18px;height:18px;color:var(--mu);flex:none}
+#dtp{position:fixed;z-index:200;display:none;width:min(372px,calc(100vw - 16px));background:var(--sf);border:1px solid var(--ln);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.28);padding:14px;color:var(--tx)}
+#dtp.on{display:block}
+#dtp .dh{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px}
+#dtp .dh b{font-size:14px;font-weight:800}
+#dtp .dn{width:32px;height:32px;border-radius:10px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);cursor:pointer;font-size:16px;line-height:1}
+#dtp .dn:hover{border-color:var(--pr);color:var(--pr)}
+#dtp .dbody{display:grid;grid-template-columns:1fr 92px;gap:12px}
+#dtp .dg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+#dtp .dg i{font-style:normal;font-size:11px;font-weight:700;color:var(--mu);padding:4px 0}
+#dtp .dg button{height:34px;border:0;border-radius:10px;background:none;color:var(--tx);font:inherit;font-size:13px;font-weight:600;cursor:pointer;position:relative}
+#dtp .dg button:hover{background:var(--soft)}
+#dtp .dg button.o{color:var(--mu);opacity:.55}
+#dtp .dg button.h{box-shadow:inset 0 0 0 1.5px var(--pr)}
+#dtp .dg button.s{background:var(--btn);color:var(--onpr);box-shadow:none}
+#dtp .dt{max-height:244px;overflow:auto;display:flex;flex-direction:column;gap:2px;padding-right:2px}
+#dtp .dt button{flex:none;height:32px;border:0;border-radius:10px;background:none;color:var(--tx);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+#dtp .dt button:hover{background:var(--soft)}
+#dtp .dt button.s{background:var(--btn);color:var(--onpr)}
+#dtp .df{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--ln)}
+#dtp .df button{border:0;background:none;color:var(--pr);font:inherit;font-weight:700;font-size:13px;cursor:pointer;padding:4px 6px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -520,7 +545,7 @@ dialog.ed{width:min(720px,96vw)}
 </defs></svg>
 
 <div id="login">
-<div class="lgp"><img src="logo-branca.png" alt="CertSiga Certificados Digitais"><div><h2>Agenda, clientes e financeiro em um só lugar.</h2><p>Validações de certificado digital, documentos e fechamento com as contabilidades, tudo organizado.</p></div><small>Acesso restrito à equipe Certsiga.</small></div>
+<div class="lgp"><img src="logo-branca.png" alt="CertSiga Certificados Digitais"><div><h2>Agenda, clientes e financeiro em um só lugar.</h2><p>Validações de certificado digital, documentos e relatório mensal com as contabilidades, tudo organizado.</p></div><small>Acesso restrito à equipe Certsiga.</small></div>
 <div class="lgr"><form class="lg" id="lgForm" autocomplete="on">
 <img class="lgm lg-l" src="logo-vinho.png" alt="CertSiga Certificados Digitais"><img class="lgm lg-d" src="logo-vinho-escura.png" alt="CertSiga Certificados Digitais">
 <h1>Entrar</h1><p class="sub">Use o e-mail e a senha criados pelo administrador.</p>
@@ -559,7 +584,7 @@ dialog.ed{width:min(720px,96vw)}
 </section>
 
 <section class="pg" id="v-financeiro">
-<div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e fechamento mensal →</a></div>
+<div class="ph"><div><h1>Financeiro</h1><p class="sub">Controle o que já foi recebido e o que ainda falta receber. Atendimento validado há mais de 7 dias sem pagamento aparece como em atraso.</p><a class="lk" href="#contabs">Contabilidades parceiras e relatório mensal →</a></div>
 <div class="seg" id="segFin"><button data-act="finf" data-v="todos" class="on">Todos</button><button data-act="finf" data-v="contab">Contabilidades</button><button data-act="finf" data-v="receber">A receber</button><button data-act="finf" data-v="parcial">Parciais</button><button data-act="finf" data-v="atraso">Em atraso</button><button data-act="finf" data-v="pago">Pagos</button></div></div>
 <div class="kpis" id="finKpis"></div>
 <div class="sheet"><div id="finLista"></div></div>
@@ -705,14 +730,14 @@ dialog.ed{width:min(720px,96vw)}
 <label class="chk" style="margin-top:12px"><input type="checkbox" id="ctPadrao" checked>Normalmente a contabilidade paga os certificados dos clientes dela</label>
 <div class="row"><button class="btn p" data-act="ctSalvar" type="button">Salvar contabilidade</button><button class="btn" data-act="ctCancel" type="button">Limpar</button></div>
 <h2>Contabilidades parceiras</h2><div id="ctLista"></div></div>
-<div class="sheet" style="margin-top:16px" id="fechamento"><h2>Fechamento mensal</h2>
+<div class="sheet" style="margin-top:16px" id="fechamento"><h2>Relatório mensal</h2>
 <div class="grid"><label>Contabilidade<select id="fechCt"></select></label><label>Mês<input id="fechMes" type="month"></label></div>
-<div class="row"><button class="btn p" data-act="fechGerar" type="button">Gerar fechamento</button></div>
+<div class="row"><button class="btn p" data-act="fechGerar" type="button">Gerar relatório</button></div>
 <div id="fechRes"></div></div>
 </section>
 
 </main>
-<footer class="foot">Agendamentos de validação de certificado digital · uso interno</footer>
+<footer class="foot">Certsiga Dashboard · uso interno</footer>
 </div>
 <aside class="rail" id="rail"></aside>
 </div>
@@ -754,12 +779,12 @@ dialog.ed{width:min(720px,96vw)}
 <div class="mf"><button class="btn" type="button" data-act="dFechar">Fechar</button></div>
 </div></dialog>
 
-<dialog id="dlgF"><div class="dl"><div class="mh"><div><h3>Pagamento do fechamento</h3><p class="sub" id="fpInfo"></p></div></div>
+<dialog id="dlgF"><div class="dl"><div class="mh"><div><h3>Pagamento do relatório</h3><p class="sub" id="fpInfo"></p></div></div>
 <div class="mb">
 <label>Forma de pagamento<select id="fpForma"><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option><option>Transferência</option></select></label>
 <label>Data do pagamento<input id="fpData" type="date"></label>
 <label>Observação (opcional)<input id="fpObs" maxlength="200"></label>
-<p class="hint">Todos os certificados ainda não pagos deste fechamento serão marcados como pagos.</p></div>
+<p class="hint">Todos os certificados ainda não pagos deste relatório serão marcados como pagos.</p></div>
 <div class="mf"><button class="btn" type="button" data-act="fpFechar">Cancelar</button><button class="btn p" type="button" data-act="fpSalvar">Registrar pagamento</button></div>
 </div></dialog>
 
@@ -876,7 +901,58 @@ function mostrarTour(){
 function fimTour(){["tourBg","tourTip","tourBlk"].forEach(function(i){$(i).classList.remove("on")});tourL=[]}
 function voltar(){if(navN>0){history.back()}else aba("inicio")}
 window.addEventListener("hashchange",function(){navN++});
-function montarE(){var g=$("eGrid");if(g.firstChild)return;["nome","cpf","cnpj","nasc","rg","cnh","resp","email","tel","contab","pagador","agenda","status","tipo","link","modelo","validade","valor","pedido","hist"].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="e_"+n.id});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});g.appendChild(l)})}
+
+/* ---------- seletor de data e hora ---------- */
+var dtpEl=null,dtpIn=null,dtpMes=null;
+function dtTxt(v){if(!v)return"";var d=new Date(v);if(isNaN(d))return"";return d.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").replace(/^./,function(c){return c.toUpperCase()})+", "+p2(d.getDate())+"/"+p2(d.getMonth()+1)+"/"+d.getFullYear()+" · "+p2(d.getHours())+":"+p2(d.getMinutes())}
+function initDtp(inp){
+  if(!inp||inp.dataset.dtp)return;inp.dataset.dtp="1";
+  var desc=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,"value");
+  inp.type="hidden";
+  var b=document.createElement("button");b.type="button";b.className="dtb";
+  var pintar=function(){var t=dtTxt(desc.get.call(inp));b.innerHTML=(t?'<span>'+esc(t)+'</span>':'<span class="ph0">Escolher data e hora</span>')+'<svg class="ic"><use href="#i-cal"/></svg>'};
+  Object.defineProperty(inp,"value",{get:function(){return desc.get.call(inp)},set:function(v){desc.set.call(inp,v);pintar()},configurable:true});
+  inp.parentNode.insertBefore(b,inp);pintar();
+  b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();abrirDtp(inp,b)})}
+function abrirDtp(inp,b){
+  if(!dtpEl){dtpEl=document.createElement("div");dtpEl.id="dtp";dtpEl.addEventListener("click",dtpClick)}
+  if(dtpEl.classList.contains("on")&&dtpIn===inp){fecharDtp();return}
+  (b.closest("dialog")||document.body).appendChild(dtpEl);dtpIn=inp;dtpEl._b=b;
+  var v=inp.value,d=v?new Date(v):new Date();if(isNaN(d))d=new Date();dtpMes=new Date(d.getFullYear(),d.getMonth(),1);
+  desenharDtp();dtpEl.classList.add("on");b.classList.add("on");
+  var r=b.getBoundingClientRect(),w=dtpEl.offsetWidth,h=dtpEl.offsetHeight;
+  dtpEl.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+"px";
+  dtpEl.style.top=(r.bottom+h+8>window.innerHeight&&r.top>h+8?r.top-h-6:r.bottom+6)+"px";
+  var s=dtpEl.querySelector(".dt .s");if(s)dtpEl.querySelector(".dt").scrollTop=s.offsetTop-80}
+function fecharDtp(){if(dtpEl){dtpEl.classList.remove("on");if(dtpEl._b)dtpEl._b.classList.remove("on")}dtpIn=null}
+function desenharDtp(){
+  var v=dtpIn.value,sel=v?new Date(v):null,hoje=new Date(),y=dtpMes.getFullYear(),m=dtpMes.getMonth();
+  var ini0=new Date(y,m,1).getDay(),dias=new Date(y,m+1,0).getDate(),h='';
+  ["D","S","T","Q","Q","S","S"].forEach(function(x){h+='<i>'+x+'</i>'});
+  for(var i=0;i<ini0;i++){var dd=new Date(y,m,1-ini0+i);h+='<button type="button" class="o" data-d="'+iso(dd)+'">'+dd.getDate()+'</button>'}
+  for(var k=1;k<=dias;k++){var dk=new Date(y,m,k),isoK=iso(dk);h+='<button type="button" data-d="'+isoK+'" class="'+(isoK===iso(hoje)?"h ":"")+(sel&&isoK===iso(sel)?"s":"")+'">'+k+'</button>'}
+  var resto=(7-(ini0+dias)%7)%7;for(var j=1;j<=resto;j++){var d2=new Date(y,m+1,j);h+='<button type="button" class="o" data-d="'+iso(d2)+'">'+j+'</button>'}
+  var hs='',cur=sel?p2(sel.getHours())+":"+p2(sel.getMinutes()):"";
+  for(var t=6*60;t<=22*60;t+=30){var hh=p2(Math.floor(t/60))+":"+p2(t%60);hs+='<button type="button" data-t="'+hh+'" class="'+(hh===cur?"s":"")+'">'+hh+'</button>'}
+  dtpEl.innerHTML='<div class="dh"><button type="button" class="dn" data-n="-1" aria-label="Mês anterior">‹</button><b>'+esc(dtpMes.toLocaleDateString("pt-BR",{month:"long"}).replace(/^./,function(c){return c.toUpperCase()})+" de "+dtpMes.getFullYear())+'</b><button type="button" class="dn" data-n="1" aria-label="Próximo mês">›</button></div><div class="dbody"><div class="dg">'+h+'</div><div class="dt">'+hs+'</div></div><div class="df"><button type="button" data-x="limpar">Limpar</button><button type="button" data-x="hoje">Hoje</button><button type="button" data-x="ok">Pronto</button></div>'}
+function dtpGravar(dia,hora){
+  var cur=dtpIn.value,base=cur?new Date(cur):null;
+  var d=dia||(base?iso(base):iso(new Date())),t=hora||(base?p2(base.getHours())+":"+p2(base.getMinutes()):"09:00");
+  dtpIn.value=d+"T"+t;dtpIn.dispatchEvent(new Event("input",{bubbles:true}));dtpIn.dispatchEvent(new Event("change",{bubbles:true}))}
+function dtpClick(e){
+  e.stopPropagation();var t=e.target.closest("button");if(!t)return;
+  if(t.dataset.n){dtpMes=new Date(dtpMes.getFullYear(),dtpMes.getMonth()+ +t.dataset.n,1);desenharDtp();return}
+  if(t.dataset.d){dtpGravar(t.dataset.d,null);var o=new Date(t.dataset.d+"T12:00");dtpMes=new Date(o.getFullYear(),o.getMonth(),1);desenharDtp();return}
+  if(t.dataset.t){dtpGravar(null,t.dataset.t);var sc=dtpEl.querySelector(".dt").scrollTop;desenharDtp();dtpEl.querySelector(".dt").scrollTop=sc;return}
+  var x=t.dataset.x;
+  if(x==="limpar"){dtpIn.value="";dtpIn.dispatchEvent(new Event("change",{bubbles:true}));fecharDtp()}
+  else if(x==="hoje"){var n=new Date(),mm=n.getMinutes()<30?"00":"30";dtpIn.value=iso(n)+"T"+p2(n.getHours())+":"+mm;dtpIn.dispatchEvent(new Event("change",{bubbles:true}));fecharDtp()}
+  else if(x==="ok")fecharDtp()}
+document.addEventListener("click",function(e){if(dtpEl&&dtpEl.classList.contains("on")&&!e.target.closest("#dtp")&&!e.target.closest(".dtb"))fecharDtp()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&dtpEl&&dtpEl.classList.contains("on")){e.preventDefault();e.stopPropagation();fecharDtp()}},true);
+initDtp($("agenda"));
+
+function montarE(){var g=$("eGrid");if(g.firstChild)return;["nome","cpf","cnpj","nasc","rg","cnh","resp","email","tel","contab","pagador","agenda","status","tipo","link","modelo","validade","valor","pedido","hist"].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="e_"+n.id});[].forEach.call(l.querySelectorAll(".dtb"),function(n){n.remove()});[].forEach.call(l.querySelectorAll("[data-dtp]"),function(n){n.removeAttribute("data-dtp")});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});g.appendChild(l)});initDtp($("e_agenda"))}
 function editar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;if(!pode("editar")){abrirDet(id);return}
   montarE();CAMPOS.forEach(function(c){$("e_"+c).value=d[c]||""});eId=id;$("eSub").textContent=(bonito(d.nome)||"Sem nome")+(d.agenda?" · "+fmtAgenda(d.agenda):"");$("eDel").hidden=!pode("excluir");$("dlgE").showModal()}
 function salvarE(){var i=dados.findIndex(function(d){return d.id===eId});if(i<0)return;var o={};CAMPOS.forEach(function(c){o[c]=$("e_"+c).value.trim()});
@@ -892,6 +968,7 @@ $("semana").addEventListener("mousemove",function(e){var c=e.target.closest(".tg
   hvt.style.display="block";var tw=hvt.offsetWidth;hvt.style.left=Math.min(e.clientX+14,window.innerWidth-tw-8)+"px";hvt.style.top=(e.clientY+18)+"px";
   [].forEach.call($("semana").querySelectorAll(".tgt span"),function(s){s.classList.toggle("hl",+s.dataset.m===m)})});
 $("semana").addEventListener("mouseleave",hideHov);
+document.addEventListener("click",function(e){var b=e.target.closest(".app.rec .brand");if(b){e.preventDefault();recolher(false)}});
 var ultEv=null,ultT=0;
 $("semana").addEventListener("dblclick",function(e){var ev=e.target.closest(".ev");if(ev&&ev.dataset.id&&!$("dlgE").open){e.preventDefault();editar(ev.dataset.id)}});
 document.addEventListener("click",function(e){
@@ -1298,7 +1375,7 @@ function checarLembretes(){
   var it=dados.filter(function(d){if(d.lembrete==="1"||dispensados[d.id])return false;if(d.status!=="Agendado"&&d.status!=="Confirmado")return false;var m=minutosAte(d);return m!==null&&m>-5&&m<=10}).sort(function(a,b){return a.agenda.localeCompare(b.agenda)});
   el.innerHTML=it.map(function(d){var m=Math.max(0,Math.ceil(minutosAte(d)));
     return '<div class="lm"><span class="tx">⏰ <b>'+(m>0?"Faltam "+m+" min":"Está na hora")+'</b> · '+esc((d.agenda||"").slice(11,16))+' · '+esc(bonito(d.nome))+(d.tipo?' · '+esc(d.tipo):'')+'</span><button class="btn p" data-act="lem" data-id="'+esc(d.id)+'" type="button">Enviar lembrete</button><button class="btn" data-act="lemx" data-id="'+esc(d.id)+'" type="button">Dispensar</button></div>'}).join("");
-  document.title=(it.length?"⏰ ("+it.length+") ":"")+"Certsiga – Agendamentos";
+  document.title=(it.length?"⏰ ("+it.length+") ":"")+"Certsiga – Dashboard";
   it.forEach(function(d){if(avisados[d.id])return;avisados[d.id]=1;
     try{if("Notification" in window&&Notification.permission==="granted")new Notification("Lembrete de atendimento",{body:(d.agenda||"").slice(11,16)+" · "+bonito(d.nome)+(d.tipo?" · "+d.tipo:"")})}catch(e){}})}
 function ativarNotif(){
@@ -1487,7 +1564,7 @@ function abrirPgto(id){var d=dados.find(function(x){return x.id===id});if(!d)ret
   $("pgStatus").value=p.status||"pago";$("pgValor").value=p.status==="parcial"?String(p.valor_pago).replace(".",","):(p.status==="pago"||!p.status?(d.valor||""):"");
   $("pgForma").value=p.forma||"Pix";$("pgData").value=p.data_pgto||iso(new Date());$("pgObs").value=p.obs||"";
   var ctn=d.pagador==="contabilidade";$("pgNota").hidden=!ctn;
-  if(ctn){$("pgNota").textContent="Este atendimento é pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")+". O mais prático é registrar o pagamento de todos de uma vez, no fechamento mensal (menu Contabilidades).";if(!p.obs)$("pgObs").value="Pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")}
+  if(ctn){$("pgNota").textContent="Este atendimento é pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")+". O mais prático é registrar o pagamento de todos de uma vez, no relatório mensal (menu Contabilidades).";if(!p.obs)$("pgObs").value="Pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")}
   pgCampos();$("dlgP").showModal()}
 function pgCampos(){var s=$("pgStatus").value;$("pgValorL").hidden=s==="receber";$("pgFormaL").hidden=s==="receber";$("pgDataL").hidden=s==="receber"}
 async function salvarPgto(){
@@ -1662,7 +1739,7 @@ function renderContabs(){
   var mes=iso(new Date()).slice(0,7);
   $("ctLista").innerHTML=contabs.length?contabs.map(function(c){var L=certsDe(c,mes),tot=L.reduce(function(s,d){return s+num(d.valor)},0);
     var inf=[c.cnpj,c.email,c.telefone].filter(Boolean).join(" · ");
-    return '<div class="ctr"><span class="av">'+esc(ini(c.nome))+'</span><div class="nm"><strong>'+esc(c.nome)+'</strong><small>'+esc(inf||"Sem dados de contato")+'</small></div><span class="hint">'+esc(mesNome(mes))+': '+L.length+(L.length===1?" certificado":" certificados")+' · '+brl(tot)+'</span><div class="acts">'+qa("ctFech","Fechamento",c.id," p")+qa("ctEdit","Editar",c.id)+qa("ctDel","Excluir",c.id)+'</div></div>'}).join(""):'<p class="empty">Nenhuma contabilidade cadastrada ainda.</p>';
+    return '<div class="ctr"><span class="av">'+esc(ini(c.nome))+'</span><div class="nm"><strong>'+esc(c.nome)+'</strong><small>'+esc(inf||"Sem dados de contato")+'</small></div><span class="hint">'+esc(mesNome(mes))+': '+L.length+(L.length===1?" certificado":" certificados")+' · '+brl(tot)+'</span><div class="acts">'+qa("ctFech","Relatório",c.id," p")+qa("ctEdit","Editar",c.id)+qa("ctDel","Excluir",c.id)+'</div></div>'}).join(""):'<p class="empty">Nenhuma contabilidade cadastrada ainda.</p>';
   var sel=$("fechCt"),v=sel.value;sel.innerHTML=contabs.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.nome)+'</option>'}).join("");if(v&&contabs.some(function(c){return c.id===v}))sel.value=v;
   if(!$("fechMes").value)$("fechMes").value=mes;
   if($("fechRes").dataset.on)renderFech()}
@@ -1683,12 +1760,12 @@ async function ctExcluir(id){var c=contabs.find(function(x){return x.id===id});i
   if(!confirm("Excluir "+c.nome+" da lista de parceiras?\nOs atendimentos continuam salvos, só o cadastro é apagado."))return;
   var r=await sb.from("contabilidades").delete().eq("id",id);if(r.error){toast("Não foi possível excluir.");return}
   await carregarContabs();renderContabs();toast("Contabilidade excluída")}
-/* ---------- fechamento mensal ---------- */
+/* ---------- relatório mensal ---------- */
 function fechLista(){var ct=contabs.find(function(c){return c.id===$("fechCt").value}),mes=$("fechMes").value;return{ct:ct,mes:mes,L:ct&&mes?certsDe(ct,mes):[]}}
 function docDe(d){return d.cnpj||d.cpf||""}
 function renderFech(){
   var f=fechLista(),el=$("fechRes");
-  if(!f.ct){el.innerHTML='<p class="empty">Cadastre uma contabilidade para gerar o fechamento.</p>';return}
+  if(!f.ct){el.innerHTML='<p class="empty">Cadastre uma contabilidade para gerar o relatório.</p>';return}
   if(!f.mes){el.innerHTML='<p class="empty">Escolha o mês.</p>';return}
   el.dataset.on="1";
   var tot=0,pago=0,sv=0;f.L.forEach(function(d){var v=num(d.valor);if(!v)sv++;tot+=v;if(pgSt(d)==="pago")pago+=v});
@@ -1696,20 +1773,24 @@ function renderFech(){
   el.innerHTML='<div class="kpis" style="margin-top:16px">'+kpi("check",f.L.length,"certificados em "+esc(mesNome(f.mes)))+kpi("money",brl(tot),"valor total")+kpi("check",brl(pago),"já recebido")+kpi("clock",brl(tot-pago),"a receber")+'</div>'
    +(f.L.length?'<div class="tbw"><table class="tb2"><thead><tr><th>Validação</th><th>Cliente</th><th>CPF/CNPJ</th><th>Modelo</th><th class="v">Valor</th><th>Situação</th></tr></thead><tbody>'+linhas+'</tbody><tfoot><tr><td colspan="4">Total</td><td class="v">'+brl(tot)+'</td><td></td></tr></tfoot></table></div>'
      +(sv?'<p class="hint" style="margin-top:8px">⚠ '+sv+(sv===1?" certificado está":" certificados estão")+' sem valor preenchido. Complete antes de enviar para a contabilidade.</p>':'')
-     +'<div class="row"><button class="btn p" data-act="fechPdf" type="button">Gerar PDF</button><button class="btn" data-act="fechCopiar" type="button">Copiar resumo</button><button class="btn" data-act="fechPagar" type="button"'+(f.L.every(function(d){return pgSt(d)==="pago"})?' disabled':'')+'>Registrar pagamento do fechamento</button></div>'
+     +'<div class="row"><button class="btn p" data-act="fechPdf" type="button">Gerar PDF</button><button class="btn" data-act="fechCopiar" type="button">Copiar resumo</button><button class="btn" data-act="fechPagar" type="button"'+(f.L.every(function(d){return pgSt(d)==="pago"})?' disabled':'')+'>Registrar pagamento do relatório</button></div>'
     :'<p class="empty">Nenhum certificado validado em '+esc(mesNome(f.mes))+' marcado como pago por '+esc(f.ct.nome)+'. Para entrar aqui, o atendimento precisa estar Validado, com esta contabilidade e com "Quem paga" = Contabilidade.</p>')}
 function fechTexto(){var f=fechLista(),tot=0;
   var l=f.L.map(function(d){tot+=num(d.valor);return fmtData(parseISO(dataVal(d)))+" - "+bonito(d.nome)+(docDe(d)?" ("+docDe(d)+")":"")+" - "+(d.modelo||"certificado")+" - "+(d.valor?"R$ "+d.valor:"sem valor")});
   return "Certsiga Certificado Digital\nRelação de certificados - "+f.ct.nome+"\nCompetência: "+mesNome(f.mes)+"\n\n"+l.join("\n")+"\n\nTotal: "+f.L.length+" certificado(s) - "+brl(tot)}
+function modeloBonito(m){return String(m||"").trim().replace(/(^|[\s\-\/])([a-zà-ú])/g,function(_,a,b){return a+b.toUpperCase()}).replace(/cnpj|cpf/gi,function(x){return x.toUpperCase()})}
+function porModelo(L){var o={};L.forEach(function(d){var k=modeloBonito(d.modelo)||"Sem modelo";o[k]=(o[k]||0)+1});return Object.keys(o).sort(function(a,b){return o[b]-o[a]||a.localeCompare(b)}).map(function(k){return{m:k,n:o[k]}})}
 function fechPdf(){
   var f=fechLista();if(!f.ct||!f.L.length)return;var tot=0;
-  var linhas=f.L.map(function(d){tot+=num(d.valor);return '<tr><td>'+esc(fmtData(parseISO(dataVal(d))))+'</td><td>'+esc(bonito(d.nome))+'</td><td>'+esc(docDe(d))+'</td><td>'+esc(d.modelo||"")+'</td><td class="v">'+(d.valor?"R$ "+esc(d.valor):"—")+'</td></tr>'}).join("");
+  var linhas=f.L.map(function(d){tot+=num(d.valor);return '<tr><td>'+esc(fmtData(parseISO(dataVal(d))))+'</td><td>'+esc(bonito(d.nome))+'</td><td>'+esc(docDe(d))+'</td><td>'+esc(modeloBonito(d.modelo))+'</td><td class="v">'+(d.valor?"R$ "+esc(d.valor):"—")+'</td></tr>'}).join("");
   var info=[f.ct.cnpj?"CNPJ "+f.ct.cnpj:"","Competência: "+mesNome(f.mes)].filter(Boolean).join(" · ");
-  $("relPrint").innerHTML='<div class="rel"><div class="rh"><img src="logo-vinho.png" alt="Certsiga"><div><h1>Relação de certificados</h1><p><b>'+esc(f.ct.nome)+'</b></p><p>'+esc(info)+'</p></div></div>'
+  var mods=porModelo(f.L).map(function(x){return '<div class="mb"><b>'+x.n+'</b><span>'+esc(x.m)+'</span></div>'}).join("");
+  $("relPrint").innerHTML='<div class="rel"><div class="rh"><img src="logo-vinho.png" alt="Certsiga"><div><h1>Relatório mensal</h1><p><b>'+esc(f.ct.nome)+'</b></p><p>'+esc(info)+'</p></div></div>'
+    +'<div class="rmb"><div class="mb t"><b>'+f.L.length+'</b><span>'+(f.L.length===1?"certificado":"certificados")+'</span></div><div class="mb t"><b>'+brl(tot)+'</b><span>valor total</span></div>'+mods+'</div>'
     +'<table><thead><tr><th>Validação</th><th>Cliente</th><th>CPF/CNPJ</th><th>Modelo</th><th class="v">Valor</th></tr></thead><tbody>'+linhas+'</tbody></table>'
     +'<div class="rt"><span>'+f.L.length+(f.L.length===1?" certificado":" certificados")+'</span><span>Valor total: '+brl(tot)+'</span></div>'
     +'<p class="rf">Emitido em '+fmtData(new Date())+' · Certsiga Certificado Digital</p></div>';
-  var t=document.title;document.title=limpaNome("Fechamento "+f.ct.nome+" "+f.mes);
+  var t=document.title;document.title=limpaNome("Relatório mensal "+f.ct.nome+" "+f.mes);
   var volta=function(){document.title=t;window.removeEventListener("afterprint",volta)};window.addEventListener("afterprint",volta);
   setTimeout(function(){window.print()},60)}
 function abrirFechPagto(){
@@ -1721,12 +1802,12 @@ async function salvarFechPagto(){
   var f=fechLista(),pend=f.L.filter(function(d){return pgSt(d)!=="pago"});if(!pend.length)return;
   if(pend.some(function(d){return !num(d.valor)})){toast("Preencha o valor de todos os certificados antes de registrar o pagamento.");return}
   if(!$("fpData").value){toast("Informe a data do pagamento.");return}
-  var ob=("Pago pela contabilidade "+f.ct.nome+" (fechamento "+f.mes+")"+($("fpObs").value.trim()?" - "+$("fpObs").value.trim():"")).slice(0,500);
+  var ob=("Pago pela contabilidade "+f.ct.nome+" (relatório "+f.mes+")"+($("fpObs").value.trim()?" - "+$("fpObs").value.trim():"")).slice(0,500);
   await sincFila;
   var rows=pend.map(function(d){return{registro_id:d.id,status:"pago",valor_pago:num(d.valor),forma:$("fpForma").value,data_pgto:$("fpData").value,obs:ob,atualizado:new Date().toISOString()}});
   var r=await sb.from("pagamentos").upsert(rows).select();
   if(r.error){toast("Não foi possível registrar o pagamento.");return}
-  r.data.forEach(function(x){pgtos[x.registro_id]=x});$("dlgF").close();render();toast("Pagamento do fechamento registrado ✓")}
+  r.data.forEach(function(x){pgtos[x.registro_id]=x});$("dlgF").close();render();toast("Pagamento do relatório registrado ✓")}
 
 $("contab").addEventListener("change",function(){var c=achaContab($("contab").value);if(c){$("contab").value=c.nome;if(c.paga_por_padrao&&!$("pagador").value){$("pagador").value="contabilidade";previa()}}});
 $("fechCt").addEventListener("change",function(){if($("fechRes").dataset.on)renderFech()});
