@@ -797,7 +797,7 @@ body:is([data-pg="atend"],[data-pg="financeiro"],[data-pg="contabs"]) .rail{disp
 <label>Pedido<input id="pedido"></label>
 <label>Histórico<input id="hist"></label>
 </div>
-<div class="row"><button class="btn p" id="btnSalvar" onclick="salvar()">Salvar atendimento</button><button class="btn" onclick="limpar()">Limpar</button><span class="hint">Ctrl + Enter também salva.</span><span class="rsv" id="rsvInfo"></span></div>
+<div class="row"><button class="btn p" id="btnSalvar" onclick="salvar()">Salvar atendimento</button><button class="btn" onclick="limpar();rascLimpa()">Limpar</button><span class="hint">Ctrl + Enter também salva.</span><span class="rsv" id="rsvInfo"></span></div>
 </div>
 
 <aside class="sheet prev">
@@ -1448,10 +1448,10 @@ function salvar(){
   else{o.id=String(Date.now());o.criado=new Date().toISOString();dados.unshift(o)}
   if(o.status==="Validado"&&!o.validadoEm)o.validadoEm=iso(new Date());
   var fs=[].slice.call($("arqs").files),guardar=pode("anexos")&&$("guardar").checked&&fs.length;
-  gravar();limpar();render();toast("Salvo ✓");aba("agenda");
+  gravar();limpar();if(!editId)rascLimpa();render();toast("Salvo ✓");aba("agenda");
   if(guardar)anexarArquivos(o.id,fs,"Documento").then(function(r){toast(r.ok?r.ok+" documento(s) guardado(s) ✓":"Não foi possível guardar os documentos.")});
 }
-function limpar(){rascLimpa();CAMPOS.forEach(function(c){$(c).value=c==="status"?"Agendado":""});$("paste").value="";$("arqs").value="";listaArq();editId=null;$("btnSalvar").textContent="Salvar atendimento";$("tNovo").textContent="Novo atendimento";previa()}
+function limpar(){CAMPOS.forEach(function(c){$(c).value=c==="status"?"Agendado":""});$("paste").value="";$("arqs").value="";listaArq();editId=null;$("btnSalvar").textContent="Salvar atendimento";$("tNovo").textContent="Novo atendimento";previa()}
 function preencherForm(d){CAMPOS.forEach(function(c){$(c).value=d[c]||""})}
 function renovar(id){var d=dados.find(function(x){return x.id===id});if(!d)return;limpar();preencherForm(d);$("agenda").value="";$("status").value="Agendado";$("hist").value="Renovação de certificado";$("pedido").value="";$("validade").value="";$("link").value="";editId=null;previa();aba("novo");toast("Dados copiados para a renovação")}
 function excluir(id){if(pode("excluir")&&confirm("Excluir este registro?")){dados=dados.filter(function(d){return d.id!==id});gravar();render()}}
@@ -1871,7 +1871,15 @@ async function pdfParaImagens(f){
   var pdf=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise,out=[],n=Math.min(pdf.numPages,3);
   for(var i=1;i<=n;i++){var pg=await pdf.getPage(i),vp=pg.getViewport({scale:1.6}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;await pg.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;out.push(await new Promise(function(r){c.toBlob(r,"image/jpeg",0.85)}))}
   return out}
-async function reduzir(f,mx,q){try{var bm=await createImageBitmap(f),s=Math.min(1,(mx||1800)/Math.max(bm.width,bm.height)),c=document.createElement("canvas");c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);c.getContext("2d").drawImage(bm,0,0,c.width,c.height);return await new Promise(function(r){c.toBlob(r,"image/jpeg",q||0.88)})}catch(e){return f}}
+function carregarHeic(){return window.heic2any?Promise.resolve():new Promise(function(ok,err){var t=document.createElement("script");t.src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js";t.onload=ok;t.onerror=err;document.head.appendChild(t)})}
+async function heicParaJpeg(f){if(!/heic|heif/i.test(f.type||"")&&!/\.(heic|heif)$/i.test(f.name||""))return f;await carregarHeic();var r=await heic2any({blob:f,toType:"image/jpeg",quality:.9});return Array.isArray(r)?r[0]:r}
+function imgDe(f){return new Promise(function(ok,err){var u=URL.createObjectURL(f),i=new Image();i.onload=function(){URL.revokeObjectURL(u);ok(i)};i.onerror=function(){URL.revokeObjectURL(u);err(new Error("img"))};i.src=u})}
+async function reduzir(f,mx,q){
+  try{f=await heicParaJpeg(f)}catch(e){return null}
+  var bm=null;try{bm=await createImageBitmap(f,{imageOrientation:"from-image"})}catch(e){try{bm=await createImageBitmap(f)}catch(e2){try{bm=await imgDe(f)}catch(e3){}}}
+  if(!bm)return(/^image\/(jpeg|png|webp)$/.test(f.type)&&f.size<4e6)?f:null;
+  try{var w=bm.naturalWidth||bm.width,h=bm.naturalHeight||bm.height,s=Math.min(1,(mx||1800)/Math.max(w,h)),c=document.createElement("canvas");c.width=Math.round(w*s);c.height=Math.round(h*s);c.getContext("2d").drawImage(bm,0,0,c.width,c.height);
+    var r=await new Promise(function(ok){c.toBlob(ok,"image/jpeg",q||0.88)});return r||f}catch(e){return(/^image\/(jpeg|png|webp)$/.test(f.type)&&f.size<4e6)?f:null}}
 function b64(b){return new Promise(function(ok){var r=new FileReader();r.onload=function(){ok(r.result.split(",")[1])};r.readAsDataURL(b)})}
 async function lerApi(p,imgs){
   var im=[];for(var i=0;i<imgs.length;i++){im.push({mime:imgs[i].type||"image/jpeg",data:await b64(imgs[i])})}
@@ -1886,7 +1894,7 @@ async function lerDocs(){
   try{
     var imgs=[];
     for(var i=0;i<fs.length;i++){var f=fs[i];
-      if(f.type==="application/pdf"||/\.pdf$/i.test(f.name))imgs=imgs.concat(await pdfParaImagens(f));else imgs.push(await reduzir(f))}
+      if(f.type==="application/pdf"||/\.pdf$/i.test(f.name))imgs=imgs.concat(await pdfParaImagens(f));else{var rd=await reduzir(f);if(!rd)throw new Error("não consegui abrir a imagem "+f.name+" (formato não suportado). Envie em JPG, PNG ou PDF");imgs.push(rd)}}
     imgs=imgs.slice(0,6);
     var p="Extraia os dados cadastrais destes documentos (RG, CNH, CPF, cartão CNPJ, contrato social, comprovantes etc.). Responda SOMENTE com um JSON: {\"nome\":\"se houver cartão CNPJ, a razão social da empresa; caso contrário, o nome completo da pessoa\",\"resp\":\"nome completo da pessoa que consta no RG ou na CNH anexado (preencha sempre que houver RG ou CNH); sem esses documentos, o sócio ou representante, se constar\",\"cpf\":\"\",\"cnpj\":\"\",\"nasc\":\"dd/mm/aaaa\",\"email\":\"\",\"tel\":\"\",\"contab\":\"\",\"rg\":\"número do RG, SOMENTE se o documento for uma carteira de identidade (RG); se for CNH, deixe vazio\",\"cnh\":\"número de registro da CNH, SOMENTE se o documento for uma CNH\"}. Use \"\" para o que não aparecer. Não invente nada.";
     var txt=await lerApi(p,imgs);
@@ -2127,7 +2135,7 @@ async function anexarArquivos(id,files,tipo){
   await sincFila;var ok=0,rej=[];
   for(var i=0;i<files.length;i++){var f=files[i],blob=f,ext="",base=limpaNome(f.name.replace(/\.[^.]+$/,""))||"arquivo";
     if(/^image\//.test(f.type)||/\.(jpe?g|png|webp|heic)$/i.test(f.name)){
-      blob=await reduzir(f,1600,.8);if(!blob||blob.type!=="image/jpeg"){rej.push(f.name);continue}ext=".jpg"}
+      blob=await reduzir(f,1600,.8);if(!blob||!/^image\/(jpeg|png|webp)$/.test(blob.type)){rej.push(f.name+" (formato não suportado)");continue}ext=blob.type==="image/png"?".png":blob.type==="image/webp"?".webp":".jpg"}
     else if(f.type==="application/pdf"||/\.pdf$/i.test(f.name)){ext=".pdf";blob=f.type==="application/pdf"?f:new Blob([f],{type:"application/pdf"})}
     else{rej.push(f.name);continue}
     if(blob.size>5*1024*1024){rej.push(f.name+" (maior que 5 MB)");continue}
@@ -2291,12 +2299,15 @@ document.addEventListener("change",function(e){var m=/^(a_|e_)?(contab|modelo)$/
 var RASC_C=["nome","cpf","cnpj","nasc","rg","cnh","resp","email","tel","contab","valor","pedido","hist","link","agenda","modelo","tipo","pagador","validade"],rascT=0;
 function rascLer(){try{var r=JSON.parse(localStorage.getItem("agend_rascunho")||"null");if(r&&Date.now()-r.t<864e5)return r}catch(e){}return null}
 function rascLimpa(){try{localStorage.removeItem("agend_rascunho")}catch(e){}var b=$("rascBanner");if(b)b.hidden=true;var i=$("rsvInfo");if(i)i.textContent=""}
-function rascGrava(){if(editId||!$("nome"))return;var v={},n=0;RASC_C.forEach(function(c){var x=$(c)?$(c).value.trim():"";if(x){v[c]=x;if(["modelo","tipo","pagador","validade"].indexOf(c)<0)n++}});
+function rascGrava(){if(editId||!$("nome"))return;var v={},n=0;RASC_C.forEach(function(c){var x=$(c)?$(c).value.trim():"";if(x){v[c]=x;if(["modelo","tipo","pagador","validade","agenda"].indexOf(c)<0)n++}});
   if(!n)return;try{localStorage.setItem("agend_rascunho",JSON.stringify({t:Date.now(),v:v}))}catch(e){return}
   var d=new Date(),i=$("rsvInfo");if(i)i.textContent="Rascunho salvo automaticamente às "+p2(d.getHours())+":"+p2(d.getMinutes())+" neste computador"}
 function rascBanner(){var b=$("rascBanner");if(!b)return;var r=rascLer();if(!r||editId||$("nome").value.trim()){b.hidden=true;return}
   var d=new Date(r.t),n=Object.keys(r.v).length;b.innerHTML='<div><b>Você tem um rascunho não salvo ('+p2(d.getDate())+'/'+p2(d.getMonth()+1)+' às '+p2(d.getHours())+':'+p2(d.getMinutes())+')</b><small>'+(r.v.nome?esc(r.v.nome)+" · ":"")+n+(n===1?" campo preenchido":" campos preenchidos")+'</small></div><button class="btn" type="button" data-act="rascDesc">Descartar</button><button class="btn p" type="button" data-act="rascCont">Continuar de onde parei</button>';b.hidden=false}
 function rascContinuar(){var r=rascLer();if(!r)return;RASC_C.forEach(function(c){if(r.v[c]!=null&&$(c))$(c).value=r.v[c]});$("rascBanner").hidden=true;try{previa()}catch(e){}toast("Rascunho recuperado ✓")}
+setInterval(function(){var v=$("v-novo");if(v&&v.classList.contains("on"))rascGrava()},4000);
+window.addEventListener("pagehide",function(){var v=$("v-novo");if(v&&v.classList.contains("on"))rascGrava()});
+document.addEventListener("visibilitychange",function(){if(document.hidden){var v=$("v-novo");if(v&&v.classList.contains("on"))rascGrava()}});
 document.addEventListener("input",function(e){if(e.target.closest&&e.target.closest("#form")&&RASC_C.indexOf(e.target.id)>-1){clearTimeout(rascT);rascT=setTimeout(rascGrava,1200)}});
 document.addEventListener("change",function(e){if(e.target.closest&&e.target.closest("#form")&&RASC_C.indexOf(e.target.id)>-1){clearTimeout(rascT);rascT=setTimeout(rascGrava,400)}});
 /* ---------- atalhos de teclado ---------- */
