@@ -344,26 +344,33 @@ html[data-modo="escuro"] #lgMsg{color:#ff8a8a}
   html,body{background:#fff!important}
   body>*:not(#relPrint){display:none!important}
   #relPrint{display:block!important;color:#000;font-family:Arial,Helvetica,sans-serif}
-  .rel .rh{display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:2px solid #a8202a;margin-bottom:16px}
-  .rel img{height:60px;width:auto;image-rendering:auto}
-  .rel h1{font-size:20px;margin:0 0 2px}
-  .rel p{margin:0;font-size:12.5px;color:#333}
-  .rel table{width:100%;border-collapse:collapse;table-layout:auto}
+  .rel{-webkit-print-color-adjust:exact;print-color-adjust:exact;color:#262626}
+  .rel .rh{display:flex;justify-content:space-between;align-items:flex-start}
+  .rel .rh img{height:54px;width:auto}
+  .rel .rh .rt1{text-align:right;line-height:1.5;font-size:12px;color:#6b6b6b}
+  .rel .rh h1{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#262626;margin:0}
+  .rel .bar{height:4px;border-radius:99px;background:linear-gradient(90deg,#5e0f16,#a8202a,#c0303a);margin:20px 0}
+  .rel .ct{padding:14px 16px;border-radius:12px;background:#faf8f7;border:1px solid #e8e5e3;line-height:1.5;font-size:13px;margin-bottom:16px}
+  .rel .ct small{display:block;font-size:10px;font-weight:800;color:#6b6b6b;letter-spacing:.08em}
+  .rel .ct b{display:block;font-size:15px}
+  .rel .cells{display:grid;gap:10px;margin-bottom:10px}
+  .rel .cells div{padding:12px 14px;border-radius:12px;background:#f6f3f1;break-inside:avoid}
+  .rel .cells.p div{background:#f9e8e9}
+  .rel .cells b{display:block;font-size:20px;font-weight:800;color:#262626;line-height:1.2}
+  .rel .cells.p b{color:#a8202a}
+  .rel .cells span{font-size:11px;color:#6b6b6b;font-weight:700}
+  .rel table{width:100%;border-collapse:collapse;margin-top:18px}
+  .rel th{font-size:10.5px;font-weight:800;color:#6b6b6b;text-align:left;background:#f3f1ef;padding:9px 10px}
+  .rel th:first-child{border-radius:8px 0 0 8px}.rel th:last-child{border-radius:0 8px 8px 0}
+  .rel td{font-size:11.5px;border-bottom:1px solid #e8e5e3;padding:9px 10px;color:#6b6b6b}
+  .rel td:nth-child(2){color:#262626;font-weight:700;width:100%}
   .rel td:not(:nth-child(2)),.rel th:not(:nth-child(2)){white-space:nowrap}
-  .rel td:nth-child(2){width:100%}
-  .rel th,.rel td{padding-right:14px}
-  .rel th.v,.rel td.v{padding-right:0}
-  .rel th{font-size:11px;text-align:left;border-bottom:1.5px solid #000;padding:6px 6px;color:#000}
-  .rel td{font-size:12px;border-bottom:1px solid #ccc;padding:6px;color:#000}
-  .rel .v{text-align:right;white-space:nowrap}
+  .rel td.v,.rel th.v{text-align:right}
+  .rel td.v{color:#262626;font-weight:800}
   .rel tr{break-inside:avoid}
-  .rel .rt{margin-top:14px;display:flex;justify-content:space-between;font-size:14px;font-weight:800;border-top:2px solid #000;padding-top:8px}
-  .rel .rf{margin-top:18px;font-size:11px;color:#555}
-  .rel .rmb{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-  .rel .mb{border:1px solid #ccc;border-radius:6px;padding:6px 12px;min-width:90px}
-  .rel .mb b{display:block;font-size:16px;color:#a8202a}
-  .rel .mb span{font-size:11px;color:#333}
-  .rel .mb.t{background:#f3e3e4}
+  .rel .rt{display:flex;justify-content:flex-end;gap:24px;align-items:baseline;padding:14px 10px;font-size:14px;color:#6b6b6b;font-weight:700}
+  .rel .rt b{font-size:16px;font-weight:800;color:#a8202a}
+  .rel .rf{margin-top:22px;padding-top:12px;border-top:1px solid #e8e5e3;display:flex;justify-content:space-between;font-size:10.5px;color:#6b6b6b}
 }
 @media(max-width:1180px){
 .app{grid-template-columns:248px minmax(0,1fr)}
@@ -1806,18 +1813,21 @@ function renderFech(){
 function fechTexto(){var f=fechLista(),tot=0;
   var l=f.L.map(function(d){tot+=num(d.valor);return fmtData(parseISO(dataVal(d)))+" - "+bonito(d.nome)+(docDe(d)?" ("+docDe(d)+")":"")+" - "+(d.modelo||"certificado")+" - "+(d.valor?"R$ "+d.valor:"sem valor")});
   return "Certsiga Certificado Digital\nRelação de certificados - "+f.ct.nome+"\nCompetência: "+mesNome(f.mes)+"\n\n"+l.join("\n")+"\n\nTotal: "+f.L.length+" certificado(s) - "+brl(tot)}
-function modeloBonito(m){return String(m||"").trim().replace(/(^|[\s\-\/])([a-zà-ú])/g,function(_,a,b){return a+b.toUpperCase()}).replace(/cnpj|cpf/gi,function(x){return x.toUpperCase()})}
+function modeloBonito(m){m=String(m||"").trim();if(/^e-/i.test(m))return "e-"+m.slice(2).replace(/cnpj|cpf/gi,function(x){return x.toUpperCase()}).replace(/\b([a-z])/g,function(c){return c.toUpperCase()});return m.replace(/(^|[\s\-\/])([a-zà-ú])/g,function(_,a,b){return a+b.toUpperCase()}).replace(/cnpj|cpf/gi,function(x){return x.toUpperCase()})}
 function porModelo(L){var o={};L.forEach(function(d){var k=modeloBonito(d.modelo)||"Sem modelo";o[k]=(o[k]||0)+1});return Object.keys(o).sort(function(a,b){return o[b]-o[a]||a.localeCompare(b)}).map(function(k){return{m:k,n:o[k]}})}
 function fechPdf(){
   var f=fechLista();if(!f.ct||!f.L.length)return;var tot=0;
   var linhas=f.L.map(function(d){tot+=num(d.valor);return '<tr><td>'+esc(fmtData(parseISO(dataVal(d))))+'</td><td>'+esc(bonito(d.nome))+'</td><td>'+esc(docDe(d))+'</td><td>'+esc(modeloBonito(d.modelo))+'</td><td class="v">'+(d.valor?"R$ "+esc(d.valor):"—")+'</td></tr>'}).join("");
-  var info=[f.ct.cnpj?"CNPJ "+f.ct.cnpj:"","Competência: "+mesNome(f.mes)].filter(Boolean).join(" · ");
-  var mods=porModelo(f.L).map(function(x){return '<div class="mb"><b>'+x.n+'</b><span>'+esc(x.m)+'</span></div>'}).join("");
-  $("relPrint").innerHTML='<div class="rel"><div class="rh"><img src="logo-vinho.png" alt="Certsiga"><div><h1>Relatório mensal</h1><p><b>'+esc(f.ct.nome)+'</b></p><p>'+esc(info)+'</p></div></div>'
-    +'<div class="rmb"><div class="mb t"><b>'+f.L.length+'</b><span>'+(f.L.length===1?"certificado":"certificados")+'</span></div><div class="mb t"><b>'+brl(tot)+'</b><span>valor total</span></div>'+mods+'</div>'
-    +'<table><thead><tr><th>Validação</th><th>Cliente</th><th>CPF/CNPJ</th><th>Modelo</th><th class="v">Valor</th></tr></thead><tbody>'+linhas+'</tbody></table>'
-    +'<div class="rt"><span>'+f.L.length+(f.L.length===1?" certificado":" certificados")+'</span><span>Valor total: '+brl(tot)+'</span></div>'
-    +'<p class="rf">Emitido em '+fmtData(new Date())+' · Certsiga Certificado Digital</p></div>';
+  var info=[f.ct.cnpj?"CNPJ "+f.ct.cnpj:"",f.ct.telefone||""].filter(Boolean).join(" · ");
+  var ord=porModelo(f.L).sort(function(a,b){var r=function(x){return x==="e-CNPJ A1"?0:x==="e-CPF A1"?1:2};return r(a.m)-r(b.m)||b.n-a.n||a.m.localeCompare(b.m)});
+  var mods=ord.map(function(x){return '<div><b>'+x.n+'</b><span>'+esc(x.m)+'</span></div>'}).join("");
+  $("relPrint").innerHTML='<div class="rel"><div class="rh"><img src="logo-vinho.png" alt="Certsiga"><div class="rt1"><h1>Relatório mensal</h1><div>'+esc(mesNome(f.mes))+' · Emitido em '+fmtData(new Date())+'</div></div></div><div class="bar"></div>'
+    +'<div class="ct"><small>CONTABILIDADE</small><b>'+esc(f.ct.nome)+'</b>'+(info?'<div>'+esc(info)+'</div>':'')+'</div>'
+    +'<div class="cells p" style="grid-template-columns:1fr 1fr"><div><b>'+f.L.length+'</b><span>Certificados</span></div><div><b>'+brl(tot)+'</b><span>Valor total</span></div></div>'
+    +'<div class="cells" style="grid-template-columns:repeat('+Math.min(ord.length,4)+',1fr)">'+mods+'</div>'
+    +'<table><thead><tr><th>Data</th><th>Cliente</th><th>CPF / CNPJ</th><th>Modelo</th><th class="v">Valor</th></tr></thead><tbody>'+linhas+'</tbody></table>'
+    +'<div class="rt">Total do mês <b>'+brl(tot)+'</b></div>'
+    +'<div class="rf"><span>Certsiga Dashboard · gustavo@certsiga.com.br · (71) 99206-0606</span><span></span></div></div>';
   var t=document.title;document.title=limpaNome("Relatório mensal "+f.ct.nome+" "+f.mes);
   var volta=function(){document.title=t;window.removeEventListener("afterprint",volta)};window.addEventListener("afterprint",volta);
   setTimeout(function(){window.print()},60)}
