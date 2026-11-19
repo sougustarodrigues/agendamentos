@@ -636,8 +636,8 @@ body:not([data-pg="inicio"]):not([data-pg="agenda"]) .rail{display:none!importan
 
 body.atov{overflow:hidden}
 #v-atend.on{display:block!important;position:fixed;inset:0;z-index:70;background:rgba(32,18,20,.55);backdrop-filter:blur(2px);overflow:auto;padding:36px 20px 60px}
-#v-atend #atBox{max-width:1120px;margin:0 auto;background:var(--bg,#f6f3f1);border-radius:18px;padding:22px 22px 26px;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative;animation:atpop .16s ease-out}
-@keyframes atpop{from{transform:translateY(14px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+#v-atend #atBox{max-width:1120px;margin:0 auto;background:var(--bg,#f6f3f1);border-radius:18px;padding:22px 22px 26px;box-shadow:0 30px 80px rgba(0,0,0,.35);position:relative;animation:atpop .34s cubic-bezier(.22,.61,.36,1) both}
+@keyframes atpop{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}@keyframes atbg{from{opacity:0}to{opacity:1}}
 #v-atend .atg{grid-template-columns:minmax(0,1fr) 360px}
 #v-atend .atbar{position:sticky;top:-22px;background:var(--bg,#f6f3f1);z-index:2;padding:4px 0 10px}
 .atx{width:36px;height:36px;border-radius:50%;border:1px solid var(--line,#ddd);background:#fff;font-size:20px;line-height:1;cursor:pointer}
@@ -756,6 +756,7 @@ dialog[open]{animation:dlgin .4s cubic-bezier(.22,.61,.36,1)}dialog[open]::backd
 #v-atend.on{animation:none}.top .bar .btn,.top .bar .srch input{transition:border-radius .5s ease,transform .2s ease,background .25s,border-color .25s,box-shadow .25s}.top.sc .bar .btn,.top.sc .bar .srch input{border-radius:18px}.top.sc{pointer-events:none}.top.sc .bar>*{pointer-events:auto}}
 
 @media(prefers-reduced-motion:reduce){#umenu{transition:none!important}}
+#v-atend.on{animation:atbg .3s ease both}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -1876,7 +1877,7 @@ function renderRail(){
 var rm=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
 window.contarKpi=function(root){if(rm)return;[].forEach.call((root||document).querySelectorAll(".pg.on .kpi b"),function(b){if(b.dataset.cu)return;var t=b.textContent.trim(),m=/^(R\$\s*)?(\d{1,3}(?:\.\d{3})*|\d+)(?:,(\d{2}))?$/.exec(t);if(!m)return;var alvo=parseFloat(m[2].replace(/\./g,"")+(m[3]?"."+m[3]:"")),dec=m[3]?2:0;if(!(alvo>0))return;b.dataset.cu="1";var t0=performance.now(),D=1500;(function f(n){var k=Math.min(1,(n-t0)/D),e=1-Math.pow(1-k,3),v=alvo*e,sv=dec?v.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}):Math.round(v).toLocaleString("pt-BR");b.textContent=(m[1]||"")+sv;if(k<1)requestAnimationFrame(f);else{b.textContent=t;delete b.dataset.cu}})(t0)})};
 var lastPg=null;window.entradaPg=function(){var h=document.body.dataset.pg;if(h===lastPg)return;lastPg=h;document.body.classList.add("pgin");clearTimeout(ti);ti=setTimeout(function(){document.body.classList.remove("pgin")},1300);setTimeout(function(){contarKpi()},350)}})();
-function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"").slice(1).split("/"),h=hp[0],ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";atId=h==="atend"?(hp[1]||null):null;if(!atId&&h==="atend")h="agenda";if(h!=="atend")atMon=null;if(h==="contabs"&&hp[1]){ctSel=hp[1];ctTab="cli"}PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h||(h==="atend"&&k==="agenda"))});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===(h==="atend"?"agenda":h))});if(h==="atend")atMontar();if(h==="contabs")renderContabs();if(h==="novo")rascBanner();if(h==="backup"){tplMostrar();mfaStatus()}if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h==="atend"?"agenda":h;document.body.classList.toggle("atov",h==="atend");renderRail();if(window.entradaPg&&h!=="atend")entradaPg();if(h!=="atend")window.scrollTo(0,0)}
+function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"").slice(1).split("/"),h=hp[0],ac=ACESSO[papel];if(!ac||ac.pags.indexOf(h)<0)h="inicio";atId=h==="atend"?(hp[1]||null):null;if(!atId&&h==="atend")h="agenda";if(h!=="atend")atMon=null;if(h==="contabs"&&hp[1]){ctSel=hp[1];ctTab="cli"}PAGS.forEach(function(k){$("v-"+k).classList.toggle("on",k===h||(h==="atend"&&k==="agenda"))});[].forEach.call(document.querySelectorAll("[data-p]"),function(a){a.classList.toggle("on",a.dataset.p===(h==="atend"?"agenda":h))});if(h==="atend")atMontar();if(h==="contabs")renderContabs();if(h==="novo")rascBanner();if(h==="backup"){tplMostrar();mfaStatus()}if(h==="usuarios")listarUsuarios();if(h==="perfil")preencherPerfil();document.body.dataset.pg=h==="atend"?"agenda":h;document.body.classList.toggle("atov",h==="atend");renderRail();if(window.entradaPg&&h!=="atend")entradaPg();if(h!=="atend"&&!(window.__ph==="atend"&&h==="agenda"))window.scrollTo(0,0);window.__ph=h}
 function aba(v){if(location.hash==="#"+v)rota();else location.hash=v}
 window.addEventListener("hashchange",rota);
 function modo(m){var h=document.documentElement,sv;m=m||(h.dataset.modo==="escuro"?"claro":"escuro");sv=m;if(m==="auto")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";h.dataset.modo=m;try{localStorage.setItem("agend_modo",sv)}catch(e){}corBarra()}
@@ -2463,7 +2464,7 @@ function atMontar(){
   [$("aGridC"),$("aGridA"),$("aGridO")].forEach(function(g){g.addEventListener("input",atAuto);g.addEventListener("change",function(e){var t=e.target.id;if(t==="a_cpf")e.target.value=fmtCPF(e.target.value);else if(t==="a_cnpj")e.target.value=fmtCNPJ(e.target.value);else if(t==="a_tel")e.target.value=fmtTel(e.target.value);atAuto()})});
   box.addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.act==="atCk")atCk(+e.target.dataset.i)});
   box.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="atCkNovo"){e.preventDefault();atCkAdd()}});
-  atMon=atId;atRefresh();listarCmt();if(pode("anexos"))listarAnx();window.scrollTo(0,0)}
+  atMon=atId;atRefresh();listarCmt();if(pode("anexos"))listarAnx();box.scrollTop=0}
 function atAuto(){atPend=true;$("atSave").textContent="Salvando…";clearTimeout(atT);atT=setTimeout(atSalvar,700)}
 function atSalvar(){
   clearTimeout(atT);atPend=false;var i=dados.findIndex(function(d){return d.id===atId});if(i<0||!$("a_nome"))return;
