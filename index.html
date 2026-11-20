@@ -757,6 +757,89 @@ dialog[open]{animation:dlgin .4s cubic-bezier(.22,.61,.36,1)}dialog[open]::backd
 
 @media(prefers-reduced-motion:reduce){#umenu{transition:none!important}}
 #v-atend.on{animation:atbg .32s ease both}#v-atend.on.out{animation:atbgo .26s ease both;pointer-events:none}#v-atend.on.out #atBox{animation:atpopo .26s cubic-bezier(.4,0,.6,1) both}
+
+/* ===== prévia 13: painel recolhível, cartões minimizáveis, anexos ligados, financeiro B, janela de pagamento ===== */
+.rstrip,.rtop{display:none}
+@media(min-width:1181px){
+.rtop{display:flex;justify-content:flex-end;margin-bottom:-6px}
+.rbtn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--ln);background:var(--sf);color:var(--mu);font:700 12.5px inherit;font-family:inherit;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.rbtn:hover{background:var(--soft);color:var(--pr);border-color:transparent}.rbtn .ic{width:14px;height:14px}
+.app.railrec{grid-template-columns:248px minmax(0,1fr) 68px}.app.rec.railrec{grid-template-columns:76px minmax(0,1fr) 68px}
+.app.rmov{transition:grid-template-columns .45s cubic-bezier(.32,.72,0,1)}.app.rmov>.mainc,.app.rmov .rail{contain:layout paint}
+.app.railrec .rail{padding:24px 12px 24px 0;overflow:hidden}
+.app.railrec .rail>:not(.rstrip){display:none}
+.app.railrec .rstrip{display:flex}
+.rstrip{flex-direction:column;align-items:center;gap:14px;width:100%;padding:14px 0 16px;border-radius:18px;border:1px solid var(--ln);background:var(--sf);box-shadow:var(--sh);cursor:pointer;color:var(--tx);font-family:inherit;transition:background .2s,border-color .2s}
+.rstrip:hover{background:var(--soft);border-color:transparent}
+.rsd{display:flex;flex-direction:column;align-items:center;line-height:1.1}.rsd b{font-size:22px;font-weight:800;color:var(--pr)}.rsd small{font-size:10px;font-weight:800;letter-spacing:.08em;color:var(--mu)}
+.rsv{writing-mode:vertical-rl;font-size:12.5px;font-weight:700;color:var(--mu);letter-spacing:.04em}
+.rstrip .ic{width:16px;height:16px;color:var(--pr)}
+}
+/* cartões minimizáveis */
+.cxb{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;text-align:left;cursor:pointer;border-radius:8px}
+.cxb::after{content:"";margin-left:auto;flex:none;width:7px;height:7px;border-right:2px solid var(--mu);border-bottom:2px solid var(--mu);transform:rotate(45deg) translate(-2px,-2px);transition:transform .3s cubic-bezier(.32,.72,0,1)}
+.cx.cl .cxb::after{transform:rotate(-45deg) translate(-2px,-2px)}
+.cxs{display:none;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--mu);margin-left:auto;padding-left:10px;white-space:nowrap}
+.cx.cl .cxs{display:inline}.cx.cl .cxs+*{}
+.cx.cl>*:not(h2){display:none}.cx.cl>h2{margin-bottom:0!important}
+.cx>*:not(h2){animation:cxin .3s cubic-bezier(.22,.61,.36,1)}
+@keyframes cxin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.cx.cl .cxb::after{margin-left:12px}
+.cxall{display:flex;justify-content:flex-end;gap:6px;font-size:12.5px;color:var(--mu);margin-bottom:-4px}
+.cxall button{background:none;border:0;padding:0;font:700 12.5px inherit;font-family:inherit;color:var(--pr);cursor:pointer}.cxall button:hover{text-decoration:underline}
+/* anexos ligados à lista de documentos */
+.axk{border-top:1px solid var(--ln);padding:10px 0}.axk:first-of-type{border-top:0}
+.axk .axh2{display:flex;align-items:center;gap:10px;font-size:14px}.axk .axh2 b{flex:1;min-width:0;font-weight:700;overflow-wrap:anywhere}
+.axi{flex:none;width:22px;height:22px;border-radius:50%;border:2px dashed var(--ln);display:flex;align-items:center;justify-content:center;color:#fff}
+.axk.ok .axi{border:0;background:var(--s-va)}.axi .ic{width:13px;height:13px}
+.axk .ax{border-top:0;padding:6px 0 0 32px}
+.ax.cf{background:var(--soft);border-radius:12px;padding:10px 12px;margin-top:6px}.axk .ax.cf{margin-left:32px;padding:10px 12px}
+.ax.cf .an{color:var(--pr)}
+.ax.cf .an{flex:1 1 100%}.ax.cf .qa{white-space:nowrap;flex:1 1 40%;margin:0;justify-content:center}
+#v-atend .ax .an{min-width:90px}
+.qa.dg{background:var(--pr);border-color:var(--pr);color:#fff}
+.axo{margin:12px 0 2px;font-weight:700}
+/* financeiro B */
+.finB{margin-top:12px}
+.fbt{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+.fbt small{display:block;font-size:12px;font-weight:700;color:var(--mu)}
+.fbv{display:block;font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
+.fbar{height:8px;border-radius:99px;background:var(--softer);margin-top:14px;overflow:hidden}.fbar b{display:block;height:100%;background:var(--s-va);border-radius:99px;transition:width .5s cubic-bezier(.22,.61,.36,1)}
+.fbl{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;font-weight:600;color:var(--mu)}.fbl b{color:var(--tx);font-weight:800}
+.fbq{font-size:12.5px;font-weight:500;color:var(--mu);margin-top:10px}.fbq b{color:var(--tx)}
+/* janela de pagamento */
+#dlgP .mh h3,#dlgF .mh h3{font-size:18px;font-weight:800}
+#dlgP .sub,#dlgF .sub{font-size:13px;font-weight:500}
+#dlgP .mb,#dlgF .mb{gap:16px}
+#dlgP .fld,#dlgF .fld{display:block}
+#dlgP .fl,#dlgP label,#dlgF .fl,#dlgF label{display:block;font-size:12px;font-weight:700;color:var(--mu);margin-bottom:0}
+#dlgP .fl,#dlgF .fl{margin-bottom:6px}
+#dlgP label input,#dlgF label input{margin-top:6px}
+#dlgP input,#dlgF input{height:44px;border-radius:12px;font-size:14px;font-weight:700}
+#dlgP .mf,#dlgF .mf{border-top:1px solid var(--ln)}
+#dlgP .mf .btn,#dlgF .mf .btn{height:42px;font-size:14px;font-weight:700;border-radius:12px}#dlgP .mf .btn.p,#dlgF .mf .btn.p{font-weight:800}
+.fld select[hidden]{display:none!important}
+.pls{display:flex;flex-wrap:wrap;gap:8px}
+.pls button{height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--ln);background:var(--sf);color:var(--tx);font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.pls button:hover{border-color:var(--pr)}
+.pls button.on{background:var(--pr);border-color:var(--pr);color:#fff}
+
+/* ===== ficha redesenhada ===== */
+.ath .stp{margin:0 0 0 auto;flex:none}
+@media(max-width:900px){.ath{flex-wrap:wrap}.ath .stp{margin:12px 0 0}}
+.atsv{margin-left:auto;margin-right:12px;font-size:12.5px;font-weight:600;white-space:nowrap}
+@media(max-width:900px){.atsv{display:none}}
+#v-atend .atbar [data-act="atDel"]{color:var(--pr)}
+#v-atend .agrid>label{font-size:12px;font-weight:700;color:var(--mu)}
+#v-atend .agrid>label input,#v-atend .agrid>label select{height:44px;border-radius:12px;font-size:14px;font-weight:600;margin-top:6px}
+#aGridC label:has(#a_nome),#aGridC label:has(#a_email){grid-column:1/-1}
+#aGridM label:has(#a_resp){grid-column:span 2}
+#aGridA label:has(#a_link){grid-column:1/-1}
+.maisb{margin-top:14px;background:none;border:0;padding:0;color:var(--pr);font-size:13.5px;font-weight:800;font-family:inherit;cursor:pointer}.maisb:hover{text-decoration:underline}
+#aGridM{margin-top:14px}
+button.axi{padding:0;background:transparent;cursor:pointer;color:#fff}
+.axrm{background:none;border:0;color:var(--mu);font-size:18px;line-height:1;padding:0 4px;cursor:pointer}.axrm:hover{color:var(--pr)}
+.axadd{margin-top:12px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -1047,9 +1130,9 @@ dialog[open]{animation:dlgin .4s cubic-bezier(.22,.61,.36,1)}dialog[open]::backd
 <dialog id="dlgP"><div class="dl"><div class="mh"><div><h3>Registrar pagamento</h3><p class="sub" id="pgNome"></p></div></div>
 <div class="mb">
 <p class="hint" id="pgNota" hidden></p>
-<label>Situação<select id="pgStatus" onchange="pgCampos()"><option value="pago">Pago</option><option value="parcial">Parcial</option><option value="receber">A receber</option></select></label>
+<div class="fld"><span class="fl">Situação</span><div class="pls" data-for="pgStatus"></div><select id="pgStatus" hidden onchange="pgCampos()"><option value="pago">Pago</option><option value="parcial">Parcial</option><option value="receber">A receber</option></select></div>
 <label id="pgValorL">Valor recebido (R$)<input id="pgValor" inputmode="decimal" placeholder="0,00"></label>
-<label id="pgFormaL">Forma de pagamento<select id="pgForma"><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option></select></label>
+<div class="fld" id="pgFormaL"><span class="fl">Forma de pagamento</span><div class="pls" data-for="pgForma"></div><select id="pgForma" hidden><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option></select></div>
 <label id="pgDataL">Data do pagamento<input id="pgData" type="text" data-dia="1" data-pass="1"></label>
 <label>Observação (opcional)<input id="pgObs" maxlength="500"></label></div>
 <div class="mf"><button class="btn" type="button" data-act="pgFechar">Cancelar</button><button class="btn p" type="button" data-act="pgSalvar">Salvar</button></div>
@@ -1073,7 +1156,7 @@ dialog[open]{animation:dlgin .4s cubic-bezier(.22,.61,.36,1)}dialog[open]::backd
 
 <dialog id="dlgF"><div class="dl"><div class="mh"><div><h3>Pagamento do relatório</h3><p class="sub" id="fpInfo"></p></div></div>
 <div class="mb">
-<label>Forma de pagamento<select id="fpForma"><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option></select></label>
+<div class="fld"><span class="fl">Forma de pagamento</span><div class="pls" data-for="fpForma"></div><select id="fpForma" hidden><option>Pix</option><option>Dinheiro</option><option>Cartão de débito</option><option>Cartão de crédito</option><option>Boleto</option></select></div>
 <label>Data do pagamento<input id="fpData" type="text" data-dia="1" data-pass="1"></label>
 <label>Observação (opcional)<input id="fpObs" maxlength="200"></label>
 <p class="hint">Todos os certificados ainda não pagos deste relatório serão marcados como pagos.</p></div>
@@ -1864,10 +1947,13 @@ function selHtml(){
     +(q?'<div class="acts" style="margin:0">'+q+'</div>':'')
     +'<div class="dl2">'+R.map(function(r){return '<div><span>'+r[0]+'</span><b>'+esc(r[1])+'</b></div>'}).join("")+(pode("fin")&&d.status==="Validado"?'<div><span>Pagamento</span>'+pgBadge(d)+'</div>':'')+'</div>'
     +'<div class="acts" style="margin:0"><button class="qa" data-act="det" data-id="'+d.id+'">Documentos e comentários</button>'+(ed?'<button class="qa" data-act="edit" data-id="'+d.id+'">Editar</button>':'')+'</div></div>'}
+function railAplica(){var a=document.querySelector(".app"),v="0";try{v=localStorage.getItem("agend_rail")||"0"}catch(e){}if(a)a.classList.toggle("railrec",v==="1");var b=document.querySelector(".rstrip");if(b)b.setAttribute("aria-expanded","false")}
+function railT(){var a=document.querySelector(".app");if(!a)return;a.classList.add("rmov");var on=!a.classList.contains("railrec");a.classList.toggle("railrec",on);try{localStorage.setItem("agend_rail",on?"1":"0")}catch(e){}setTimeout(function(){a.classList.remove("rmov")},520)}
 function renderRail(){
   var el=$("rail");if(!papel){el.innerHTML="";$("selMob").innerHTML="";return}
-  var h=(location.hash||"").slice(1),ag=h==="agenda",s1=ag&&selId&&dados.some(function(x){return x.id===selId})?selHtml():"";
-  el.innerHTML=miniCal()+(s1||semanaLista());
+  var h=(location.hash||"").slice(1),ag=h==="agenda"||h.split("/")[0]==="atend",s1=ag&&selId&&dados.some(function(x){return x.id===selId})?selHtml():"";
+  el.innerHTML='<div class="rtop"><button type="button" class="rbtn" data-act="railT" aria-label="Recolher painel">'+ic("right")+' Recolher painel</button></div><button type="button" class="rstrip" data-act="railT" aria-label="Abrir painel lateral"><span class="rsd"><b>'+(new Date().getDate())+'</b><small>HOJE</small></span><span class="rsv">Calendário e semana</span>'+ic("left")+'</button>'+miniCal()+(s1||semanaLista());
+  railAplica();
   $("selMob").innerHTML=s1}
 
 /* ---------- navegação ---------- */
@@ -1887,7 +1973,15 @@ function corBarra(){var h=document.documentElement,mt=document.querySelector('me
 document.addEventListener("click",function(e){
   var b=e.target.closest("button[data-act],a[data-act],tr[data-act],.ev[data-act]");if(!b)return;
   var a=b.dataset.act,id=b.dataset.id,d=id?dados.find(function(x){return x.id===id}):null;
-  if(a==="copy")copiar(b.dataset.v);
+  if(a==="railT")railT();
+  else if(a==="cliMais"){var m=$("aGridM"),o=m.hidden;m.hidden=!o;b.setAttribute("aria-expanded",o?"true":"false");b.textContent=o?"Mostrar menos":"+ Mais dados do cliente (nascimento, RG, CNH, responsável, contabilidade)"}
+  else if(a==="cxT")cxToggle(b);
+  else if(a==="cxAll")cxTodos(b.dataset.v==="1");
+  else if(a==="axPara")axPara(+b.dataset.i);
+  else if(a==="axNao"){anxConf=null;pintarAnx()}
+  else if(a==="axSim")apagarAnx(id);
+  else if(a==="pgPill")pgPill(b);
+  else if(a==="copy")copiar(b.dataset.v);
   else if(a==="desc"&&d)copiar(textoReg(d));
   else if(a==="tit"&&d)copiar(tituloReg(d));
   else if(a==="edit")editar(id);
@@ -1979,7 +2073,7 @@ document.addEventListener("click",function(e){
   else if(a==="cmtDel"){sb.from("comentarios").delete().eq("id",id).then(listarCmt)}
   else if(a==="axEnviar")enviarAnx();
   else if(a==="axBaixar")baixarAnx(id);
-  else if(a==="axDel")apagarAnx(id);
+  else if(a==="axDel"){anxConf=id;pintarAnx()}
   else if(a==="zip")baixarPacote()
   else if(a==="ctSalvar")ctSalvar();
   else if(a==="ctCancel"){ctLimpar();$("dlgCt").close()}
@@ -2271,7 +2365,9 @@ function abrirPgto(id){var d=dados.find(function(x){return x.id===id});if(!d)ret
   $("pgForma").value=p.forma||"Pix";$("pgData").value=p.data_pgto||iso(new Date());$("pgObs").value=p.obs||"";
   var ctn=d.pagador==="contabilidade";$("pgNota").hidden=!ctn;
   if(ctn){$("pgNota").textContent="Este atendimento é pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")+". O mais prático é registrar o pagamento de todos de uma vez, no relatório mensal (menu Contabilidades).";if(!p.obs)$("pgObs").value="Pago pela contabilidade"+(d.contab?" "+bonito(d.contab):"")}
-  pgCampos();$("dlgP").showModal()}
+  pgCampos();pgPills();$("dlgP").showModal()}
+function pgPills(){[].forEach.call(document.querySelectorAll(".pls[data-for]"),function(p){var sel=$(p.dataset.for);if(!sel)return;p.innerHTML=[].map.call(sel.options,function(o){return '<button type="button" data-act="pgPill" data-for="'+p.dataset.for+'" data-v="'+esc(o.value)+'" class="'+(o.value===sel.value?"on":"")+'" aria-pressed="'+(o.value===sel.value)+'">'+esc(o.textContent)+'</button>'}).join("")})}
+function pgPill(b){var sel=$(b.dataset.for);if(!sel)return;sel.value=b.dataset.v;if(sel.onchange)sel.onchange();pgPills()}
 function pgCampos(){var s=$("pgStatus").value;$("pgValorL").hidden=s==="receber";$("pgFormaL").hidden=s==="receber";$("pgDataL").hidden=s==="receber"}
 async function salvarPgto(){
   var d=dados.find(function(x){return x.id===pgId});if(!d)return;
@@ -2366,11 +2462,30 @@ async function enviarCmt(){
   var r=await sb.from("comentarios").insert({registro_id:detId,autor:meuEmail,texto:t});
   if(r.error){toast("Não foi possível comentar.");return}
   WX("dTxt").value="";listarCmt()}
+var anxConf=null,anxAlvo=null;
+function anxLinha(a){
+  if(anxConf===a.id)return '<div class="ax cf" role="alert"><span class="an">Excluir este documento?<br><small>'+esc(a.nome)+' · não dá para desfazer</small></span><button class="qa" type="button" data-act="axNao">Cancelar</button><button class="qa dg" type="button" data-act="axSim" data-id="'+esc(a.id)+'">Sim, excluir</button></div>';
+  return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}
+function pintarAnx(){
+  var box=WX("dAnx");if(!box)return;var d=atId?atDados():null,L=d?atLista(d):[],cs=$("cxsAnx");
+  if(!L.length){box.innerHTML=(atId&&d?'<p class="hint" style="margin-bottom:8px">Monte a lista de documentos que o cliente precisa entregar. <button class="btn" type="button" data-act="atCkPad">Usar lista padrão</button></p>':'')+(anx.length?anx.map(anxLinha).join(""):'<p class="hint">Nenhum documento anexado.</p>');if(cs)cs.textContent=anx.length?anx.length+" arquivo(s)":"nenhum arquivo";return}
+  var usados={},n=0,h="";
+  L.forEach(function(x,k){var t=semAcento(limpaNome(x.t)),fs=anx.filter(function(a){var p=a.nome.indexOf(" - ");return p>0&&semAcento(a.nome.slice(0,p))===t});fs.forEach(function(f){usados[f.id]=1});var feito=fs.length||x.o;if(feito)n++;
+    h+='<div class="axk'+(feito?' ok':'')+'"><div class="axh2"><button type="button" class="axi" data-act="atCk" data-i="'+k+'" aria-label="'+(x.o?'Desmarcar':'Marcar')+' '+esc(x.t)+' como entregue">'+(feito?ic("check"):"")+'</button><b>'+esc(x.t)+'</b>'+(fs.length?'':'<button class="qa" type="button" data-act="axPara" data-i="'+k+'">Anexar</button>')+'<button type="button" class="axrm" data-act="atCkDel" data-i="'+k+'" aria-label="Remover '+esc(x.t)+' da lista">×</button></div>'+fs.map(anxLinha).join("")+'</div>'});
+  var out=anx.filter(function(a){return!usados[a.id]}),pc=Math.round(n*100/L.length);
+  box.innerHTML='<div class="prog"><span>'+pc+'%</span><div><b style="width:'+pc+'%"></b></div><span>'+n+'/'+L.length+'</span></div>'+h+(out.length?'<p class="hint axo">Outros arquivos</p>'+out.map(anxLinha).join(""):"");
+  if(cs)cs.textContent=n+" de "+L.length+" documentos"}
+function axPara(i){var d=atDados(),L=d?atLista(d):[];if(!L[i])return;anxAlvo=L[i].t;var e=$("aRowArq");if(e)e.click()}
+document.addEventListener("change",async function(e){if(e.target.id!=="aRowArq")return;var fs=[].slice.call(e.target.files);e.target.value="";if(!fs.length||!anxAlvo||!detId)return;var alvo=anxAlvo;anxAlvo=null;
+  WX("dMsg").textContent="Enviando…";var r=await anexarArquivos(detId,fs,alvo);
+  WX("dMsg").textContent=(r.ok?r.ok+" arquivo(s) anexado(s). ":"")+(r.rej.length?"Não enviados: "+r.rej.join(", ")+". Use JPG, PNG, WEBP ou PDF de até 5 MB.":"");
+  await listarAnx();
+  if(r.ok){var d=atDados();if(d){var L=atLista(d),ch=false;L.forEach(function(x){if(x.t===alvo&&!x.o){x.o=true;ch=true}});if(ch)atGravaCk(L)}}});
 async function listarAnx(){
   var r=await sb.from("anexos").select("id,nome,caminho,tamanho,criado").eq("registro_id",detId).order("criado",{ascending:true});
   if(r.error){anx=[];WX("dAnx").innerHTML='<p class="hint">Não foi possível carregar os anexos.</p>';return}
   anx=r.data;
-  WX("dAnx").innerHTML=anx.length?anx.map(function(a){return '<div class="ax"><span class="an">'+esc(a.nome)+'<br><small>'+esc(tam(a.tamanho))+' · '+esc(fmtDH(a.criado))+'</small></span><button class="qa" type="button" data-act="axBaixar" data-id="'+esc(a.id)+'">Baixar</button><button class="qa" type="button" data-act="axDel" data-id="'+esc(a.id)+'">Excluir</button></div>'}).join(""):'<p class="hint">Nenhum documento anexado.</p>';
+  pintarAnx();
   WX("btnZip").disabled=!anx.length}
 function uid(){return(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2,10)}
 function limpaNome(s){return String(s||"").replace(/[\\\/:*?"<>|\u0000-\u001f]/g," ").replace(/\s+/g," ").trim()}
@@ -2399,9 +2514,9 @@ function baixarBlob(nome,blob){var a=document.createElement("a");a.href=URL.crea
 async function baixarAnx(id){var a=anx.find(function(x){return x.id===id});if(!a)return;
   var r=await sb.storage.from("anexos").download(a.caminho);if(r.error){toast("Não foi possível baixar.");return}baixarBlob(a.nome,r.data)}
 async function apagarAnx(id){var a=anx.find(function(x){return x.id===id});if(!a)return;
-  if(!confirm("Excluir "+a.nome+"? Não dá para desfazer."))return;
+  anxConf=null;
   var r=await sb.storage.from("anexos").remove([a.caminho]);if(r.error){toast("Não foi possível excluir.");return}
-  await sb.from("anexos").delete().eq("id",id);listarAnx()}
+  await sb.from("anexos").delete().eq("id",id);toast("Documento excluído");listarAnx()}
 /* ZIP simples (sem compressão), nomes em UTF-8 */
 var CRCT=(function(){var t=[],c,n,k;for(n=0;n<256;n++){c=n;for(k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
 function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRCT[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
@@ -2439,32 +2554,38 @@ function abrirAt(id){if(!pode("editar")){abrirDet(id);return}location.hash="aten
 function tipoDoc(){var s=WX("dTipo"),o=WX("dTipoOut");return s.value==="Outro"&&o&&o.value.trim()?o.value.trim():s.value}
 function atDados(){return dados.find(function(x){return x.id===atId})}
 function atLista(d){try{var c=JSON.parse(d.check||"[]");return Array.isArray(c)?c:[]}catch(e){return[]}}
+var CXK="agend_cx";
+function cxGet(){try{return JSON.parse(localStorage.getItem(CXK)||"{}")||{}}catch(e){return{}}}
+function cxSet(o){try{localStorage.setItem(CXK,JSON.stringify(o))}catch(e){}}
+function cxAplica(){var o=cxGet();[].forEach.call(document.querySelectorAll("#v-atend .cx"),function(el){var c=!!o[el.dataset.cx];el.classList.toggle("cl",c);var b=el.querySelector(".cxb");if(b)b.setAttribute("aria-expanded",c?"false":"true")})}
+function cxToggle(b){var el=b.closest(".cx");if(!el)return;var o=cxGet(),c=!el.classList.contains("cl");el.classList.toggle("cl",c);b.setAttribute("aria-expanded",c?"false":"true");if(c)o[el.dataset.cx]=1;else delete o[el.dataset.cx];cxSet(o)}
+function cxTodos(c){var o={};if(c)[].forEach.call(document.querySelectorAll("#v-atend .cx"),function(el){o[el.dataset.cx]=1});cxSet(o);cxAplica()}
 function atMontar(){
   var d=atDados(),box=$("atBox");
   if(!d){box.innerHTML='<div class="sheet"><p class="empty">Atendimento não encontrado. Ele pode ter sido excluído.</p><div class="row" style="justify-content:center"><button class="btn" type="button" data-act="atVoltar">Voltar para a agenda</button></div></div>';atMon=null;return}
   if(atMon===atId&&$("a_nome"))return;
   detId=atId;
-  box.innerHTML='<div class="atp"><div class="atbar"><div class="atcr"><button class="lk" type="button" data-act="atVoltar">'+ic("left")+' Agenda</button><span>›</span><span id="atCrumb"></span></div><div class="acts" style="margin:0"><button class="btn" type="button" data-act="tit" data-id="'+esc(atId)+'" title="Copia o título do cartão para colar no Trello">'+ic("copy")+' Título (Trello)</button><button class="btn" type="button" data-act="desc" data-id="'+esc(atId)+'" title="Copia a descrição do cartão para colar no Trello">'+ic("copy")+' Descrição (Trello)</button>'+(pode("excluir")?'<button class="btn" type="button" data-act="atDel">Excluir</button>':'')+'<button class="atx" type="button" data-act="atVoltar" aria-label="Fechar">×</button></div></div>'
+  box.innerHTML='<div class="atp"><div class="atbar"><div class="atcr"><button class="lk" type="button" data-act="atVoltar">'+ic("left")+' Agenda</button><span>›</span><span id="atCrumb"></span></div><span class="hint atsv" id="atSave">Alterações salvas automaticamente</span><div class="acts" style="margin:0"><button class="btn" type="button" data-act="tit" data-id="'+esc(atId)+'" title="Copia o título do cartão para colar no Trello">'+ic("copy")+' Título (Trello)</button><button class="btn" type="button" data-act="desc" data-id="'+esc(atId)+'" title="Copia a descrição do cartão para colar no Trello">'+ic("copy")+' Descrição (Trello)</button>'+(pode("excluir")?'<button class="btn" type="button" data-act="atDel">Excluir</button>':'')+'<button class="atx" type="button" data-act="atVoltar" aria-label="Fechar">×</button></div></div>'
    +'<div class="sheet" id="atHead"></div>'
    +'<div class="atg"><div class="atl">'
-   +'<div class="sheet"><div class="atsh"><h2 style="margin:0">Cliente</h2><span class="hint" id="atSave">Alterações salvas automaticamente</span></div><div class="agrid" id="aGridC"></div></div>'
+   +'<div class="sheet"><h2 style="margin:0">Cliente</h2><div class="agrid" id="aGridC"></div><button type="button" class="maisb" data-act="cliMais" aria-expanded="false">+ Mais dados do cliente (nascimento, RG, CNH, responsável, contabilidade)</button><div class="agrid" id="aGridM" hidden></div></div>'
    +'<div class="sheet"><h2 style="margin-top:0">Atendimento</h2><div class="agrid" id="aGridA"></div></div>'
-   +'<div class="sheet" id="atCheck"></div>'
    +'<div class="sheet"><h2 style="margin-top:0">Observações</h2><div class="agrid" id="aGridO"></div></div></div>'
-   +'<div class="atr"><div class="sheet" id="atFin"></div>'
-   +'<div class="sheet"><h2 style="margin-top:0">Ações</h2><div class="acoes" id="atAcoes"></div></div>'
-   +'<div class="sheet"><h2 style="margin-top:0">Comentários</h2><div id="aCmt"></div><textarea id="aTxt" rows="2" maxlength="2000" placeholder="Escreva um comentário…"></textarea><div class="row" style="margin-top:10px"><button class="btn p" type="button" data-act="cmtEnviar">Comentar</button></div><p class="hint" id="aMsg" role="status"></p></div>'
-   +'<div class="sheet"><h2 style="margin-top:0">Anexos</h2><div id="aAnx"></div>'
-   +'<div class="row"><select id="aTipo" style="flex:0 0 140px" aria-label="Tipo do documento"><option>RG</option><option>CNH</option><option>CPF</option><option>Cartão CNPJ</option><option>Comprovante</option><option>Contrato social</option><option>Outro</option></select><input id="aTipoOut" placeholder="Qual documento?" maxlength="40" hidden style="flex:1 1 100%"><input id="aArq" type="file" multiple accept="image/*,application/pdf" style="flex:1 1 160px"><button class="btn" id="aEnv" type="button" data-act="axEnviar">Anexar</button></div>'
+   +'<div class="atr"><div class="cxall"><button type="button" data-act="cxAll" data-v="1">Minimizar todos</button> · <button type="button" data-act="cxAll" data-v="0">Abrir todos</button></div><div class="sheet cx" data-cx="fin" id="atFin"></div>'
+   +'<div class="sheet cx" data-cx="acoes"><h2 style="margin-top:0"><button type="button" class="cxb" data-act="cxT" aria-expanded="true">Ações<span class="cxs" id="cxsAc"></span></button></h2><div class="acoes" id="atAcoes"></div></div>'
+   +'<div class="sheet cx" data-cx="anx"><h2 style="margin-top:0"><button type="button" class="cxb" data-act="cxT" aria-expanded="true">Anexos<span class="cxs" id="cxsAnx"></span></button></h2><div id="aAnx"></div><input id="aRowArq" type="file" multiple accept="image/*,application/pdf" hidden><div class="row axadd"><input id="atCkNovo" placeholder="Novo documento na lista (ex.: Comprovante de endereço)" style="flex:1 1 200px"><button class="btn" type="button" data-act="atCkAdd">+ Item</button></div>'
+   +'<p class="hint axo" style="margin:6px 0 0">Outro documento</p><div class="row"><select id="aTipo" style="flex:0 0 140px" aria-label="Tipo do documento"><option>RG</option><option>CNH</option><option>CPF</option><option>Cartão CNPJ</option><option>Comprovante</option><option>Contrato social</option><option>Outro</option></select><input id="aTipoOut" placeholder="Qual documento?" maxlength="40" hidden style="flex:1 1 100%"><input id="aArq" type="file" multiple accept="image/*,application/pdf" style="flex:1 1 160px"><button class="btn" id="aEnv" type="button" data-act="axEnviar">Anexar</button></div>'
    +'<div class="row"><button class="btn p" id="aZip" type="button" data-act="zip" disabled>Baixar tudo (.zip)</button><label class="chk"><input type="checkbox" id="aZipApagar">Apagar do sistema depois</label></div>'
-   +'<p class="hint">JPG, PNG, WEBP ou PDF de até 5 MB.</p></div></div></div></div>';
-  var GR={aGridC:["nome","cpf","cnpj","nasc","rg","cnh","resp","contab","email","tel"],aGridA:["pedido","modelo","valor","validade","agenda","status","tipo","link","pagador"],aGridO:["hist"]};
+   +'<p class="hint" id="aMsg" role="status"></p><p class="hint">JPG, PNG, WEBP ou PDF de até 5 MB.</p></div>'
+   +'<div class="sheet cx" data-cx="com"><h2 style="margin-top:0"><button type="button" class="cxb" data-act="cxT" aria-expanded="true">Comentários<span class="cxs" id="cxsCom"></span></button></h2><div id="aCmt"></div><textarea id="aTxt" rows="2" maxlength="2000" placeholder="Escreva um comentário…"></textarea><div class="row" style="margin-top:10px"><button class="btn p" type="button" data-act="cmtEnviar">Comentar</button></div></div>'
+   +'</div></div></div>';
+  var GR={aGridC:["nome","cpf","cnpj","tel","email"],aGridM:["nasc","rg","cnh","resp","contab"],aGridA:["modelo","valor","validade","agenda","tipo","pagador","status","pedido","link"],aGridO:["hist"]};
   var g=$("aGridC");Object.keys(GR).forEach(function(k){GR[k].forEach(function(c){var l=$(c).closest("label").cloneNode(true);[].forEach.call(l.querySelectorAll("[id]"),function(n){n.id="a_"+n.id});[].forEach.call(l.querySelectorAll(".dtb"),function(n){n.remove()});[].forEach.call(l.querySelectorAll("[data-dtp]"),function(n){n.removeAttribute("data-dtp")});[].forEach.call(l.querySelectorAll("[onchange]"),function(n){n.removeAttribute("onchange")});$(k).appendChild(l)})});
   initDtp($("a_agenda"));CAMPOS.forEach(function(c){var el=$("a_"+c);if(el)el.value=d[c]||""});
-  [$("aGridC"),$("aGridA"),$("aGridO")].forEach(function(g){g.addEventListener("input",atAuto);g.addEventListener("change",function(e){var t=e.target.id;if(t==="a_cpf")e.target.value=fmtCPF(e.target.value);else if(t==="a_cnpj")e.target.value=fmtCNPJ(e.target.value);else if(t==="a_tel")e.target.value=fmtTel(e.target.value);atAuto()})});
+  [$("aGridC"),$("aGridM"),$("aGridA"),$("aGridO")].forEach(function(g){g.addEventListener("input",atAuto);g.addEventListener("change",function(e){var t=e.target.id;if(t==="a_cpf")e.target.value=fmtCPF(e.target.value);else if(t==="a_cnpj")e.target.value=fmtCNPJ(e.target.value);else if(t==="a_tel")e.target.value=fmtTel(e.target.value);atAuto()})});
   box.addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.act==="atCk")atCk(+e.target.dataset.i)});
   box.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="atCkNovo"){e.preventDefault();atCkAdd()}});
-  atMon=atId;atRefresh();listarCmt();if(pode("anexos"))listarAnx();box.scrollTop=0}
+  atMon=atId;cxAplica();atRefresh();listarCmt();if(pode("anexos"))listarAnx();box.scrollTop=0}
 function atAuto(){atPend=true;$("atSave").textContent="Salvando…";clearTimeout(atT);atT=setTimeout(atSalvar,700)}
 function atSalvar(){
   clearTimeout(atT);atPend=false;var i=dados.findIndex(function(d){return d.id===atId});if(i<0||!$("a_nome"))return;
@@ -2478,36 +2599,34 @@ function atStatus(v){var d=atDados();if(!d)return;
   if(v==="Validado"){abrirValidar(d.id);return}
   if(v==="Pago"){if(d.status==="Validado"&&pode("fin")&&pgSt(d)!=="pago")quitar(d.id);return}
   atSalvar();d=atDados();d.status=v;if($("a_status"))$("a_status").value=v;gravar();render();toast("Status: "+v)}
-function atGravaCk(L){var d=atDados();if(!d)return;d.check=L.length?JSON.stringify(L):"";gravar();render()}
+function atGravaCk(L){var d=atDados();if(!d)return;d.check=L.length?JSON.stringify(L):"";gravar();render();pintarAnx()}
 function atCk(i){var d=atDados(),L=atLista(d);if(L[i]){L[i].o=!L[i].o;atGravaCk(L)}}
 function atCkDel(i){var d=atDados(),L=atLista(d);L.splice(i,1);atGravaCk(L)}
-function atCkAdd(){var el=$("atCkNovo"),t=el&&el.value.trim();if(!t)return;var d=atDados(),L=atLista(d);L.push({t:t,o:false});atGravaCk(L);var e2=$("atCkNovo");if(e2)e2.focus()}
+function atCkAdd(){var el=$("atCkNovo"),t=el&&el.value.trim();if(!t)return;var d=atDados(),L=atLista(d);L.push({t:t,o:false});el.value="";atGravaCk(L);var e2=$("atCkNovo");if(e2)e2.focus()}
 function atCkPad(){var d=atDados(),L=atLista(d),ja=L.map(function(x){return semAcento(x.t)});
   (d.cnpj?["RG do responsável","CNH do responsável","Cartão CNPJ","Comprovante de endereço"]:["RG","CNH","Comprovante de endereço"]).forEach(function(t){if(ja.indexOf(semAcento(t))<0)L.push({t:t,o:false})});atGravaCk(L)}
 function atRefresh(){
   if(!atId||!$("atHead"))return;var d=atDados();if(!d)return;
   var val=d.status==="Validado",ps=val?pgSt(d):"",pago=ps==="pago",ix={Agendado:0,Aprovado:1,Validado:2}[d.status];
   $("atCrumb").textContent="Atendimento"+(d.agenda?" de "+fmtAgenda(d.agenda.slice(0,10)):"");
-  var steps=["Agendado","Aprovado","Validado","Pago"].map(function(e,k){var on=ix!=null&&k<=ix&&!(k===3),ok=(k===2&&val&&pago)||k===3&&pago||(k===2&&val),cls=k===3?(pago?"ok":""):(on?(k===2&&val?"ok":"on"):"");
-    return '<button type="button" data-act="atSt" data-v="'+e+'" class="'+cls+'"'+(k===3&&!(val&&pode("fin")&&!pago)?' tabindex="-1"':'')+'>'+(cls?ic("check")+" ":"")+e+'</button>'+(k<3?'<i></i>':'')}).join("");
-  var tags=[];if(val)tags.push(pgBadge(d));if(d.status==="Faltou"||d.status==="Cancelado"||d.status==="Revogado")tags.push('<span class="pill '+(ST[d.status]||"")+'" style="cursor:default">'+esc(d.status)+'</span>');
-  [d.tipo,d.modelo,d.valor?"R$ "+d.valor:""].forEach(function(t){if(t)tags.push('<span class="tag" style="background:var(--softer);color:var(--tx)">'+esc(t)+'</span>')});
+  var steps=["Agendado","Aprovado","Validado"].map(function(e,k){var on=ix!=null&&k<=ix,cls=on?(k===2&&val?"ok":"on"):"";
+    return '<button type="button" data-act="atSt" data-v="'+e+'" class="'+cls+'">'+(cls?ic("check")+" ":"")+e+'</button>'+(k<2?'<i></i>':'')}).join("");
+  var tags=[];if(d.status==="Faltou"||d.status==="Cancelado"||d.status==="Revogado")tags.push('<span class="pill '+(ST[d.status]||"")+'" style="cursor:default">'+esc(d.status)+'</span>');
+  [d.tipo,d.modelo].forEach(function(t){if(t)tags.push('<span class="tag" style="background:var(--softer);color:var(--tx)">'+esc(t)+'</span>')});
   if(d.contab)tags.push('<span class="tag">Contabilidade: '+esc(bonito(d.contab))+'</span>');if(naCentral(d))tags.push('<span class="tag">Na central de verificação</span>');
   var q="";if(!naCentral(d)&&(d.status==="Agendado"||d.status==="Aprovado"))q+='<button class="btn" type="button" data-act="cenEnv" data-id="'+esc(d.id)+'">Enviar para a central de verificação</button>';
   q+='<button class="btn" type="button" data-act="wa" data-id="'+esc(d.id)+'">Confirmar no WhatsApp</button><button class="btn" type="button" data-act="wal" data-id="'+esc(d.id)+'">Lembrete de 10 min</button>';
   if(/^https?:\/\//i.test(d.link||""))q+='<a class="btn" href="'+esc(d.link)+'" target="_blank" rel="noopener">Abrir videoconferência</a>';
-  $("atHead").innerHTML='<div class="ath"><span class="av">'+esc(ini(d.nome))+'</span><div style="min-width:0"><h1>'+esc(bonito(d.nome)||"Sem nome")+'</h1><div class="attg">'+tags.join("")+'</div></div></div><div class="stp">'+steps+'</div>';
+  $("atHead").innerHTML='<div class="ath"><span class="av">'+esc(ini(d.nome))+'</span><div style="min-width:0"><h1>'+esc(bonito(d.nome)||"Sem nome")+'</h1><div class="attg">'+tags.join("")+'</div></div><div class="stp">'+steps+'</div></div>';
+  var _ac=$("cxsAc");
   $("atAcoes").innerHTML=(d.status!=="Validado"&&d.status!=="Cancelado"&&d.status!=="Revogado"&&pode("editar")?'<button class="btn" type="button" data-act="atSt" data-v="Validado">Marcar como validado</button>':'')+q;
+  if(_ac)_ac.textContent=$("atAcoes").children.length+" ações";
   var L=atLista(d),fe=L.filter(function(x){return x.o}).length,pc=L.length?Math.round(fe*100/L.length):0;
-  var kf=document.activeElement&&document.activeElement.id==="atCkNovo"?$("atCkNovo").value:"";
-  $("atCheck").innerHTML='<div class="atsh"><h2 style="margin:0">Documentos</h2>'+(L.length?'':'<button class="btn" type="button" data-act="atCkPad">Usar lista padrão</button>')+'</div>'
-   +(L.length?'<div class="prog"><span>'+pc+'%</span><div><b style="width:'+pc+'%"></b></div><span>'+fe+'/'+L.length+'</span></div>':'<p class="hint" style="margin-top:10px">Monte a lista de documentos que o cliente precisa entregar e vá marcando.</p>')
-   +L.map(function(x,k){return '<div class="ckr'+(x.o?' o':'')+'"><input type="checkbox" data-act="atCk" data-i="'+k+'"'+(x.o?' checked':'')+' aria-label="'+esc(x.t)+'"><span>'+esc(x.t)+'</span><button type="button" data-act="atCkDel" data-i="'+k+'">remover</button></div>'}).join("")
-   +'<div class="row"><input id="atCkNovo" placeholder="Novo item (ex.: Comprovante de endereço)" style="flex:1 1 200px"><button class="btn" type="button" data-act="atCkAdd">+ Item</button></div>';
-  if(kf){var n=$("atCkNovo");n.value=kf;n.focus()}
+
   var v=num(d.valor),pg=pgtos[d.id],pagoV=ps==="pago"?v:(pg?+pg.valor_pago:0),sd=saldo(d);
-  $("atFin").innerHTML='<h2 style="margin-top:0">Financeiro</h2>'+(pode("fin")&&val?'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Pago</small><b style="color:var(--s-va)">'+brl(pagoV)+'</b></div><div><small>Saldo</small><b>'+brl(sd)+'</b></div></div><div class="row"><button class="btn p" type="button" data-act="pagar" data-id="'+esc(d.id)+'">Registrar pagamento</button>'+(pago?'':'<button class="btn" type="button" data-act="quitar" data-id="'+esc(d.id)+'">Marcar como pago</button>')+'</div>'
-    :'<div class="fin3"><div><small>Valor</small><b>'+(v?brl(v):"—")+'</b></div><div><small>Quem paga</small><b>'+(d.pagador==="contabilidade"?"Contabilidade":"Cliente")+'</b></div><div><small>Situação</small><b>'+esc(d.status)+'</b></div></div><p class="hint" style="margin-top:10px">O pagamento é registrado pelo financeiro depois que o atendimento for validado.</p>')}
+  var pcF=v?Math.max(0,Math.min(100,Math.round(pagoV*100/v))):0;
+  $("atFin").innerHTML='<h2 style="margin-top:0"><button type="button" class="cxb" data-act="cxT" aria-expanded="true">Financeiro<span class="cxs">'+(val&&pode("fin")?"Saldo "+brl(sd):(v?brl(v):""))+'</span></button></h2>'+(pode("fin")&&val?'<div class="finB"><div class="fbt"><div><small>Valor do atendimento</small><b class="fbv">'+(v?brl(v):"—")+'</b></div>'+pgBadge(d)+'</div><div class="fbar"><b style="width:'+pcF+'%"></b></div><div class="fbl"><span>Pago <b>'+brl(pagoV)+'</b></span><span>Saldo <b>'+brl(sd)+'</b></span></div><div class="fbq">Quem paga: <b>'+(d.pagador==="contabilidade"?"Contabilidade":"Cliente")+'</b></div><div class="row"><button class="btn p" type="button" data-act="pagar" data-id="'+esc(d.id)+'">Registrar pagamento</button>'+(pago?'':'<button class="btn" type="button" data-act="quitar" data-id="'+esc(d.id)+'">Marcar como pago</button>')+'</div></div>'
+    :'<div class="finB"><div class="fbt"><div><small>Valor do atendimento</small><b class="fbv">'+(v?brl(v):"—")+'</b></div></div><div class="fbq">Quem paga: <b>'+(d.pagador==="contabilidade"?"Contabilidade":"Cliente")+'</b></div><p class="hint" style="margin-top:10px">O pagamento é registrado pelo financeiro depois que o atendimento for validado.</p></div>')}
 
 document.addEventListener("change",function(e){var c=e.target.closest&&e.target.closest("input.fck");if(!c)return;if(c.checked)finSel[c.dataset.id]=1;else delete finSel[c.dataset.id];finBar()});
 document.addEventListener("input",function(e){if(e.target.id==="tplTxt")tplPrev();if(e.target.id==="ctBusca")renderContabs();else if(e.target.id==="ctAddQ")ctAddBusca()});
@@ -2724,7 +2843,7 @@ function abrirFechPagto(){
   var f=fechLista(),pend=f.L.filter(function(d){return pgSt(d)!=="pago"});if(!pend.length)return;
   var tot=pend.reduce(function(s,d){return s+num(d.valor)},0);
   $("fpInfo").textContent=f.ct.nome+" · "+mesNome(f.mes)+" · "+pend.length+(pend.length===1?" certificado":" certificados")+" · "+brl(tot);
-  $("fpForma").value="Pix";$("fpData").value=iso(new Date());$("fpObs").value="";$("dlgF").showModal()}
+  $("fpForma").value="Pix";$("fpData").value=iso(new Date());$("fpObs").value="";pgPills();$("dlgF").showModal()}
 async function salvarFechPagto(){
   var f=fechLista(),pend=f.L.filter(function(d){return pgSt(d)!=="pago"});if(!pend.length)return;
   if(pend.some(function(d){return !num(d.valor)})){toast("Preencha o valor de todos os certificados antes de registrar o pagamento.");return}
