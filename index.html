@@ -17,7 +17,7 @@
 --pr:#a8202a;--btn:#a8202a;--onpr:#fff;--g1:#5e0f16;--g2:#a8202a;--g3:#c0303a;--c2:#8f8f8f;--tx2:#4a4a4a;
 --soft:color-mix(in srgb,var(--pr) 9%,var(--sf));--softer:color-mix(in srgb,var(--pr) 4%,var(--sf));
 --s-ag:#3b82f6;--s-co:#d97706;--s-va:#16a34a;--s-fa:#dc2626;--s-ca:#94a3b8;--s-re:#7c2d3a}
-html[data-modo="escuro"]{color-scheme:dark;--bg:#14110f;--sf:#1d1a18;--tx:#f1ede9;--tx2:#d6d0ca;--mu:#aaa49e;--ln:#35312e;--sh:none;--pr:#ff6a6a;--btn:#c0303a;--onpr:#fff;--g1:#2a0a0e;--g2:#6e1520;--g3:#9a2230;--c2:#8a847f}
+html[data-modo="escuro"]{color-scheme:dark;--bg:#0f141c;--sf:#171e29;--tx:#e8edf4;--tx2:#c8d0db;--mu:#8f9bab;--ln:#28323f;--sh:none;--pr:#ff7b80;--btn:#be2f3d;--onpr:#fff;--g1:#1c0e17;--g2:#5c1a2b;--g3:#862a3b;--c2:#7d8898}
 [hidden]{display:none!important}
 .modo{padding:8px 10px;line-height:0}
 html[data-modo="escuro"] .im-lua{display:none}html:not([data-modo="escuro"]) .im-sol{display:none}
@@ -1008,7 +1008,7 @@ html[data-modo="escuro"] #toast{box-shadow:0 8px 24px rgba(0,0,0,.5)}
 /* A2 vidro + cores */
 #nbPanel.nb-a[data-v="2"]{background:color-mix(in srgb,var(--sf) 78%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border-color:rgba(255,255,255,.55);box-shadow:0 22px 60px rgba(38,38,38,.3),inset 0 1px 0 rgba(255,255,255,.6)}
 #nbPanel.nb-a[data-v="2"] .nbn{background:color-mix(in srgb,var(--nt) 85%,transparent);border:0;border-left:4px solid var(--nc);box-shadow:0 2px 8px rgba(38,38,38,.06);color:#2d2326}#nbPanel.nb-a[data-v="2"] .nbn textarea{color:#2d2326}#nbPanel.nb-a[data-v="2"] .nbn.pin{border-left-width:4px}#nbPanel.nb-a[data-v="2"] .nbn .nbf .nbk{display:flex;opacity:1}
-html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn{--nt:#2b2527}html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn,html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn textarea{color:#f1ede9}
+html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn{--nt:#232a36}html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn,html[data-modo="escuro"] #nbPanel.nb-a[data-v="2"] .nbn textarea{color:#e8edf4}
 /* E1 barra */
 /* E2 pílula que expande */
 /* E3 spotlight */
@@ -2283,7 +2283,7 @@ function rota(){if(atPend&&atId&&$("a_nome"))atSalvar();var hp=(location.hash||"
 function aba(v){if(location.hash==="#"+v)rota();else location.hash=v}
 window.addEventListener("hashchange",rota);
 function modo(m){var h=document.documentElement,sv;m=m||(h.dataset.modo==="escuro"?"claro":"escuro");sv=m;if(m==="auto")m=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"escuro":"claro";h.dataset.modo=m;try{localStorage.setItem("agend_modo",sv)}catch(e){}corBarra()}
-function corBarra(){var h=document.documentElement,mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=h.dataset.modo==="escuro"?"#14110f":"#a8202a"}
+function corBarra(){var h=document.documentElement,mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=h.dataset.modo==="escuro"?"#0f141c":"#a8202a"}
 
 /* ---------- ações (um único ouvinte) ---------- */
 document.addEventListener("click",function(e){
