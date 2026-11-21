@@ -3105,7 +3105,7 @@ async function mfaStatus(){if(!$("mfaSt")||!sb||!sb.auth.mfa)return;
   catch(e){$("mfaSt").textContent="Não foi possível verificar o 2FA agora."}}
 async function mfaIniciar(){
   try{var f=await sb.auth.mfa.listFactors();for(var i=0;i<(f.data.all||[]).length;i++){if(f.data.all[i].status==="unverified")await sb.auth.mfa.unenroll({factorId:f.data.all[i].id})}
-    var r=await sb.auth.mfa.enroll({factorType:"totp",friendlyName:"Certsiga "+Date.now()});if(r.error)throw r.error;
+    var r=await sb.auth.mfa.enroll({factorType:"totp",friendlyName:"Certsiga "+Date.now(),issuer:"Certsiga"});if(r.error)throw r.error;
     mfaPend=r.data.id;$("mfaQr").src=r.data.totp.qr_code;$("mfaSec").textContent=r.data.totp.secret;$("mfaCod").value="";$("mfaEnr").hidden=false;$("mfaIni").hidden=true;$("mfaCod").focus()}
   catch(e){toast("Não foi possível iniciar o 2FA.")}}
 async function mfaAtivar(){var c=$("mfaCod").value.replace(/\D/g,"");if(c.length!==6){toast("Digite os 6 dígitos do app.");return}
